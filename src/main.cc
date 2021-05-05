@@ -1,7 +1,8 @@
-#include <iostream>
+#include "Game.h"
+#include "constants.h"
 
-int main()
+int main ()
 {
-    std::cout << "Hello World!" << std::endl;
-    return 0;
+    Game g { "Hopp,hopp!", screen_width, screen_height };
+    g.start ();
 }
