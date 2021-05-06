@@ -1,5 +1,5 @@
-#include "../include/Game.h"
-#include "../include/constants.h"
+#include "Game.h"
+#include "constants.h"
 
 int main ()
 {
