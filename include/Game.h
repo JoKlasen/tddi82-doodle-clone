@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "State.h"
-#include "State_Machine.h"
+//#include "State.h"
+//#include "State_Machine.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -17,11 +17,11 @@ Game (std::string const & title, unsigned width, unsigned height);
 
 void start();
 
-void Stop();
+//void Stop();
 
 private:
 
-void handle_events (State & state);
+//void handle_events (State & state);
 
 
 void delay (sf::Clock & clock) const;
@@ -30,7 +30,7 @@ void delay (sf::Clock & clock) const;
 sf::RenderWindow window;
 
 
-State_Machine machine;
+//State_Machine machine;
 
 bool running;
 
