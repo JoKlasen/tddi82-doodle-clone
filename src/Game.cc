@@ -1,8 +1,8 @@
-#include "../include/Game.h"
+#include "Game.h"
 //#include "Events.h" 
 //#include "Menu_State.h" 
 //#include "State.h" 
-#include "../include/constants.h" 
+#include "constants.h" 
 
 using namespace sf;
 

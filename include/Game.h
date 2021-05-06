@@ -15,7 +15,7 @@ public:
 
 Game (std::string const & title, unsigned width, unsigned height);
 
-void Start();
+void start();
 
 void Stop();
 
