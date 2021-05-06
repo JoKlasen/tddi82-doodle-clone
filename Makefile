@@ -16,7 +16,7 @@ OBJECTS := $(BUILDDIR)/Game.o
 
 #Huvudmål
 main: $(OBJECTS)
-	$(CC) $(INC) $(FLAGS) main.cc -o $(TARGET) $(LIB)
+	$(CC) $(INC) $(FLAGS) $(SRCDIR)/main.cc -o $(TARGET) $(LIB)
 
 #Delmål
 $(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
