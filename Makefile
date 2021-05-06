@@ -9,7 +9,6 @@ LIB := -lsfml-window -lsfml-graphics -lsfml-system
 main:
 	$(CC) $(FLAGS) main.cc -o bin/main $(LIB)
 
-
 #Extra
 .PHONY: run
 run:
