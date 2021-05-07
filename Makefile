@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -22,10 +22,17 @@ main: $(OBJECTS)
 $(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game.cc -o $(BUILDDIR)/Game.o
 
+$(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Menu_State.cc -o $(BUILDDIR)/Menu_State.o
+
 dir:
-	@mkdir -p $(BUILDDIR)
+	@mkdir -p $(BUILDDIR) bin
 
 #Extra
+.PHONY: clean
+clean:
+	@ \rm -rf $(OBJDIR)/*.o *.gch bin/*
+
 .PHONY: run
 run:
 	./$(TARGET)

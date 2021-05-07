@@ -7,20 +7,21 @@ class Menu_State: public State
 {
 
 public:
+    Menu_State();
 
-Menu_State();
+    void handle_event (sf::Event event) override;
 
-void handle_event (sf::Event event) override;
-Game_Event update() override;
-void render(sf::RenderTarget & target) override;
+    void update () override;
+
+    void render(sf::RenderTarget & target) override;
+
+    int get_next_state() override;
 
 private:
-
-bool play;
-
-bool exit_game;
-
-bool high_score;
+    //Variabler
+    bool play;
+    bool exit_game;
+    bool high_score;
 
 };
 

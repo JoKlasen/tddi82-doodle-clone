@@ -1,41 +1,31 @@
 #ifndef GAME_H
 #define GAME_H
 
-//#include "State.h"
-//#include "State_Machine.h"
-
 #include <SFML/Graphics.hpp>
 
 #include <string>
+#include <memory>
 
-class Game
+#include "State.h"
+
+class Game 
 {
-
 public:
+    Game (std::string const & title, unsigned width, unsigned height);
 
-Game (std::string const & title, unsigned width, unsigned height);
-
-void start();
-
-//void Stop();
+    void start ();
 
 private:
+    //Variabler
+    sf::RenderWindow window;
+    std::map<int, std::unique_ptr<State>> states;
+    int current_state;
+    bool running;
 
-//void handle_events (State & state);
+    //Funktioner
+    void handle_events(); 
 
-
-void delay (sf::Clock & clock) const;
-
-
-sf::RenderWindow window;
-
-
-//State_Machine machine;
-
-bool running;
-
+    void delay (sf::Clock & clock) const;
 };
 
-
-
-#endif
+#endif // GAME_H
