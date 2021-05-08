@@ -8,14 +8,18 @@ sf::CircleShape shape(100.f);
 //highscore
 
 Menu_State::Menu_State()
-    : play{false}
+    : play{false}, exit_game{false}, high_score{false}
 {
 
 }
 
 void Menu_State::handle_event(sf::Event event)
 {
-    
+    if ( event.type == sf::Event::KeyPressed )
+    {
+        if ( event.key.code == sf::Keyboard::Key::H)
+            high_score = true;
+    }
 }
 void Menu_State::update()
 {
@@ -29,5 +33,12 @@ void Menu_State::render(sf::RenderTarget & target)
 
 int Menu_State::get_next_state() 
 {
-    return MENU_STATE;
+    if(high_score)
+    {
+        high_score = false;
+        return HIGH_SCORE_STATE;
+    }
+        
+
+    return MENU_STATE;    
 }

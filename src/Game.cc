@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "Menu_State.h" 
 #include "Game_State.h" 
-//#include "High_Score_State.h" 
+#include "High_Score_State.h" 
 #include "State.h" 
 #include "constants.h" 
 
@@ -10,24 +10,25 @@ using namespace sf;
 
 Game::Game (std::string const & title, unsigned width, unsigned height)
         : window { VideoMode { width, height }, title, Style::Titlebar | Style::Close },
-        current_state{ MENU_STATE },
+        states{},
+        current_state{ MENU_STATE }, // igentligen ska det vara MENU_STATE
         running { true }
+        
 {
     // Insert all sates you want in your game in the states map
     states.insert(
         std::pair<int,
-            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>()})
-    );
+            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>()}));
 
     /*
     states.insert(std::pair<int,
             std::unique_ptr<State>>({GAME_STATE,
                                     std::make_unique<Game_State>()}));
-
+     */
     states.insert(std::pair<int,
             std::unique_ptr<State>>({HIGH_SCORE_STATE,
                                     std::make_unique<High_Score_State>()}));
-    */
+   
 }
 
 void Game::start ()

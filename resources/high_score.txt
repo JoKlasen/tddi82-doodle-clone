@@ -1,0 +1,5 @@
+10:Kalle
+30:Berta
+50:Simon
+5:Ludvig
+100:Oskar
