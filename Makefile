@@ -25,6 +25,9 @@ $(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
 $(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Menu_State.cc -o $(BUILDDIR)/Menu_State.o
 
+$(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Platform.cc -o $(BUILDDIR)/Platform.o
+
 dir:
 	@mkdir -p $(BUILDDIR) bin
 
