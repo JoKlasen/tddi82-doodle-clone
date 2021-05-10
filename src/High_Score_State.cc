@@ -7,20 +7,17 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}
+    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{"Banan", 400}
 {
     
     if ( !font.loadFromFile (font_file) )
         throw std::invalid_argument ("Unable to load font");
     state_text = sf::Text{ "HIGH SCORE", font, 25 };
-   
+    add_current_score();
     read_file();
     print_hs();
     current_leader_text = sf::Text{high_scores.at(0).name + ": " + std::to_string(high_scores.at(0).score) + " Points", font, 25 };
 
-    
-
-    
 }
 
 void High_Score_State::handle_event (sf::Event event) 
@@ -69,8 +66,40 @@ int High_Score_State::get_next_state()
     return HIGH_SCORE_STATE;    
 }
 
+void High_Score_State::set_current_score(int score)
+{
+    current_score.score = score;
+}
 
+void High_Score_State::set_current_name(std::string name)
+{
+    current_score.name = name;
+}
 
+void High_Score_State::add_current_score()
+{
+    if(current_score.name == "") // kasta exception "måste ange namn"
+    {
+        return;
+    }
+    
+    if(name_list.find(current_score.name) == name_list.end()) // ska kasta exception "namn finns redan"
+    {
+        return;
+    }
+    
+
+    std::ofstream ofs(hs_file, std::ios::app);
+    
+    if(ofs.fail())
+    {
+        std::cerr << "Error: File could not be found or opened!" << std::endl;
+        return;
+    }
+    ofs << "\n" << current_score.score << ":" << current_score.name;
+
+    ofs.close();
+}
 //////////////
 // Private
 //////////////
@@ -99,6 +128,7 @@ void High_Score_State::read_file()
         ss >> name;
     
         high_scores.push_back(High_Score{name, score});
+        name_list.insert(name);
     }
     std::sort(high_scores.begin(), high_scores.end(), [](High_Score a, High_Score b) {
         return a.score > b.score;
@@ -116,3 +146,5 @@ void High_Score_State::print_hs()
         std::cout << pos++ << ": " << e.name << ":" << e.score << std::endl;
     }
 }
+
+

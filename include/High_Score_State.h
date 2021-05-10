@@ -2,6 +2,7 @@
 #define HIGH_SCORE_STATE_H
 #include "State.h"
 #include <SFML/Graphics.hpp>
+#include <set>
 
 class High_Score_State: public State
 {
@@ -15,6 +16,10 @@ public:
     void render(sf::RenderTarget & target) override;
 
     int get_next_state() override;
+
+    void set_current_score(int score);
+    void set_current_name(std::string name);
+    void add_current_score();
 
 
 private:
@@ -33,11 +38,14 @@ private:
     sf::Text current_leader_text;
     sf::Font font;
     std::vector<High_Score> high_scores;
+    High_Score current_score;
+    std::set<std::string> name_list;
 
 
     //Functions
     void read_file();
     void print_hs();
+    
     
 };
 

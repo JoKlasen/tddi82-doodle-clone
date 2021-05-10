@@ -3,3 +3,4 @@
 50:Simon
 5:Ludvig
 100:Oskar
+500:Banan
