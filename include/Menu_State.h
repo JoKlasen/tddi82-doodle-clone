@@ -2,6 +2,7 @@
 #define MENU_STATE_H
 #include <SFML/Graphics.hpp>
 #include "State.h"
+#include "Platform.h"
 
 class Menu_State: public State
 {
@@ -22,6 +23,7 @@ private:
     bool play;
     bool exit_game;
     bool high_score;
+    Platform platform;
 
 };
 

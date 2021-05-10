@@ -7,9 +7,10 @@ sf::CircleShape shape(100.f);
 
 
 Menu_State::Menu_State()
-    : play{false}
+    : play{false}, exit_game{false}, high_score{false}
 {
-    Platform::Platform platform {};
+    Platform p();
+    Platform p1("oskar");
 }
 
 void Menu_State::handle_event(sf::Event event)

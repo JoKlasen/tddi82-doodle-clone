@@ -1,5 +1,5 @@
 #include "Platform.h"
-
+#include "Entity.h"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -10,24 +10,31 @@
 
 //konstruktor
 Platform::Platform()
-    : position{0.0, 0.0}, acceleration{0.0, 0.0}
+    : Entity()
 {
-    sf::CircleShape shape(10.f);
-    shape.setPosition( position ) ;
+
 }
 
-void render(sf::RenderTarget & target)
+Platform::Platform(std::string pname, sf::Vector2f pposition , sf::Vector2f pacceleration , std::vector<int> pCollisionContainer)
+    : Entity{pname, pposition,pacceleration, pCollisionContainer}
+{
+    //sf::CircleShape shape(10.f);
+    //shape.setPosition( position ) ;
+
+}
+
+void Platform::render(sf::RenderTarget & target)
 {
     //target.draw(shape);
 }
 
-void update() 
+void Platform::update() 
 {
     //shape.setFillColor(sf::Color::Red);
 }
 
-void handle_collision( Entity const& e)
+void Platform::handle_collision( Entity const& e)
 {
-    auto = &e;
+    //auto = &e;
 }
 
