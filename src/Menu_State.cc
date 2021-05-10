@@ -1,6 +1,6 @@
 #include "Menu_State.h"
 #include "State.h"
-#include "Platform.h"   //
+#include "Platform.h"   
 
 sf::CircleShape shape(100.f);
 
