@@ -4,3 +4,6 @@
 5:Ludvig
 100:Oskar
 500:Banan
+
+400:Banan
+400:Banan

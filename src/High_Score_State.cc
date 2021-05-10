@@ -7,14 +7,14 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{"Banan", 400}
+    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{"Banan", 400}, name_list{}
 {
     
     if ( !font.loadFromFile (font_file) )
         throw std::invalid_argument ("Unable to load font");
     state_text = sf::Text{ "HIGH SCORE", font, 25 };
-    add_current_score();
     read_file();
+    add_current_score();
     print_hs();
     current_leader_text = sf::Text{high_scores.at(0).name + ": " + std::to_string(high_scores.at(0).score) + " Points", font, 25 };
 
@@ -88,6 +88,10 @@ void High_Score_State::add_current_score()
         return;
     }
     
+    high_scores.push_back(High_Score{current_score.name, current_score.score});
+    std::sort(high_scores.begin(), high_scores.end(), [](High_Score a, High_Score b) {
+        return a.score > b.score;
+    });
 
     std::ofstream ofs(hs_file, std::ios::app);
     
