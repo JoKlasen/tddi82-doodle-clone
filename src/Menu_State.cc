@@ -1,12 +1,13 @@
 #include "Menu_State.h"
 #include "State.h"
+#include "Manager.h"
 
 sf::CircleShape shape(100.f);
 
 Menu_State::Menu_State()
-    : play{false}
+    : play{false}, exit_game{false}, high_score{false}
 {
-
+    sf::Image & im1{Manager<sf::Image>::load("../resources/image/Doodle_Jump.png")};
 }
 
 void Menu_State::handle_event(sf::Event event)

@@ -23,6 +23,8 @@ private:
     bool exit_game;
     bool high_score;
 
+    //sf::Image & im1;
+
 };
 
 

@@ -25,6 +25,10 @@ $(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
 $(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Menu_State.cc -o $(BUILDDIR)/Menu_State.o
 
+# $(BUILDDIR)/Manager.o: $(SRCDIR)/Manager.tcc dir
+# 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Manager.tcc -o $(BUILDDIR)/Manager.o
+
+
 dir:
 	@mkdir -p $(BUILDDIR) bin
 
