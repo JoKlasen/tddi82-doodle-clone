@@ -15,7 +15,7 @@ High_Score_State::High_Score_State()
     state_text = sf::Text{ "HIGH SCORE", font, 25 };
     read_file();
     add_current_score();
-    print_hs();
+    //print_hs();
     current_leader_text = sf::Text{high_scores.at(0).name + ": " + std::to_string(high_scores.at(0).score) + " Points", font, 25 };
 
 }
@@ -127,7 +127,7 @@ void High_Score_State::read_file()
         ss >> name;
     
         high_scores.push_back(High_Score{name, score});
-        std::cout << name << std::endl;
+        //std::cout << name << std::endl;
     }
     std::sort(high_scores.begin(), high_scores.end(), [](High_Score a, High_Score b) {
         return a.score > b.score;

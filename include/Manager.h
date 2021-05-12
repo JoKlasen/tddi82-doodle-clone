@@ -13,7 +13,7 @@ class Manager
 public:
 
     
-    static T & load (const std::string & file);
+    static T & load (const std::string & file); // filnamnet utgår från root ex. (./resources/images/Apple.png)
 
 
 private:
