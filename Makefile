@@ -45,3 +45,7 @@ clean:
 .PHONY: run
 run:
 	./$(TARGET)
+
+.PHONY: test
+test:
+	make; ./$(TARGET)

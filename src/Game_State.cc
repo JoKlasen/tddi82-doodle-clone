@@ -17,6 +17,7 @@ void Game_State::handle_event (sf::Event event)
         if ( event.key.code == sf::Keyboard::Key::Escape)
             menu = true;
     }
+    game_world.handle_event(event);
 }
 
 void Game_State::update ()

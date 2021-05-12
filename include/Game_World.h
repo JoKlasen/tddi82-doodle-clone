@@ -9,8 +9,11 @@ class Game_World
 {
 public:
     Game_World ();
+
+    void handle_event (sf::Event event); 
     void update ();
-    void render (sf::RenderTarget & target); 
+    void render (sf::RenderTarget & target);
+    
 
 private:
     sf::CircleShape playershape{30, 3};
