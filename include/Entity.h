@@ -16,10 +16,10 @@ class Entity
 public:
     virtual ~Entity () = default;
     Entity();
-    Entity(std::string pname,
-    sf::Vector2f pposition,        
-    sf::Vector2f pacceleration,
-    std::vector<int> pCollisionContainer );
+    Entity( std::string pname,
+            sf::Vector2f pposition,        
+            sf::Vector2f pacceleration,
+            std::vector<int> pCollisionContainer);
 
     virtual void render( sf::RenderTarget & ) = 0;
     virtual void handle_collision( Entity const& ) = 0;
