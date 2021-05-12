@@ -11,7 +11,7 @@ using namespace sf;
 Game::Game (std::string const & title, unsigned width, unsigned height)
         : window { VideoMode { width, height }, title, Style::Titlebar | Style::Close },
         states{},
-        current_state{ MENU_STATE }, // igentligen ska det vara MENU_STATE
+        current_state{ MENU_STATE },
         running { true }
         
 {

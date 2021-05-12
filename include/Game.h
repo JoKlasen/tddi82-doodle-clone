@@ -5,7 +5,6 @@
 
 #include <string>
 #include <memory>
-
 #include "State.h"
 
 class Game 
@@ -14,6 +13,8 @@ public:
     Game (std::string const & title, unsigned width, unsigned height);
 
     void start ();
+
+
 
 private:
     //Variabler

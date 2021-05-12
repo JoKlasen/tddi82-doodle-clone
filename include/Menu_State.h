@@ -23,6 +23,7 @@ private:
     bool exit_game;
     bool high_score;
 
+
 };
 
 
