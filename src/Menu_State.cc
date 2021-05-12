@@ -19,8 +19,10 @@ void Menu_State::handle_event(sf::Event event)
 {
     if ( event.type == sf::Event::KeyPressed )
     {
-        if ( event.key.code == sf::Keyboard::Key::H)
+        if ( event.key.code == sf::Keyboard::Key::H )
             high_score = true;
+        else if ( event.key.code == sf::Keyboard::Key::Return )
+            play = true;
     }
 }
 void Menu_State::update()
@@ -41,6 +43,11 @@ int Menu_State::get_next_state()
     {
         high_score = false;
         return HIGH_SCORE_STATE;
+    }
+    else if(play)
+    {
+        play = false;
+        return GAME_STATE;
     }
         
 

@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -28,6 +28,11 @@ $(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
 $(BUILDDIR)/High_Score_State.o: $(SRCDIR)/High_Score_State.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/High_Score_State.cc -o $(BUILDDIR)/High_Score_State.o
 
+$(BUILDDIR)/Game_State.o: $(SRCDIR)/Game_State.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_State.cc -o $(BUILDDIR)/Game_State.o
+
+$(BUILDDIR)/Game_World.o: $(SRCDIR)/Game_World.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_World.cc -o $(BUILDDIR)/Game_World.o
 
 dir:
 	@mkdir -p $(BUILDDIR) bin
@@ -35,7 +40,7 @@ dir:
 #Extra
 .PHONY: clean
 clean:
-	@ \rm -rf $(OBJDIR)/*.o *.gch bin/*
+	@ \rm -rf $(BUILDDIR)/*.o *.gch bin/*
 
 .PHONY: run
 run:

@@ -20,11 +20,11 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
         std::pair<int,
             std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>()}));
 
-    /*
+    
     states.insert(std::pair<int,
             std::unique_ptr<State>>({GAME_STATE,
                                     std::make_unique<Game_State>()}));
-     */
+     
     states.insert(std::pair<int,
             std::unique_ptr<State>>({HIGH_SCORE_STATE,
                                     std::make_unique<High_Score_State>()}));
