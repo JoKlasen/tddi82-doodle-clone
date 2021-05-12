@@ -6,5 +6,3 @@
 500:Banan
 400:Banan
 400:Banan
-400:Banan
-400:Banan

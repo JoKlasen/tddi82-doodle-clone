@@ -7,7 +7,7 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{"Banan", 400}, name_list{}
+    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{}
 {
     
     if ( !font.loadFromFile (font_file) )
@@ -83,11 +83,6 @@ void High_Score_State::add_current_score()
         return;
     }
     
-    if(name_list.find(current_score.name) == name_list.end()) // ska kasta exception "namn finns redan"
-    {
-        return;
-    }
-    
     high_scores.push_back(High_Score{current_score.name, current_score.score});
     std::sort(high_scores.begin(), high_scores.end(), [](High_Score a, High_Score b) {
         return a.score > b.score;
@@ -132,7 +127,7 @@ void High_Score_State::read_file()
         ss >> name;
     
         high_scores.push_back(High_Score{name, score});
-        name_list.insert(name);
+        std::cout << name << std::endl;
     }
     std::sort(high_scores.begin(), high_scores.end(), [](High_Score a, High_Score b) {
         return a.score > b.score;

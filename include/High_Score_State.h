@@ -39,8 +39,6 @@ private:
     sf::Font font;
     std::vector<High_Score> high_scores;
     High_Score current_score;
-    std::set<std::string> name_list;
-
 
     //Functions
     void read_file();
