@@ -1,11 +1,5 @@
 
 template <typename T>
-T load_from_file(std::string const& file)
-{
-
-}
-
-template <typename T>
 T & Manager<T>::load (const std::string & file)
 {
     auto it { resource_map.find(file) };
