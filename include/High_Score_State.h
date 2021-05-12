@@ -3,6 +3,7 @@
 #include "State.h"
 #include <SFML/Graphics.hpp>
 #include <set>
+#include "Textfield.h"
 
 class High_Score_State: public State
 {
@@ -39,6 +40,8 @@ private:
     sf::Font font;
     std::vector<High_Score> high_scores;
     High_Score current_score;
+
+    Textfield textfield;
 
     //Functions
     void read_file();

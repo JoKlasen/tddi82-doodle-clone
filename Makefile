@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Textfield.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -27,6 +27,9 @@ $(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
 
 $(BUILDDIR)/High_Score_State.o: $(SRCDIR)/High_Score_State.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/High_Score_State.cc -o $(BUILDDIR)/High_Score_State.o
+
+$(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Textfield.cc -o $(BUILDDIR)/Textfield.o	
 
 
 dir:

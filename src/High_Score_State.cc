@@ -7,7 +7,7 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{}
+    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{}, textfield{}
 {
     
     if ( !font.loadFromFile (font_file) )
@@ -52,6 +52,10 @@ void High_Score_State::render(sf::RenderTarget & target)
                       (size.y - bounds.height) / 2+50);
     
     target.draw(current_leader_text);
+
+    //textfield
+
+    textfield.render(target);
 }
 
 int High_Score_State::get_next_state()
