@@ -35,23 +35,22 @@ void Menu_State::handle_event(sf::Event event)
             play = true;
     }
 }
+
 void Menu_State::update()
 {
-    
     //platform.update();
 
     shape.setFillColor(sf::Color::Green);
 }
+
 void Menu_State::render(sf::RenderTarget & target)
 {
     //target.draw(shape);
 
     target.draw(sprite);
     //platform.render(target);
-
 }
 
-}
 int Menu_State::get_next_state() 
 {
     if(high_score)
@@ -63,8 +62,7 @@ int Menu_State::get_next_state()
     {
         play = false;
         return GAME_STATE;
-    }
-        
+    }  
 
     return MENU_STATE;    
 }

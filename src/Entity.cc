@@ -1,30 +1,31 @@
 #include "Entity.h"
 
-// Construktorer
+// Konstruktorer
+
+double Entity::acceleration = 0;
 
 Entity::Entity()
-    : name{"bertil"}, position{}, acceleration{}, CollisionContainer{}
+    : name{"bertil"}, position{}, CollisionContainer{}
 {
 
 }
 
 Entity::Entity(std::string pname,
     sf::Vector2f pposition,        
-    sf::Vector2f pacceleration,
     std::vector<int> pCollisionContainer )
-        : name{pname}, position{pposition}, acceleration{pacceleration}, CollisionContainer{pCollisionContainer}
+        : name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
     {
 
     }
 
 // Getters och setters
 
-std::string getName() const
+std::string Entity::getName() const
 {
     return this->name;
 }
 
-void setName(std::string value)
+void Entity::setName(std::string value)
 {
     this->name = value;
 }

@@ -17,8 +17,7 @@ public:
     virtual ~Entity () = default;
     Entity();
     Entity( std::string pname,
-            sf::Vector2f pposition,        
-            sf::Vector2f pacceleration,
+            sf::Vector2f pposition,
             std::vector<int> pCollisionContainer);
 
     virtual void render( sf::RenderTarget & ) = 0;

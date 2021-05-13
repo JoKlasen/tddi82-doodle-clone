@@ -4,7 +4,7 @@
 
 
 Game_World::Game_World ()
-    : score{0}
+    : score{0}, entities{}
 {
     playershape.setPosition (screen_width/2 - playershape.getRadius(), screen_height /2 - playershape.getRadius());
     playershape.setFillColor (sf::Color::Blue);

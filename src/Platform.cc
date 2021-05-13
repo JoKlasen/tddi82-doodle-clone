@@ -15,8 +15,8 @@ Platform::Platform()
 
 }
 
-Platform::Platform(std::string pname, sf::Vector2f pposition , sf::Vector2f pacceleration , std::vector<int> pCollisionContainer)
-    : Entity{pname, pposition,pacceleration, pCollisionContainer}
+Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<int> pCollisionContainer)
+    : Entity{pname, pposition, pCollisionContainer}
 {
     //sf::CircleShape shape(10.f);
     //shape.setPosition( position ) ;
