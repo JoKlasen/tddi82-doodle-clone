@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Entity.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -33,6 +33,12 @@ $(BUILDDIR)/Game_State.o: $(SRCDIR)/Game_State.cc dir
 
 $(BUILDDIR)/Game_World.o: $(SRCDIR)/Game_World.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_World.cc -o $(BUILDDIR)/Game_World.o
+
+$(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Platform.cc -o $(BUILDDIR)/Platform.o
+
+$(BUILDDIR)/Entity.o: $(SRCDIR)/Entity.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Entity.cc -o $(BUILDDIR)/Entity.o	
 
 dir:
 	@mkdir -p $(BUILDDIR) bin
