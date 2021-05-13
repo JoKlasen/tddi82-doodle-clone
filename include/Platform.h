@@ -1,15 +1,12 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
+
 #include "Entity.h"
-
 #include <SFML/Graphics.hpp>
-//#include <SFML>
 
-//#include <CircleShape.hpp>
 
 class Platform : public Entity
 {
-
 public:
 
     Platform();

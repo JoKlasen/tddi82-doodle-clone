@@ -23,8 +23,6 @@ private:
     bool play;
     bool exit_game;
     bool high_score;
-    Platform platform;
-
     
 };
 
