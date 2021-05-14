@@ -15,13 +15,14 @@ Platform::Platform()
     shape.setOutlineColor(sf::Color::Blue);
     shape.setOutlineThickness(5);
 }
-/*
-Platform::Platform(int x)
+
+Platform::Platform(sf::Vector2f pos)
     : Entity()
 {
+    Entity::position = pos; 
     shape.setOutlineColor(sf::Color::Blue);
     shape.setOutlineThickness(5);
-} //*/
+}
 
 Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<int> pCollisionContainer)
     : Entity{pname, pposition, pCollisionContainer}

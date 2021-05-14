@@ -10,6 +10,7 @@ class Platform : public Entity
 public:
 
     Platform();
+    Platform( sf::Vector2f );
     Platform(std::string name, sf::Vector2f position= sf::Vector2f(), std::vector<int> CollisionContainer = std::vector<int>{});
     
     void render( sf::RenderTarget & ) override;
@@ -17,9 +18,8 @@ public:
     void update() override;
 
 private:
+    
 
-    //sf::CircleShape shape(10 , 10);
-    //sf::CircleShape shape{100.f};    
 
     sf::RectangleShape shape{ sf::Vector2f(75, 20) };
 
