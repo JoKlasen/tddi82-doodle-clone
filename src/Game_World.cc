@@ -4,9 +4,9 @@
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}
+    : score{0}, entities{}, player{}, platform{}
 {
-
+    //entities.push_back( Platform {} );
 }
 
 void Game_World::handle_event (sf::Event event)
@@ -24,6 +24,7 @@ void Game_World::handle_event (sf::Event event)
 void Game_World::update ()
 {
     player.update ();
+    platform.update();
     // for ( auto & ent : entities )
     // {
     //     ent.update ();
@@ -34,11 +35,12 @@ void Game_World::update ()
 
 void Game_World::render (sf::RenderTarget & target)
 {
-    
     // for ( auto & ent : entities )
     // {
     //     ent.render (target);
     // }
 
+
     player.render (target);
+    platform.render(target);
 }
