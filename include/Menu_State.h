@@ -18,13 +18,24 @@ public:
 
     int get_next_state() override;
 
+    void initMenuItem(sf::Text & object, int x, int y, std::string name, int caracterSize, sf::Color color);
+    bool mouseEventMenuItem(sf::Event event, sf::Text & sfText);
+
 private:
     //Variabler
     bool play;
     bool exit_game;
     bool high_score;
+    bool options;
+    
+    sf::Text titelText;
+    sf::Text playText;
+    sf::Text highScoreText;
+    sf::Text optionsText;
+    
     Platform platform;
-
+    
+    sf::Font font; //TESTFIXASAPEDVIN
     
 };
 
