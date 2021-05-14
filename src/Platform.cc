@@ -8,27 +8,36 @@
 #include <iostream> //debug
 
 
-//konstruktor
-Platform::Platform()
-    : Entity()
+void Platform::default_shape()
 {
     shape.setOutlineColor(sf::Color::Blue);
     shape.setOutlineThickness(5);
 }
+
+
+
+//konstruktor
+Platform::Platform()
+    : Entity()
+{
+    default_shape();
+}
+
+Platform::Platform( float x, float y )
+    : Platform( sf::Vector2f(x, y) )
+{ }
 
 Platform::Platform(sf::Vector2f pos)
     : Entity()
 {
     Entity::position = pos; 
-    shape.setOutlineColor(sf::Color::Blue);
-    shape.setOutlineThickness(5);
+    default_shape();
 }
 
 Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<int> pCollisionContainer)
     : Entity{pname, pposition, pCollisionContainer}
 {
-    shape.setOutlineColor(sf::Color::Blue);
-    shape.setOutlineThickness(5);
+    default_shape();
 }
 
 void Platform::render(sf::RenderTarget & target)
@@ -40,7 +49,6 @@ void Platform::render(sf::RenderTarget & target)
 void Platform::update() 
 {
     shape.setPosition( position ) ;
-    //shape.setPosition( 10, 20 );
 }
 
 void Platform::handle_collision( Entity const&)

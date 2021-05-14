@@ -4,7 +4,7 @@
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{}
+    : score{0}, entities{}, player{}, platform{ 150, 50 }//platform{ sf::Vector2f(50, 50) }
 {
     //entities.push_back( Platform {} );
 }
