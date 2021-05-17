@@ -50,3 +50,15 @@ void Entity::setAcceleration(double value)
 {
     this->acceleration = value;
 }
+
+void Entity::move(sf::Vector2f const & value)
+{
+    this->position.x += value.x;
+    this->position.y += value.y;
+}
+
+void Entity::move(float const & offsetX, float const & offsetY)
+{
+    this->position.x += offsetX;
+    this->position.y += offsetY;
+}
