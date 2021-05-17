@@ -15,13 +15,14 @@ public:
     void handle_collision( Entity const& ) override;
     void update() override;
 
-    void move(sf::Vector2f const & value);
+    void handle_input();
+
 
 private:
     int life;
     sf::Vector2f dimensions{};      // Width, Height
     sf::CircleShape playershape{30, 3};
-
+    sf::RectangleShape testplatform{sf::Vector2f(50, 10)};
 };
 
 

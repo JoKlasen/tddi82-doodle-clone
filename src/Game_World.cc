@@ -11,14 +11,8 @@ Game_World::Game_World ()
 
 void Game_World::handle_event (sf::Event event)
 {
-    // Flytta spelaren vid knappar
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        player.move(sf::Vector2f(-4, 0));
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        player.move(sf::Vector2f(4, 0));
+    //player.handle_input();
 
-
-    
 }
 
 void Game_World::update ()
