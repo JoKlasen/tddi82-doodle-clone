@@ -21,8 +21,6 @@ Menu_State::Menu_State()
     texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
     sprite.setTexture(texture);
     
-    //Platform p();
-    //Platform p1("oskar");
 }
 
 void Menu_State::handle_event(sf::Event event)
