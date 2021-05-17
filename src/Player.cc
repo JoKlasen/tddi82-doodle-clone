@@ -10,6 +10,7 @@ Player::Player()
         this->position.y = (screen_height/2 - this->dimensions.y/2);
         
         playershape.setFillColor (sf::Color::Blue);
+        //TESTFIX; ta bort nedan
         testplatform.setFillColor (sf::Color::Green);
         testplatform.setPosition (0,300); 
     }
@@ -19,6 +20,7 @@ void Player::render( sf::RenderTarget & target)
 {
     playershape.setPosition( this->getPosition() );
     target.draw(playershape);
+    //TESTFIX; ta bort nedan
     target.draw(testplatform);
 }
 
@@ -34,7 +36,9 @@ void Player::update()
     // Hopp/fall
     Entity::acceleration += 0.2;    // Öka fallhastighet
     this->position.y += Entity::acceleration;
-    //playershape.move(0, Entity::acceleration);
+
+
+    // TESTFIX; Nedanstående kod var för test av funktioner mot testplatform i spelar-klassen, kan tas bort tillsammans med testplatform-datamedlemmen.
 
     // Flytta ner platform
     if (position.y < screen_height/2 - 50)
@@ -48,13 +52,6 @@ void Player::update()
          && (position.y + dimensions.y >= testplatform.getPosition().y) && (position.y + dimensions.y < testplatform.getPosition().y + 10)
          && (Entity::acceleration > 0) )
         Entity::acceleration = -7.5;
-
-    // Kollision med golv för testvärld
-    if ( this->position.y >= (screen_height - this->dimensions.y/2) )
-        Entity::acceleration = -10;
-
-    
-
 }
 
 void Player::handle_input()
