@@ -24,6 +24,8 @@ private:
     Player player;
 
     Platform platform; //Debug
+
+    bool testPlayerCollision (Entity const & obj);
 };
 
 #endif
