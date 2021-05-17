@@ -1,11 +1,15 @@
 #include "Game_World.h"
 #include <SFML/Graphics.hpp>
 #include "constants.h"
+#include <iostream>
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630}//platform{ sf::Vector2f(50, 50) }
+    : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
+      scoreBar{sf::Vector2f(screen_width, 30)}, scoreText{}
 {
+    scoreBar.setPosition(0,0);
+    scoreBar.setFillColor(sf::Color(255, 255, 255, 128));
     //entities.push_back( Platform {} );
 }
 
@@ -20,13 +24,16 @@ void Game_World::update ()
     // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
     player.update ();
 
-    // Flytta ner platform(ar)
+    // Flytta ner platform(ar) och räkna poäng
     if (player.getPosition().y < screen_height/2 - 50)
         {
             player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
+            score += -(player.getAcceleration())*10;
             // Byt senare ut följande mot for loop för vector<entity>
             platform.move(0, -(player.getAcceleration()));
             platform2.move(0, -(player.getAcceleration()));
+            //scoreText.setString("Score: " + std::to_string(score/10));
+            std::cout << score/10 << std::endl;        // debugg
         }
 
 
@@ -64,7 +71,10 @@ void Game_World::render (sf::RenderTarget & target)
     // }
     
 
-    player.render (target);
+    player.render(target);
+
+    target.draw(scoreBar);
+    //target.draw(scoreText);
 }
 
 bool Game_World::testPlayerCollision (Entity const & obj)
