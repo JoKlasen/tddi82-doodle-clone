@@ -24,13 +24,23 @@ void Game_World::handle_event (sf::Event event)
 
 void Game_World::update ()
 {
+    // Uppdaterar plats
     player.update ();
     for ( auto & ent : entities )
     {
         ent->update ();
     }
 
-    
+    // Tar bort entetis under skärm 
+    /*
+    entities.erase(
+        remove(entities.begin(), entities.end(), 
+            [](Entity const& ent){
+                return ent.getPosition().x < 0; 
+            } ), 
+        entities.end()
+    );
+    //*/
 }
 
 void Game_World::render (sf::RenderTarget & target)
