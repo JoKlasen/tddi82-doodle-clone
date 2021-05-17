@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Entity.h"
+#include "Platform.h"
+#include "Player.h"
 
 class Game_World
 {
@@ -16,10 +18,12 @@ public:
     
 
 private:
-    sf::CircleShape playershape{30, 3};
+    
     int score;
     std::vector<Entity> entities;
-    //Player player;
+    Player player;
+
+    Platform platform; //Debug
 };
 
 #endif
