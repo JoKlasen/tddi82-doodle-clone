@@ -53,6 +53,7 @@ void Platform::update()
 
 void Platform::handle_collision( Entity const&)
 {
+    Entity::acceleration = -7.5;
     //auto = &e;
 }
 

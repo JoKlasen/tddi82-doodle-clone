@@ -23,6 +23,8 @@ private:
     int score;
     std::vector< std::unique_ptr<Entity> > entities;
     Player player;
+
+    bool testPlayerCollision (Entity const & obj);
 };
 
 #endif

@@ -13,18 +13,14 @@ Game_World::Game_World ()
 
 void Game_World::handle_event (sf::Event event)
 {
-    // Flytta spelaren vid knappar
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        player.move(sf::Vector2f(-4, 0));
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        player.move(sf::Vector2f(4, 0));
-
+    //player.handle_input();
 
 }
 
 void Game_World::update ()
 {
     // Uppdaterar plats
+    // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
     player.update ();
     for ( auto & ent : entities )
     {
@@ -41,6 +37,38 @@ void Game_World::update ()
         entities.end()
     );
     //*/
+
+
+    // Flytta ner platform(ar)
+    for (auto & ent : entities)
+    {
+        if (ent->getPosition().y < screen_height/2 - 50)
+        {
+            ent->setPosition(sf::Vector2f (ent->getPosition().x, screen_height/2 - 50) );
+            // Byt senare ut följande mot for loop för vector<entity>
+            ent->move(0, -(ent.getAcceleration()));
+        }
+    }
+
+
+    // Kollisionslogik för spelare mot generell entiry
+    // TESTFIXASAP; Senare for each platform i vector<entity>
+    
+    for (auto & ent : entities)
+    {
+        if (testPlayerCollision( ent-> ))
+        {
+            ent->handle_collision(player);
+        }
+    }
+
+
+
+
+    // TESTFIXASAP;
+    // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
+    if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
+        player.setAcceleration(-10);
 }
 
 void Game_World::render (sf::RenderTarget & target)
@@ -49,7 +77,5 @@ void Game_World::render (sf::RenderTarget & target)
     {
         ent->render (target);
     }
-
-
     player.render (target);
 }
