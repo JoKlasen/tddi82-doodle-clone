@@ -14,18 +14,18 @@ void Platform::default_shape()
     shape.setOutlineThickness(5);
 }
 
-void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup)
+void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här för hur ofta power_ups ska spawna
 {
     std::random_device rd;
     std::uniform_int_distribution<int> distrib(0, 3);
     std::mt19937 gen(rd());
     int rand = distrib(gen);
-    if(rand <= 1)
+    if(rand != 8)
     {
         pwup = std::make_unique<Spring>();
         has_power_up = true;
     }
-    else if(rand > 1)
+    else if(rand > 2)
     {
         pwup = std::make_unique<Shield>();
         has_power_up = true;

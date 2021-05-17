@@ -19,9 +19,10 @@ class Power_Up
 
     protected:
     sf::Sprite sprite;
-    sf::RectangleShape shape{sf::Vector2f(20, 20) };
+    sf::RectangleShape shape{sf::Vector2f(20, 20) }; // shape för test
     bool active;
     std::vector<int> effects; // spring, shield, extra-life 
+    sf::Texture texture;
 };
 
 class Spring: public Power_Up
