@@ -4,7 +4,7 @@
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{ 150, 300 }//platform{ sf::Vector2f(50, 50) }
+    : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630}//platform{ sf::Vector2f(50, 50) }
 {
     //entities.push_back( Platform {} );
 }
@@ -26,7 +26,7 @@ void Game_World::update ()
             player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
             // Byt senare ut följande mot for loop för vector<entity>
             platform.move(0, -(player.getAcceleration()));
-            
+            platform2.move(0, -(player.getAcceleration()));
         }
 
 
@@ -36,8 +36,13 @@ void Game_World::update ()
         {
             platform.handle_collision(player);
         }
+    if (testPlayerCollision(platform2))
+        {
+            platform2.handle_collision(player);
+        }
 
     platform.update();
+    platform2.update();
     // for ( auto & ent : entities )
     // {
     //     ent.update ();
@@ -55,6 +60,7 @@ void Game_World::render (sf::RenderTarget & target)
     // {
     //     ent.render (target);
     platform.render(target);
+    platform2.render(target);
     // }
     
 

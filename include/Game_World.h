@@ -5,6 +5,7 @@
 #include <vector>
 #include "Entity.h"
 #include "Platform.h"
+#include "Special_Platforms.h"
 #include "Player.h"
 
 class Game_World
@@ -24,6 +25,7 @@ private:
     Player player;
 
     Platform platform; //Debug
+    Moving_Platform platform2;
 
     bool testPlayerCollision (Entity const & obj);
 };
