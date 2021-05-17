@@ -4,9 +4,11 @@
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{ 150, 50 }//platform{ sf::Vector2f(50, 50) }
+    : score{0}, entities{}, player{}
 {
-    //entities.push_back( Platform {} );
+    entities.push_back( std::make_unique<Platform>() );
+    entities.push_back( std::make_unique<Platform>(200, 100) );
+    entities.push_back( std::make_unique<Platform>(200, 150) );
 }
 
 void Game_World::handle_event (sf::Event event)
@@ -18,29 +20,26 @@ void Game_World::handle_event (sf::Event event)
         player.move(sf::Vector2f(4, 0));
 
 
-    
 }
 
 void Game_World::update ()
 {
     player.update ();
-    platform.update();
-    // for ( auto & ent : entities )
-    // {
-    //     ent.update ();
-    // }
+    for ( auto & ent : entities )
+    {
+        ent->update ();
+    }
 
     
 }
 
 void Game_World::render (sf::RenderTarget & target)
 {
-    // for ( auto & ent : entities )
-    // {
-    //     ent.render (target);
-    // }
+    for ( auto & ent : entities )
+    {
+        ent->render (target);
+    }
 
 
     player.render (target);
-    platform.render(target);
 }

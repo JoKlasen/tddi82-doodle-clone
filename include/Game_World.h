@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 #include "Entity.h"
 #include "Platform.h"
 #include "Player.h"
@@ -20,10 +21,8 @@ public:
 private:
     
     int score;
-    std::vector<Entity> entities;
+    std::vector< std::unique_ptr<Entity> > entities;
     Player player;
-
-    Platform platform; //Debug
 };
 
 #endif
