@@ -7,6 +7,7 @@ Game_World::Game_World ()
     : score{0}, entities{}, player{}, platform{ 150, 300 }//platform{ sf::Vector2f(50, 50) }
 {
     //entities.push_back( Platform {} );
+   
 }
 
 void Game_World::handle_event (sf::Event event)

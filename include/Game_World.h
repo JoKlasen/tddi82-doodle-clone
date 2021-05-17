@@ -7,6 +7,7 @@
 #include "Platform.h"
 #include "Player.h"
 
+
 class Game_World
 {
 public:
@@ -26,6 +27,8 @@ private:
     Platform platform; //Debug
 
     bool testPlayerCollision (Entity const & obj);
+
+   
 };
 
 #endif

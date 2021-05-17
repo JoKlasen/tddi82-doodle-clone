@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o 
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Power_Up.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -42,6 +42,9 @@ $(BUILDDIR)/Player.o: $(SRCDIR)/Player.cc dir
 
 $(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Platform.cc -o $(BUILDDIR)/Platform.o
+
+$(BUILDDIR)/Power_Up.o: $(SRCDIR)/Power_Up.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Power_Up.cc -o $(BUILDDIR)/Power_Up.o	
 
 	
 
