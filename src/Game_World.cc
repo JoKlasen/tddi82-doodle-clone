@@ -2,13 +2,15 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 
+#include <iostream>
+
 
 Game_World::Game_World ()
     : score{0}, entities{}, player{}
 {
     entities.push_back( std::make_unique<Platform>() );
     entities.push_back( std::make_unique<Platform>(200, 100) );
-    entities.push_back( std::make_unique<Platform>(200, 150) );
+    entities.push_back( std::make_unique<Platform>(200, 200) );
 }
 
 void Game_World::handle_event (sf::Event event)
@@ -27,24 +29,15 @@ void Game_World::update ()
         ent->update ();
     }
 
-    // Tar bort entetis under skärm 
-    /*
-    entities.erase(
-        remove(entities.begin(), entities.end(), 
-            [](Entity const& ent){
-                return ent.getPosition().x < 0; 
-            } ), 
-        entities.end()
-    );
-    //*/
-
 
     // Flytta ner platform(ar)
-    for (auto & ent : entities)
+    
+    if (player.getPosition().y < screen_height/2 - 50)
     {
-        if (ent->getPosition().y < screen_height/2 - 50)
+        player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
+        
+        for (auto & ent : entities)
         {
-            ent->setPosition(sf::Vector2f (ent->getPosition().x, screen_height/2 - 50) );
             // Byt senare ut följande mot for loop för vector<entity>
             ent->move(0, -(ent->getAcceleration()));
         }
@@ -85,14 +78,41 @@ void Game_World::render (sf::RenderTarget & target)
 bool Game_World::testPlayerCollision (Entity const & obj)
 {   
     // TESTFIXASAP; 60, 60, 70 och 20 representerar här spelarens hårdkodade width och height, platformens bredd respektive platformens höjd. Bör bytas ut mot getBounds eller liknande för generella entities
-    if ( (player.getPosition().x + 60 > obj.getPosition().x) && (player.getPosition().x < obj.getPosition().x + 70) 
-         && (player.getPosition().y + 60 >= obj.getPosition().y) && (player.getPosition().y + 60 < obj.getPosition().y + 20)
-         && (player.getAcceleration() > 0) )
-        {
-            return true;
-        }
+    /*if ( (player.getPosition().x + 60 > obj.getPosition().x) && 
+        (player.getPosition().x < obj.getPosition().x + 70) && 
+        (player.getPosition().y + 60 >= obj.getPosition().y) && 
+        (player.getPosition().y + 60 < obj.getPosition().y + 20) && 
+        (player.getAcceleration() > 0) )*/
+    auto player_rect = player.getGlobalBounds() ;
+    std::cout << "player_rect.top: " << player_rect.top << std::endl;
+    player_rect.top = 20.0 ;
+    auto obj_rect    = obj.getGlobalBounds() ;
+
+    if (player_rect.intersects(obj_rect) )
+    {
+        std::cout << "CRASH" << std::endl 
+                  <<"player_rect.top: " << player_rect.top << std::endl;
+        return true;
+    }
     else
-        {
-            return false;
-        }
+    {
+        return false;
+    }
 }
+
+
+
+
+
+
+
+    // Tar bort entetis under skärm 
+    /*
+    entities.erase(
+        remove(entities.begin(), entities.end(), 
+            [](Entity const& ent){
+                return ent.getPosition().x < 0; 
+            } ), 
+        entities.end()
+    );
+    //*/

@@ -17,6 +17,8 @@ public:
 
     void handle_input();
 
+    sf::FloatRect getGlobalBounds() const override; //tillfälig
+
 
 private:
     int life;

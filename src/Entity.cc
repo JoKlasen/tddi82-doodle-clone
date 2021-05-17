@@ -20,6 +20,12 @@ Entity::Entity(std::string pname,
 
 // Getters och setters
 
+sf::FloatRect Entity::getGlobalBounds() const
+{
+    return getGlobalBounds();
+}
+
+
 std::string Entity::getName() const
 {
     return this->name;
