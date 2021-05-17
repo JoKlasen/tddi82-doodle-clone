@@ -1,10 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-//#include <SFML/Vector2.hpp>
-
-//#include <System.hpp>
-
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -24,6 +20,9 @@ public:
     virtual void handle_collision( Entity const& ) = 0;
     virtual void update() = 0;
     //virtual void movement_behavior() = 0;         //? tycker att dena ska vara private och lokal för "läggre" klasser 
+
+    void move(sf::Vector2f const & value);
+    void move(float const & offsetX, float const & offsetY); 
 
     // Getters och setters
 

@@ -4,47 +4,74 @@
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}
+    : score{0}, entities{}, player{}, platform{ 150, 300 }//platform{ sf::Vector2f(50, 50) }
 {
-    playershape.setPosition (screen_width/2 - playershape.getRadius(), screen_height /2 - playershape.getRadius());
-    playershape.setFillColor (sf::Color::Blue);
+    //entities.push_back( Platform {} );
 }
 
 void Game_World::handle_event (sf::Event event)
 {
-    // Flytta spelaren vid knappar
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-        playershape.move(-4.f, 0);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-        playershape.move(4.f, 0);
-
-
-    // wrap around
-    if ( playershape.getPosition().x > screen_width )
-        playershape.setPosition(0, playershape.getPosition().y);
-    if ( playershape.getPosition().x < (0 - playershape.getLocalBounds().width ) )
-        playershape.setPosition( (screen_width - playershape.getLocalBounds().width ), playershape.getPosition().y);
+    //player.handle_input();
 
 }
 
 void Game_World::update ()
 {
-   
+    // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
+    player.update ();
+
+    // Flytta ner platform(ar)
+    if (player.getPosition().y < screen_height/2 - 50)
+        {
+            player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
+            // Byt senare ut följande mot for loop för vector<entity>
+            platform.move(0, -(player.getAcceleration()));
+            
+        }
+
+
+    // Kollisionslogik för spelare mot generell entiry
+    // TESTFIXASAP; Senare for each platform i vector<entity>
+    if (testPlayerCollision(platform))
+        {
+            platform.handle_collision(player);
+        }
+
+    platform.update();
     // for ( auto & ent : entities )
     // {
     //     ent.update ();
     // }
 
-    // player.update ();
+    // TESTFIXASAP;
+    // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
+    if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
+        player.setAcceleration(-10);
 }
 
 void Game_World::render (sf::RenderTarget & target)
 {
-    target.draw(playershape);
     // for ( auto & ent : entities )
     // {
     //     ent.render (target);
+    platform.render(target);
     // }
+    
 
-    // player.render (target);
+    player.render (target);
+}
+
+bool Game_World::testPlayerCollision (Entity const & obj)
+{   
+    // TESTFIXASAP; 60, 60, 70 och 20 representerar här spelarens hårdkodade width och height, platformens bredd respektive platformens höjd. Bör bytas ut mot getBounds eller liknande för generella entities
+    if ( (player.getPosition().x + 60 > obj.getPosition().x) && (player.getPosition().x < obj.getPosition().x + 70) 
+         && (player.getPosition().y + 60 >= obj.getPosition().y) && (player.getPosition().y + 60 < obj.getPosition().y + 20)
+         && (player.getAcceleration() > 0) )
+        {
+            return true;
+        }
+    else
+        {
+            return false;
+        }
 }
