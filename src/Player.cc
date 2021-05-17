@@ -39,7 +39,7 @@ void Player::update()
     // Flytta ner platform
     if (position.y < screen_height/2 - 50)
         {
-            position.y = screen_height/2 - 50;
+            //position.y = screen_height/2 - 50;
             testplatform.move(0, -(Entity::acceleration));
         }
 
