@@ -19,10 +19,13 @@ public:
     
 
 private:
-    
     int score;
     std::vector< std::unique_ptr<Entity> > entities;
     Player player;
+
+
+    void placePlatforms();
+    void destroyPlatforms();
 
     bool testPlayerCollision (Entity const & obj);
 };
