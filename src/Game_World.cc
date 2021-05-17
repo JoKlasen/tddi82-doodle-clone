@@ -46,7 +46,7 @@ void Game_World::update ()
         {
             ent->setPosition(sf::Vector2f (ent->getPosition().x, screen_height/2 - 50) );
             // Byt senare ut följande mot for loop för vector<entity>
-            ent->move(0, -(ent.getAcceleration()));
+            ent->move(0, -(ent->getAcceleration()));
         }
     }
 
@@ -56,7 +56,7 @@ void Game_World::update ()
     
     for (auto & ent : entities)
     {
-        if (testPlayerCollision( ent-> ))
+        if (testPlayerCollision( *ent ))
         {
             ent->handle_collision(player);
         }
@@ -78,4 +78,21 @@ void Game_World::render (sf::RenderTarget & target)
         ent->render (target);
     }
     player.render (target);
+}
+
+
+
+bool Game_World::testPlayerCollision (Entity const & obj)
+{   
+    // TESTFIXASAP; 60, 60, 70 och 20 representerar här spelarens hårdkodade width och height, platformens bredd respektive platformens höjd. Bör bytas ut mot getBounds eller liknande för generella entities
+    if ( (player.getPosition().x + 60 > obj.getPosition().x) && (player.getPosition().x < obj.getPosition().x + 70) 
+         && (player.getPosition().y + 60 >= obj.getPosition().y) && (player.getPosition().y + 60 < obj.getPosition().y + 20)
+         && (player.getAcceleration() > 0) )
+        {
+            return true;
+        }
+    else
+        {
+            return false;
+        }
 }
