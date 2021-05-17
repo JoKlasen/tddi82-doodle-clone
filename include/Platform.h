@@ -27,6 +27,7 @@ private:
 
     sf::RectangleShape shape{ sf::Vector2f(50, 10) };
 
+    double jump_value {7.5};
 };
 
 #endif
