@@ -1,10 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-//#include <SFML/Vector2.hpp>
-
-//#include <System.hpp>
-
 #include <SFML/Graphics.hpp>
 
 #include <vector>
