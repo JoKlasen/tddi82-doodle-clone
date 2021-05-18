@@ -2,6 +2,7 @@
 #define TEXTFIELD_H
 
 #include <SFML/Graphics.hpp>
+#include "constants.h"
 
 class Textfield
 {
@@ -27,7 +28,6 @@ bool isEntered();
 private:
 int const char_limit;
 int const align_text{15};
-const std::string font_file{"./resources/fonts/DoodleJump.ttf"};
 sf::String input;
 sf::Text text;
 sf::Text description;

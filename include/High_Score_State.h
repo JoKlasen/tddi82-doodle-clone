@@ -24,12 +24,7 @@ public:
 
 
 private:
-    const std::string font_file = "resources/fonts/DoodleJump.ttf"; 
-    const std::string background_file = "./resources/images/Background.png";
-    const std::string hs_file = "resources/high_score.txt";
-   
     
-
     struct High_Score
     {
         std::string name;
