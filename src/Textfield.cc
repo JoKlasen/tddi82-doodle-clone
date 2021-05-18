@@ -5,7 +5,7 @@
 
 
 Textfield::Textfield()
-    : char_limit{20}, font{}, input{}, text{}, description{}, position{}, box{}, isSelected{false}, isEntered_flag{false}
+    : char_limit{20}, input{}, text{}, description{}, position{}, box{}, isSelected{false}, isEntered_flag{false}
 {
     position = sf::Vector2f(50.0, 50.0);
 
@@ -17,8 +17,7 @@ Textfield::Textfield()
     box.setOutlineColor(sf::Color(150, 150, 150));
 
     //text
-    font = Manager<sf::Font>::load("./resources/fonts/DoodleJump.ttf");
-    text.setFont(font);
+    text.setFont(Manager<sf::Font>::load(font_file));
     text.setFillColor(sf::Color::Black);
     text.setStyle(sf::Text::Bold);
     text.setCharacterSize(25);
@@ -27,7 +26,7 @@ Textfield::Textfield()
     
 
     // description
-    description.setFont(font);
+    description.setFont(Manager<sf::Font>::load(font_file));
     description.setFillColor(sf::Color::Black);
     description.setStyle(sf::Text::Bold);
     description.setCharacterSize(25);

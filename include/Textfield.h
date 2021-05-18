@@ -27,7 +27,7 @@ bool isEntered();
 private:
 int const char_limit;
 int const align_text{15};
-sf::Font font;
+const std::string font_file{"./resources/fonts/DoodleJump.ttf"};
 sf::String input;
 sf::Text text;
 sf::Text description;
