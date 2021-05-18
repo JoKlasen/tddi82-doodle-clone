@@ -88,7 +88,7 @@ void Game_World::update ()
 {
     //Random place new Platforms
     placePlatforms();
-
+    //Destroy Platforms under screen
     destroyPlatforms();
 
 
