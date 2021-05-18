@@ -1,4 +1,6 @@
 #include "High_Score_State.h"
+#include "constants.h"
+#include "Manager.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -7,16 +9,25 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{}
+    : menu{false}, state_text{}, font{}, high_scores{}, current_score{}, textfield{}, backgroundTexture{}, background{}
 {
-    
-    if ( !font.loadFromFile (font_file) )
-        throw std::invalid_argument ("Unable to load font");
-    state_text = sf::Text{ "HIGH SCORE", font, 25 };
+    // Text
+    font = Manager<sf::Font>::load(font_file);
+    state_text = sf::Text{ "HIGH SCORE", font, 30 };
+    state_text.setFillColor(sf::Color::Black);
+    state_text.setStyle(sf::Text::Bold);
+    state_text.setPosition ((screen_width-state_text.getGlobalBounds().width) / 2, (screen_height - state_text.getGlobalBounds().height) / 2 - 100);
+
+    // Text-field
+    textfield.setPosition ((screen_width-textfield.getWidth()) / 2, (screen_height - textfield.getHight()) / 2 + 40);
+    textfield.setFieldText("Enter name:");
+
+    //background
+    backgroundTexture = Manager<sf::Texture>::load(background_file);
+    background.setTexture(backgroundTexture);
+
+    // Läser in hs
     read_file();
-    add_current_score();
-    //print_hs();
-    current_leader_text = sf::Text{high_scores.at(0).name + ": " + std::to_string(high_scores.at(0).score) + " Points", font, 25 };
 
 }
 
@@ -28,30 +39,28 @@ void High_Score_State::handle_event (sf::Event event)
             menu = true;
     }
 
-    
+    // Textfield
+    textfield.handle_event(event);
 }
 
 void High_Score_State::update ()
 {
-
+    if(textfield.isEntered())
+    {
+        current_score.name = textfield.get_entered_name();
+    }
 }
 
 void High_Score_State::render(sf::RenderTarget & target)
 {
-    auto bounds { state_text.getGlobalBounds () };
-    auto size   { target.getSize () };
+    //background
+    target.draw(background);
 
-    state_text.setPosition ((size.x - bounds.width) / 2,
-                      (size.y - bounds.height) / 2-30);
-
+    //state-text
     target.draw (state_text);
 
-    bounds = current_leader_text.getGlobalBounds ();
-    
-    current_leader_text.setPosition ((size.x - bounds.width) / 2,
-                      (size.y - bounds.height) / 2+50);
-    
-    target.draw(current_leader_text);
+    //textfield
+    textfield.render(target);
 }
 
 int High_Score_State::get_next_state()

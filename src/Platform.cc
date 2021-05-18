@@ -15,7 +15,7 @@ void Platform::default_shape()
     //shape.setOutlineThickness(5);
 }
 
-
+ 
 
 //konstruktor
 Platform::Platform()

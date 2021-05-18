@@ -11,10 +11,14 @@ Game_World::Game_World ()
     : score{0}, entities{}, player{}
 {
     entities.push_back( std::make_unique<Platform>() );
-    entities.push_back( std::make_unique<Platform>(200, 100) );
-    entities.push_back( std::make_unique<Platform>(200, 200) );
-    entities.push_back( std::make_unique<Platform>(300, 300) );
+    entities.push_back( std::make_unique<Moving_Platform>(200, 100) );
+    entities.push_back( std::make_unique<Breaking_Platform>(200, 200) );
+    entities.push_back( std::make_unique<Extra_Jump_Platform>(300, 300) );
     entities.push_back( std::make_unique<Platform>(100, 400) );
+    entities.push_back( std::make_unique<Platform>(100, 500) );
+    entities.push_back( std::make_unique<Platform>(100, 600) );
+    entities.push_back( std::make_unique<Platform>(100, 700) );
+
 }
 
 void Game_World::handle_event (sf::Event event)
@@ -37,9 +41,20 @@ void Game_World::placePlatforms()
               << "       Last Entity:" << entities.back()->getPosition().y << std::endl;
 
 
-    int dice_roll   = pos_distribution(generator);
     if ( entities.back()->getPosition().y > spawn_distance)
-        entities.push_back( std::make_unique<Platform>(dice_roll, spawn_y_pos) );
+    {
+        int dice_x_roll   = pos_distribution(generator);
+        int spawn_type  = spawn_distribution(generator);
+
+        if (spawn_type == 1)
+            entities.push_back( std::make_unique<Platform>(dice_x_roll, spawn_y_pos) );
+        if (spawn_type == 2)
+            entities.push_back( std::make_unique<Moving_Platform>(dice_x_roll, spawn_y_pos) );
+        if (spawn_type == 3)
+            entities.push_back( std::make_unique<Breaking_Platform>(dice_x_roll, spawn_y_pos) );
+        if (spawn_type == 4)
+            entities.push_back( std::make_unique<Extra_Jump_Platform>(dice_x_roll, spawn_y_pos) );
+    }
     /*
     if (entities.size() < 10)
     {
@@ -52,10 +67,11 @@ void Game_World::placePlatforms()
 
 void Game_World::destroyPlatforms()
 {
-    // Tar bort entetis under skärm 
+    int destroy_y_line {800};
 
+    // Tar bort entetis under skärm 
     auto it = remove_if(entities.begin(), entities.end(), 
-                [](auto const& ent ){ return ent->getPosition().y > 400; } );
+                [destroy_y_line](auto const& ent ){ return ent->getPosition().y > destroy_y_line; } );
     entities.erase(it, entities.end()
     );
 }
@@ -107,14 +123,13 @@ void Game_World::update ()
         }
     }
 
-
-
-
     // TESTFIXASAP;
     // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
     if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
         player.setAcceleration(-10);
 }
+
+
 
 void Game_World::render (sf::RenderTarget & target)
 {
@@ -122,6 +137,8 @@ void Game_World::render (sf::RenderTarget & target)
     {
         ent->render (target);
     }
+   
+
     player.render (target);
 }
 

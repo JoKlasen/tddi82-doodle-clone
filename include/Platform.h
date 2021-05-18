@@ -15,19 +15,20 @@ public:
     Platform(std::string name, sf::Vector2f position= sf::Vector2f(), std::vector<int> CollisionContainer = std::vector<int>{});
     
     
-    void render( sf::RenderTarget & ) override;
-    void handle_collision( Entity const& ) override;
-    void update() override;
+    virtual void render( sf::RenderTarget & ) override;
+    virtual void handle_collision( Entity const& ) override;
+    virtual void update() override;
 
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
-private:
-    void default_shape();
+protected:
+    virtual void default_shape();
+
+    double jump_value{7.6};
 
 
     sf::RectangleShape shape{ sf::Vector2f(50, 10) };
 
-    double jump_value {7.5};
 };
 
 #endif

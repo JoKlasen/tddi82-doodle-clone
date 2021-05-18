@@ -6,6 +6,7 @@
 #include <memory>
 #include "Entity.h"
 #include "Platform.h"
+#include "Special_Platforms.h"
 #include "Player.h"
 
 class Game_World
@@ -26,6 +27,7 @@ private:
 
     void placePlatforms();
     void destroyPlatforms();
+    
 
     bool testPlayerCollision (Entity const & obj);
 };
