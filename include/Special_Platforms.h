@@ -16,6 +16,9 @@ private:
     void default_shape() override;
 };
 
+
+
+
 class Breaking_Platform : public Platform
 {
 public:
@@ -31,6 +34,9 @@ private:
     bool intact{true};
     float fall_speed;
 };
+
+
+
 
 class Moving_Platform : public Platform
 {

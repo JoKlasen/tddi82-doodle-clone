@@ -47,3 +47,9 @@ void Player::handle_input()
     else if ( this->position.x < (0 - this->dimensions.x/2 ) )
         this->position.x = (screen_width - this->dimensions.x/2 );
 }
+
+sf::FloatRect Player::getGlobalBounds() const
+{
+    return playershape.getGlobalBounds() ;
+}
+

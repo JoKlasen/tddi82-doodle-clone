@@ -14,7 +14,7 @@ void Platform::default_shape()
     //shape.setOutlineThickness(5);
 }
 
-
+ 
 
 //konstruktor
 Platform::Platform()
@@ -55,7 +55,11 @@ void Platform::update()
 
 void Platform::handle_collision( Entity const&)
 {
-    Entity::acceleration = -(jump_value);
+    Entity::acceleration = -jump_value;
     //auto = &e;
 }
 
+sf::FloatRect Platform::getGlobalBounds() const
+{
+    return shape.getGlobalBounds() ;
+}

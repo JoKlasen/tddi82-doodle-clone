@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 #include "Entity.h"
 #include "Platform.h"
 #include "Special_Platforms.h"
@@ -19,17 +20,21 @@ public:
     
 
 private:
-
     int score;
-    std::vector<Entity> entities;
+    std::vector< std::unique_ptr<Entity> > entities;
     Player player;
 
-    Platform platform; //Debug
-    Disappearing_Platform platform2;
+    //Platform platform; //Debug
+    //Disappearing_Platform platform2;
 
     sf::RectangleShape scoreBar;
     sf::Text scoreText;
     sf::Sprite ScoreBarFill;
+
+    void placePlatforms();
+    void destroyPlatforms();
+    void uppdateEntities();
+    
 
     bool testPlayerCollision (Entity const & obj);
 };
