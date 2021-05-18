@@ -4,29 +4,22 @@
 #include "Manager.h"
 #include <iostream>
 
-//sf::Texture GameBackgroundTexture;
-//sf::Sprite GameBackground;
-
-sf::Texture ScoreBarFillTexture;
 sf::Sprite ScoreBarFill;
 
 Game_World::Game_World ()
     : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
-      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}
+      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, ScoreBarFill{Texture_Manager::load("./resources/images/testbar3.png")}
 {
     scoreBar.setPosition(0,0);
     scoreBar.setFillColor(sf::Color(128, 128, 128, 128)); // Genomskinlig grå färg
 
-    
-    ScoreBarFill.setTexture(Manager<sf::Texture>::load("./resources/images/testbar3.png"));
     ScoreBarFill.setPosition(0, 35);
 
-    scoreText.setFont(Manager<sf::Font>::load("./resources/fonts/DoodleJump.ttf"));
+    scoreText.setFont(Font_Manager::load(font_file));
     scoreText.setString("Score: 0");
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setCharacterSize(30);
     scoreText.setPosition(10,3);
-
 
     //entities.push_back( Platform {} );
 }
@@ -51,7 +44,7 @@ void Game_World::update ()
             platform.move(0, -(player.getAcceleration()));
             platform2.move(0, -(player.getAcceleration()));
             scoreText.setString("Score: " + std::to_string(score/10));
-            std::cout << score/10 << std::endl;        // debugg
+            //std::cout << score/10 << std::endl;        // debugg
         }
 
 
@@ -81,7 +74,6 @@ void Game_World::update ()
 
 void Game_World::render (sf::RenderTarget & target)
 {
-    //target.draw(GameBackground);
     // for ( auto & ent : entities )
     // {
     //     ent.render (target);

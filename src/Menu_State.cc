@@ -20,21 +20,8 @@
 Menu_State::Menu_State()
     : play{false}, exit_game{false}, high_score{false}, options{},
       titelText{}, playText{}, highScoreText{}, optionsText{},
-      platform{}, font{}//TESTFIXASAPEDVIN
+      platform{}
 {
-    //texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
-    //sprite.setTexture(texture);
-  
-    
-    //Platform p();
-    //Platform p1("oskar");
-
-    //TESTFIXASAPEDVIN Load the font
-    font.loadFromFile("./resources/fonts/DoodleJump.ttf"); //TESTFIXASAPEDVIN load form game memory
-    titelText.setFont(font); //TESTFIXASAPEDVIN
-    //backgroundTexture = Manager<sf::Texture>::load("./resources/images/Background.png");//TESTFIXASAPEDVIN load form game memory
-    //background.setTexture(backgroundTexture);//TESTFIXASAPEDVIN load form game memory
-    
     // init texts
     initMenuItem(titelText,     50,  100, "doodle jump", 60, sf::Color::Red);
     initMenuItem(playText,      125, 200, "play",        40, sf::Color::Black);
@@ -44,7 +31,7 @@ Menu_State::Menu_State()
 }
 void Menu_State::initMenuItem(sf::Text & sfText, int x, int y, std::string name, int caracterSize, sf::Color color )
 {
-    sfText.setFont(font); //TESTFIXASAPEDVIN font
+    sfText.setFont(Font_Manager::load(font_file));
     sfText.setString(name);
     sfText.setFillColor(color);
     sfText.setCharacterSize(caracterSize);
@@ -82,21 +69,17 @@ void Menu_State::handle_event(sf::Event event)
     if (event.type == sf::Event::MouseButtonPressed)
     {
         if( mouseEventMenuItem(event, highScoreText) )
-	    high_score = true;
-	else if ( mouseEventMenuItem(event, playText) )
+	        high_score = true;
+	    else if ( mouseEventMenuItem(event, playText) )
             play = true;
-	else if ( mouseEventMenuItem(event, optionsText) )
+	    else if ( mouseEventMenuItem(event, optionsText) )
             options = true;
-	    
-    }
-      
+    }    
 }
 
 void Menu_State::update()
 {
-    //platform.update();
 
-    //shape.setFillColor(sf::Color::Green);
 }
 
 void Menu_State::render(sf::RenderTarget & target)
@@ -104,12 +87,11 @@ void Menu_State::render(sf::RenderTarget & target)
     //target.draw(shape);
 
     //target.draw(sprite);//TESTFIXASAPEDVIN
-    //target.draw(background);//TESTFIXASAPEDVIN
+
     target.draw(titelText);
     target.draw(playText);
     target.draw(highScoreText);
     target.draw(optionsText);
-    //platform.render(target);
 }
 
 int Menu_State::get_next_state() 

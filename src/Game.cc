@@ -13,7 +13,7 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
         states{},
         current_state{ MENU_STATE },
         running { true },
-        background {Manager<sf::Texture>::load("./resources/images/Background.png")}
+        background {Texture_Manager::load(background_file)}
         
 {
     // Insert all sates you want in your game in the states map

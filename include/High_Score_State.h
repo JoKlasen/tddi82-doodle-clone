@@ -37,7 +37,6 @@ private:
     std::vector<High_Score> high_scores;
     High_Score              current_score;
     Textfield               textfield;
-    sf::Sprite              background;
     //Functions
     void read_file();
     void print_hs();

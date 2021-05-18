@@ -29,7 +29,7 @@ private:
 
     sf::RectangleShape scoreBar;
     sf::Text scoreText;
-    //sf::Font font;
+    sf::Sprite ScoreBarFill;
 
     bool testPlayerCollision (Entity const & obj);
 };
