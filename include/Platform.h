@@ -24,7 +24,7 @@ public:
 protected:
     virtual void default_shape();
 
-    double jump_value{7.6};
+    double jump_value{10.0};
     sf::Sprite shape; 
     //sf::RectangleShape shape{ sf::Vector2f(75, 20) };
 
