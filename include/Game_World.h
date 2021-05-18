@@ -13,7 +13,7 @@ class Game_World
 public:
     Game_World ();
 
-    void handle_event (sf::Event event); 
+    void handle_event (sf::Event); 
     void update ();
     void render (sf::RenderTarget & target);
     
@@ -25,7 +25,7 @@ private:
     Player player;
 
     Platform platform; //Debug
-    Extra_Jump_Platform platform2;
+    Disappearing_Platform platform2;
 
     sf::RectangleShape scoreBar;
     sf::Text scoreText;

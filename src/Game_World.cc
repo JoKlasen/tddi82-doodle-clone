@@ -4,8 +4,6 @@
 #include "Manager.h"
 #include <iostream>
 
-sf::Sprite ScoreBarFill;
-
 Game_World::Game_World ()
     : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
       scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, ScoreBarFill{Texture_Manager::load("./resources/images/testbar3.png")}
@@ -24,9 +22,8 @@ Game_World::Game_World ()
     //entities.push_back( Platform {} );
 }
 
-void Game_World::handle_event (sf::Event event)
+void Game_World::handle_event (sf::Event)
 {
-    //player.handle_input();
 
 }
 
