@@ -14,44 +14,59 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o
+OBJECTS := $(BUILDDIR)/main.o $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o
 
 #Huvudmål
-main: $(OBJECTS)
-	$(CC) $(INC) $(FLAGS) $(SRCDIR)/main.cc $(OBJECTS) -o $(TARGET) $(LIB)
+$(TARGET): $(OBJECTS) dir
+	@echo "Linking..."
+	@echo "$(OBJECTS)"; $(CC) $(INC) $(FLAGS) $(OBJECTS) -o $(TARGET) $(LIB)
 
 #Delmål
-$(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game.cc -o $(BUILDDIR)/Game.o
+$(BUILDDIR)/main.o: $(SRCDIR)/main.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Menu_State.cc -o $(BUILDDIR)/Menu_State.o
+$(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/High_Score_State.o: $(SRCDIR)/High_Score_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/High_Score_State.cc -o $(BUILDDIR)/High_Score_State.o
+$(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Game_State.o: $(SRCDIR)/Game_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_State.cc -o $(BUILDDIR)/Game_State.o
+$(BUILDDIR)/High_Score_State.o: $(SRCDIR)/High_Score_State.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Game_World.o: $(SRCDIR)/Game_World.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_World.cc -o $(BUILDDIR)/Game_World.o
+$(BUILDDIR)/Game_State.o: $(SRCDIR)/Game_State.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Entity.o: $(SRCDIR)/Entity.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Entity.cc -o $(BUILDDIR)/Entity.o
+$(BUILDDIR)/Game_World.o: $(SRCDIR)/Game_World.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Player.o: $(SRCDIR)/Player.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Player.cc -o $(BUILDDIR)/Player.o
+$(BUILDDIR)/Entity.o: $(SRCDIR)/Entity.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Platform.cc -o $(BUILDDIR)/Platform.o
+$(BUILDDIR)/Player.o: $(SRCDIR)/Player.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Special_Platforms.o: $(SRCDIR)/Special_Platforms.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Special_Platforms.cc -o $(BUILDDIR)/Special_Platforms.o
+$(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
+
+$(BUILDDIR)/Special_Platforms.o: $(SRCDIR)/Special_Platforms.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 	
-$(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Textfield.cc -o $(BUILDDIR)/Textfield.o	
+$(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@	
 
-
+.PHONY: dir
 dir:
 	@mkdir -p $(BUILDDIR) bin
 
