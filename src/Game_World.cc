@@ -25,23 +25,34 @@ void Game_World::handle_event (sf::Event event)
 
 void Game_World::placePlatforms()
 {
-    std::random_device generator;
-    std::uniform_int_distribution<int> distribution(1, 300);
+    int spawn_distance {50};
+    int spawn_y_pos {0};
 
-    int dice_roll = distribution(generator);
-    // Y-pos , X-pos
+    std::random_device generator;
+    std::uniform_int_distribution<int> pos_distribution(1, 300);
+    std::uniform_int_distribution<int> spawn_distribution(1, 4);
+
+    std::cout << "entities: " << entities.size()  
+              << "       player_y: " << player.getPosition().y 
+              << "       Last Entity:" << entities.back()->getPosition().y << std::endl;
+
+
+    int dice_roll   = pos_distribution(generator);
+    if ( entities.back()->getPosition().y > spawn_distance)
+        entities.push_back( std::make_unique<Platform>(dice_roll, spawn_y_pos) );
+    /*
     if (entities.size() < 10)
     {
-
-        entities.push_back( std::make_unique<Platform>(dice_roll, 0) );
-    }
+        //int spawn_type  = spawn_distribution(generator);
+        //if (spawn_type == 1)
+        entities.push_back( std::make_unique<Platform>(dice_roll, spawn_y_pos) );
+    } //*/
 }
 
 
 void Game_World::destroyPlatforms()
 {
     // Tar bort entetis under skärm 
-    std::cout << "entities: " << entities.size()  << "       player_y: " << player.getPosition().y << std::endl;
 
     auto it = remove_if(entities.begin(), entities.end(), 
                 [](auto const& ent ){ return ent->getPosition().y > 400; } );
