@@ -26,8 +26,6 @@ public:
 
     // Getters och setters
 
-    virtual sf::FloatRect getGlobalBounds() const = 0;  //tillfällig
-
     std::string getName() const;
     void setName(std::string value);
 
