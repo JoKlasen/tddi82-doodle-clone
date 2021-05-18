@@ -76,7 +76,13 @@ void Game_World::destroyPlatforms()
     );
 }
 
-
+void Game_World::uppdateEntities()
+{
+    for ( auto & ent : entities )
+    {
+        ent->update ();
+    }
+}
 
 void Game_World::update ()
 {
@@ -86,16 +92,10 @@ void Game_World::update ()
     destroyPlatforms();
 
 
-
-
-
     // Uppdaterar plats
     // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
     player.update ();
-    for ( auto & ent : entities )
-    {
-        ent->update ();
-    }
+    uppdateEntities();
 
 
     // Flytta ner platform(ar)

@@ -27,6 +27,7 @@ private:
 
     void placePlatforms();
     void destroyPlatforms();
+    void uppdateEntities();
     
 
     bool testPlayerCollision (Entity const & obj);
