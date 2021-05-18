@@ -7,7 +7,7 @@
 #include <random>
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
+    : score{0}, entities{}, player{}, //platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
       scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, ScoreBarFill{Texture_Manager::load("./resources/images/testbar3.png")}
 {
     // Initiera poängräknare-del
@@ -88,7 +88,7 @@ void Game_World::destroyPlatforms()
     );
 }
 
-void Game_World::uppdateEntities()
+void Game_World::updateEntities()
 {
     for ( auto & ent : entities )
     {
@@ -107,7 +107,7 @@ void Game_World::update ()
     // Uppdaterar plats
     // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
     player.update ();
-    uppdateEntities();
+    updateEntities();
 
 
     // Flytta ner platform(ar) och räkna poäng
@@ -154,7 +154,7 @@ void Game_World::render (sf::RenderTarget & target)
     player.render(target);
 
     target.draw(scoreBar);
-    target.draw(ScoreBarFill);
+    //target.draw(ScoreBarFill);
     target.draw(scoreText);
 }
 
