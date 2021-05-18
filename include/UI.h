@@ -23,9 +23,11 @@ public:
 private:
     bool pressed;
     bool button_read;
+    bool hover;
+
     sf::Text text;
     sf::Window & window;
-    
+    int char_size;
 
     //funktion
     void mouse_hover();

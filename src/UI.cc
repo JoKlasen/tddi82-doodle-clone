@@ -7,17 +7,19 @@
 
 
 Button::Button(sf::Window & win)
-    : pressed{false}, button_read{false}, text{}, window{win}
+    : pressed{false}, button_read{false},hover{false}, text{}, window{win}, char_size{30}
 {
     
-    UI::initText(text, "Button", 30, sf::Color::Black);
+    UI::initText(text, "Button", char_size, sf::Color::Black);
     UI::centerText(text, 0);
+
 }
 
 Button::Button(sf::Text button_text, sf::Window & win)
-    : pressed{false}, button_read{false}, text{}, window{win}
+    : pressed{false}, button_read{false},hover{false}, text{}, window{win}, char_size{}
 {
     text = button_text;
+    char_size = text.getCharacterSize();
 }
 
 void Button::draw(sf::RenderTarget& target)
@@ -52,17 +54,36 @@ void Button::mouse_hover()
 {
     int x = sf::Mouse::getPosition(window).x;
     int y = sf::Mouse::getPosition(window).y;
+    
     int left = text.getGlobalBounds().left;
     int top = text.getGlobalBounds().top;
     int width = text.getGlobalBounds().width;
     int height = text.getGlobalBounds().height;
+
+    if(hover)
+    {
+        left = text.getGlobalBounds().left -5;
+        top = text.getGlobalBounds().top -10;
+        width = text.getGlobalBounds().width +5;
+        height = text.getGlobalBounds().height +5;
+        
+    }
+    
+   
     if(left < x && x < left+width && top < y && y < top+height)
     {
         text.setFillColor(sf::Color::Red);
+        text.setCharacterSize(char_size+char_size/2);
+        text.setStyle(sf::Text::Bold);
+        hover = true;
+        //std::cout << left << std::endl;
     }
     else
     {
         text.setFillColor(sf::Color::Black);
+        text.setCharacterSize(char_size);
+        text.setStyle(sf::Text::Regular);
+        hover = false;
     }
 }
 
