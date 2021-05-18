@@ -12,8 +12,8 @@
 
 //sf::Texture texture;
 //sf::Sprite sprite;
-sf::Texture backgroundTexture;
-sf::Sprite background;
+//sf::Texture backgroundTexture;
+//sf::Sprite background;
 
 
 
@@ -32,8 +32,8 @@ Menu_State::Menu_State()
     //TESTFIXASAPEDVIN Load the font
     font.loadFromFile("./resources/fonts/DoodleJump.ttf"); //TESTFIXASAPEDVIN load form game memory
     titelText.setFont(font); //TESTFIXASAPEDVIN
-    backgroundTexture = Manager<sf::Texture>::load("./resources/images/Background.png");//TESTFIXASAPEDVIN load form game memory
-    background.setTexture(backgroundTexture);//TESTFIXASAPEDVIN load form game memory
+    //backgroundTexture = Manager<sf::Texture>::load("./resources/images/Background.png");//TESTFIXASAPEDVIN load form game memory
+    //background.setTexture(backgroundTexture);//TESTFIXASAPEDVIN load form game memory
     
     // init texts
     initMenuItem(titelText,     50,  100, "doodle jump", 60, sf::Color::Red);
@@ -104,7 +104,7 @@ void Menu_State::render(sf::RenderTarget & target)
     //target.draw(shape);
 
     //target.draw(sprite);//TESTFIXASAPEDVIN
-    target.draw(background);//TESTFIXASAPEDVIN
+    //target.draw(background);//TESTFIXASAPEDVIN
     target.draw(titelText);
     target.draw(playText);
     target.draw(highScoreText);

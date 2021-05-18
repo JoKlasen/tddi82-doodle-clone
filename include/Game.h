@@ -22,6 +22,7 @@ private:
     std::map<int, std::unique_ptr<State>> states;
     int current_state;
     bool running;
+    sf::Sprite background;
 
     //Funktioner
     void handle_events(); 
