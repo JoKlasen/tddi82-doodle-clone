@@ -67,7 +67,7 @@ void Game_World::placePlatforms()
 
 void Game_World::destroyPlatforms()
 {
-    int destroy_y_line {800};
+    int destroy_y_line {screen_height};
 
     // Tar bort entetis under skärm 
     auto it = remove_if(entities.begin(), entities.end(), 
