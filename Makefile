@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -46,6 +46,9 @@ $(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
 $(BUILDDIR)/Special_Platforms.o: $(SRCDIR)/Special_Platforms.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Special_Platforms.cc -o $(BUILDDIR)/Special_Platforms.o
 	
+$(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Textfield.cc -o $(BUILDDIR)/Textfield.o	
+
 
 dir:
 	@mkdir -p $(BUILDDIR) bin
