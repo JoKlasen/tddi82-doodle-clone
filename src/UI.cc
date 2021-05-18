@@ -3,6 +3,9 @@
 #include "Manager.h"
 #include <iostream>
 
+
+
+
 Button::Button(sf::Window & win)
     : pressed{false}, button_read{false}, text{}, window{win}
 {
@@ -89,10 +92,16 @@ void UI::initText(sf::Text & sfText,std::string const& name, int caracterSize, s
     sfText.setCharacterSize(caracterSize);
     sfText.setPosition(0,0);
 }
+void UI::initText(sf::Text & sfText, float x, float y,std::string const& name, int caracterSize, sf::Color const& color )
+{
+    sfText.setString(name);
+    sfText.setFont(Font_Manager::load(font_file));
+    sfText.setFillColor(color);
+    sfText.setCharacterSize(caracterSize);
+    sfText.setPosition(x,y);
+}
 
 void UI::centerText(sf::Text & sfText, float y_offfset)
 {
     sfText.setPosition((screen_width-sfText.getGlobalBounds().width) / 2, (screen_height - sfText.getGlobalBounds().height) / 2 + y_offfset);
 }
-
-

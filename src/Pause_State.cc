@@ -3,6 +3,7 @@
 #include "Manager.h"
 
 
+
 Pause_State::Pause_State(State & pgame_world, sf::Window & window)
     : unpause{false}, main_menu{false}, game_world{pgame_world}, filter{}, paused{}, resume{}, quit{}, resume_b{window}, quit_b{window}
 {

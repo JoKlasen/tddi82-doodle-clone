@@ -19,7 +19,7 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
 {
     // Insert all sates you want in your game in the states map
     states.insert(std::pair<int,
-            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>()}));
+            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>(window)}));
 
     
     states.insert(std::pair<int,

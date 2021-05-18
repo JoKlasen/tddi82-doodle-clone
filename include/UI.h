@@ -8,6 +8,8 @@
 #include "Game.h"
 
 
+
+
 class Button
 {
 
@@ -35,7 +37,8 @@ private:
 class UI
 {
     public:
-    static void initText(sf::Text & sfText, std::string const& name, int caracterSize, sf::Color const& color ); // sätter värden efter init
+    static void initText(sf::Text & sfText, std::string const& name, int caracterSize, sf::Color const& color );
+    static void initText(sf::Text & sfText, float x, float y,std::string const& name, int caracterSize, sf::Color const& color ); 
     static void centerText(sf::Text & sfText, float y_offfset); // texten blir centrerad i x-led och man kan sätta en offset i y-led
 
 };
