@@ -32,7 +32,7 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
 
     states.insert(std::pair<int,
             std::unique_ptr<State>>({PAUSE_STATE,
-                                    std::make_unique<Pause_State>(*states.at(1))}));                                
+                                    std::make_unique<Pause_State>(*states.at(1), window)}));                                
    
 }
 
@@ -124,3 +124,5 @@ void Game::delay (sf::Clock & clock) const
     sleep (milliseconds (1000.0 / fps) - clock.getElapsedTime ());
     clock.restart ();
 }
+
+

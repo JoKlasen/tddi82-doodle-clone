@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o $(BUILDDIR)/Pause_State.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o $(BUILDDIR)/Pause_State.o $(BUILDDIR)/UI.o 
 
 #Huvudmål
 main: $(OBJECTS)
@@ -52,6 +52,8 @@ $(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc dir
 $(BUILDDIR)/Pause_State.o: $(SRCDIR)/Pause_State.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Pause_State.cc -o $(BUILDDIR)/Pause_State.o	
 
+$(BUILDDIR)/UI.o: $(SRCDIR)/UI.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/UI.cc -o $(BUILDDIR)/UI.o	
 dir:
 	@mkdir -p $(BUILDDIR) bin
 

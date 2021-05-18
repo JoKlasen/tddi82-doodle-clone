@@ -3,40 +3,51 @@
 #include "Manager.h"
 
 
-Pause_State::Pause_State(State & pgame_world)
-    : unpause{false}, game_world{pgame_world}, filter{}, paused{}, resume{}, quit{}
+Pause_State::Pause_State(State & pgame_world, sf::Window & window)
+    : unpause{false}, main_menu{false}, game_world{pgame_world}, filter{}, paused{}, resume{}, quit{}, resume_b{window}, quit_b{window}
 {
     // init filter
     filter.setSize(sf::Vector2f(screen_width, screen_height));
     filter.setFillColor(sf::Color(150, 150, 150, 125));
 
     // text init
-    paused.setFont(Font_Manager::load(font_file));
-    resume.setFont(Font_Manager::load(font_file));
-    quit.setFont(Font_Manager::load(font_file));
 
-    paused.setString("Paused");
-    resume.setString("resume");
-    quit.setString("quit");
-
-    paused.setFillColor(sf::Color::Black);
-    resume.setFillColor(sf::Color::Black);
-    quit.setFillColor(sf::Color::Black);
-
-    paused.setCharacterSize(60);
+    UI::initText(paused, 
+                "Paused", 
+                60, 
+                sf::Color::Black);
     paused.setStyle(sf::Text::Bold);
-    resume.setCharacterSize(40);
-    quit.setCharacterSize(40);
+    UI::initText(resume, 
+                "resume",
+                40, 
+                sf::Color::Black);
+    UI::initText(quit, 
+                "quit",
+                40, 
+                sf::Color::Black);                        
 
-    paused.setPosition ((screen_width-paused.getGlobalBounds().width) / 2, (screen_height - paused.getGlobalBounds().height) / 2 - 100);
-    resume.setPosition ((screen_width-resume.getGlobalBounds().width) / 2, (screen_height - resume.getGlobalBounds().height) / 2 );
-    quit.setPosition ((screen_width-quit.getGlobalBounds().width) / 2, (screen_height - quit.getGlobalBounds().height) / 2 + 80);
+    UI::centerText(paused, -100); // texten blir centrerad i x-led och man kan sätta en offset i y-led
+    UI::centerText(resume, 0);
+    UI::centerText(quit, 80);
 
+    resume_b.setText(resume);
+    quit_b.setText(quit);
 }
 
 void Pause_State::handle_event (sf::Event event) 
 {
+    resume_b.handle_event(event);
+    quit_b.handle_event(event);
 
+    if(resume_b.is_pressed())
+    {
+        unpause = true;
+    }
+    else if (quit_b.is_pressed())
+    {
+        main_menu = true;
+    }
+    
 }
 void Pause_State::update ()
 {
@@ -51,8 +62,8 @@ void Pause_State::render (sf::RenderTarget & target)
     game_world.render(target);
     target.draw(filter);
     target.draw(paused);
-    target.draw(resume);
-    target.draw(quit);
+    resume_b.draw(target);
+    quit_b.draw(target);
 
 }
 
@@ -62,6 +73,11 @@ int Pause_State::get_next_state()
     {
         unpause = false;
         return GAME_STATE;
+    }
+    else if(main_menu)
+    {
+        main_menu = false;
+        return MENU_STATE;
     }
     else
     {

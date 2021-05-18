@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "State.h"
 #include "Platform.h"
+//#include "UI.h"
 
 class Menu_State: public State
 {
@@ -32,6 +33,8 @@ private:
     sf::Text playText;
     sf::Text highScoreText;
     sf::Text optionsText;
+
+    //Button
     
     Platform platform;
     
