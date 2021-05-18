@@ -10,11 +10,12 @@
 
 void Platform::default_shape()
 {
-    shape.setOutlineColor(sf::Color::Blue);
-    shape.setOutlineThickness(5);
+    shape.setFillColor(sf::Color::Green);
+    //shape.setOutlineColor(sf::Color::Green);
+    //shape.setOutlineThickness(5);
 }
 
-
+ 
 
 //konstruktor
 Platform::Platform()
@@ -53,7 +54,11 @@ void Platform::update()
 
 void Platform::handle_collision( Entity const&)
 {
-    Entity::acceleration = -(jump_value);
+    Entity::acceleration = -jump_value;
     //auto = &e;
 }
 
+sf::FloatRect Platform::getGlobalBounds() const
+{
+    return shape.getGlobalBounds() ;
+}

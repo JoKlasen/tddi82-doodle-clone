@@ -16,6 +16,9 @@ private:
     void default_shape() override;
 };
 
+
+
+
 class Breaking_Platform : public Platform
 {
 public:
@@ -30,6 +33,9 @@ private:
     void default_shape() override;
     bool intact{true};
 };
+
+
+
 
 class Moving_Platform : public Platform
 {

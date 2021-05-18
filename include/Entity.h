@@ -25,6 +25,7 @@ public:
     void move(float const & offsetX, float const & offsetY); 
 
     // Getters och setters
+    virtual sf::FloatRect getGlobalBounds() const  = 0; 
 
     std::string getName() const;
     void setName(std::string value);
