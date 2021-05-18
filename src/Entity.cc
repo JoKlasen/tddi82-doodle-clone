@@ -14,11 +14,18 @@ Entity::Entity(std::string pname,
     sf::Vector2f pposition,        
     std::vector<int> pCollisionContainer )
         : name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
-    {
+{
 
-    }
+}
+
+
 
 // Getters och setters
+
+sf::FloatRect Entity::getGlobalBounds() const
+{
+    return getGlobalBounds();
+}
 
 std::string Entity::getName() const
 {

@@ -17,13 +17,13 @@ public:
 
     void handle_input();
 
+    sf::FloatRect getGlobalBounds() const override; //tillfälig
+
 
 private:
     int life;
     sf::Vector2f dimensions{};      // Width, Height
     sf::CircleShape playershape{30, 3};
-    //TESTFIX; ta bort nedan
-    sf::RectangleShape testplatform{sf::Vector2f(50, 10)};
 };
 
 

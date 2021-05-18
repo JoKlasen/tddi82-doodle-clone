@@ -2,6 +2,8 @@
 #define ENTITY_H
 
 #include <SFML/Graphics.hpp>
+#include "constants.h"
+#include "Manager.h"
 
 #include <vector>
 #include <string>
@@ -25,6 +27,7 @@ public:
     void move(float const & offsetX, float const & offsetY); 
 
     // Getters och setters
+    virtual sf::FloatRect getGlobalBounds() const  = 0; 
 
     std::string getName() const;
     void setName(std::string value);
