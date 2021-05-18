@@ -9,11 +9,15 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, high_scores{}, current_score{}, textfield{}, background{}
+    : menu{false}, state_text{}, high_scores{}, current_score{}, textfield{}
 {
     // Text
+<<<<<<< HEAD
     
     state_text = sf::Text{ "HIGH SCORE", Font_Manager::load(font_file), 30 };
+=======
+    state_text = sf::Text{ "HIGH SCORE", Manager<sf::Font>::load(font_file), 30 };
+>>>>>>> origin/johan-dev
     state_text.setFillColor(sf::Color::Black);
     state_text.setStyle(sf::Text::Bold);
     state_text.setPosition ((screen_width-state_text.getGlobalBounds().width) / 2, (screen_height - state_text.getGlobalBounds().height) / 2 - 100);
@@ -21,9 +25,6 @@ High_Score_State::High_Score_State()
     // Text-field
     textfield.setPosition ((screen_width-textfield.getWidth()) / 2, (screen_height - textfield.getHight()) / 2 + 40);
     textfield.setFieldText("Enter name:");
-
-    //background
-    background.setTexture(Manager<sf::Texture>::load(background_file));
 
     // Läser in hs
     read_file();
@@ -52,9 +53,6 @@ void High_Score_State::update ()
 
 void High_Score_State::render(sf::RenderTarget & target)
 {
-    //background
-    target.draw(background);
-
     //state-text
     target.draw (state_text);
 

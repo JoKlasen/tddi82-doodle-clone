@@ -35,8 +35,6 @@ private:
     
     Platform platform;
     
-    sf::Font font; //TESTFIXASAPEDVIN
-    
 };
 
 

@@ -19,13 +19,17 @@ public:
     
 
 private:
-    
+
     int score;
     std::vector<Entity> entities;
     Player player;
 
     Platform platform; //Debug
-    Moving_Platform platform2;
+    Extra_Jump_Platform platform2;
+
+    sf::RectangleShape scoreBar;
+    sf::Text scoreText;
+    sf::Sprite ScoreBarFill;
 
     bool testPlayerCollision (Entity const & obj);
 };

@@ -5,15 +5,16 @@
 #include "Pause_State.h"
 #include "State.h" 
 #include "constants.h" 
+#include "Manager.h"
 
 using namespace sf;
-
 
 Game::Game (std::string const & title, unsigned width, unsigned height)
         : window { VideoMode { width, height }, title, Style::Titlebar | Style::Close },
         states{},
         current_state{ MENU_STATE },
-        running { true }
+        running { true },
+        background {Texture_Manager::load(background_file)}
         
 {
     // Insert all sates you want in your game in the states map
@@ -57,6 +58,7 @@ void Game::start ()
         window.clear ();
 
         // let the current state render itself onto the window
+        window.draw(background);
         states.at(current_state) -> render(window);
 
         /*
