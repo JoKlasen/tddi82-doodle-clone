@@ -21,6 +21,7 @@ Game_World::Game_World ()
     scoreText.setFillColor(sf::Color::Black);
     scoreText.setCharacterSize(30);
     scoreText.setPosition(10,3);
+    scoreText.setStyle(sf::Text::Bold);
 
     // Initera platformar
     entities.push_back( std::make_unique<Platform>() );
