@@ -13,7 +13,7 @@ High_Score_State::High_Score_State()
 {
     // Text
     
-    state_text = sf::Text{ "HIGH SCORE", Manager<sf::Font>::load(font_file), 30 };
+    state_text = sf::Text{ "HIGH SCORE", Font_Manager::load(font_file), 30 };
     state_text.setFillColor(sf::Color::Black);
     state_text.setStyle(sf::Text::Bold);
     state_text.setPosition ((screen_width-state_text.getGlobalBounds().width) / 2, (screen_height - state_text.getGlobalBounds().height) / 2 - 100);

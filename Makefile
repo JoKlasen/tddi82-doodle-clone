@@ -12,7 +12,7 @@ INC := -I include
 
 #Moduler
 #Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o
+OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o $(BUILDDIR)/Special_Platforms.o $(BUILDDIR)/Textfield.o $(BUILDDIR)/Pause_State.o
 
 #Huvudmål
 main: $(OBJECTS)
@@ -49,6 +49,8 @@ $(BUILDDIR)/Special_Platforms.o: $(SRCDIR)/Special_Platforms.cc dir
 $(BUILDDIR)/Textfield.o: $(SRCDIR)/Textfield.cc dir
 	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Textfield.cc -o $(BUILDDIR)/Textfield.o	
 
+$(BUILDDIR)/Pause_State.o: $(SRCDIR)/Pause_State.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Pause_State.cc -o $(BUILDDIR)/Pause_State.o	
 
 dir:
 	@mkdir -p $(BUILDDIR) bin

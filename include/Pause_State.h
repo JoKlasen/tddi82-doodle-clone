@@ -5,7 +5,7 @@
 class Pause_State: public Game_State
 {
     public:
-
+    Pause_State(State & pgame_world);
     void handle_event (sf::Event event) override;
     void update () override;
     void render (sf::RenderTarget & target) override;
@@ -13,7 +13,11 @@ class Pause_State: public Game_State
 
     private:
     bool unpause;
-    Game_World & game_world;
+    State & game_world;
+    sf::RectangleShape filter;
+    sf::Text paused;
+    sf::Text resume;
+    sf::Text quit;
 };
 
 #endif
