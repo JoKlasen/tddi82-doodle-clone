@@ -1,4 +1,5 @@
 #include "High_Score_State.h"
+#include "Manager.h"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -7,16 +8,14 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, current_leader_text{}, font{}, high_scores{}, current_score{}
+    : menu{false}, state_text{}, font{}, high_scores{}, current_score{}, textfield{}
 {
-    
-    if ( !font.loadFromFile (font_file) )
-        throw std::invalid_argument ("Unable to load font");
+    // Text
+    font = Manager<sf::Font>::load(font_file);
     state_text = sf::Text{ "HIGH SCORE", font, 25 };
+
+    // Läser in hs
     read_file();
-    add_current_score();
-    //print_hs();
-    current_leader_text = sf::Text{high_scores.at(0).name + ": " + std::to_string(high_scores.at(0).score) + " Points", font, 25 };
 
 }
 
@@ -28,16 +27,22 @@ void High_Score_State::handle_event (sf::Event event)
             menu = true;
     }
 
-    
+    // Textfield
+    textfield.handle_event(event);
 }
 
 void High_Score_State::update ()
 {
-
+    if(textfield.isEntered())
+    {
+        current_score.name = textfield.get_entered_name();
+    }
 }
 
 void High_Score_State::render(sf::RenderTarget & target)
 {
+
+    // State text
     auto bounds { state_text.getGlobalBounds () };
     auto size   { target.getSize () };
 
@@ -46,12 +51,10 @@ void High_Score_State::render(sf::RenderTarget & target)
 
     target.draw (state_text);
 
-    bounds = current_leader_text.getGlobalBounds ();
-    
-    current_leader_text.setPosition ((size.x - bounds.width) / 2,
-                      (size.y - bounds.height) / 2+50);
-    
-    target.draw(current_leader_text);
+
+
+    //textfield
+    textfield.render(target);
 }
 
 int High_Score_State::get_next_state()
