@@ -9,7 +9,6 @@ class Textfield
 public:
 
 Textfield();
-Textfield(sf::Vector2f pposition, int width, int height, int limit, std::string pdescription);
 
 void handle_event(sf::Event event);
 
@@ -17,10 +16,17 @@ void render(sf::RenderTarget & target);
 
 std::string get_entered_name();
 
+void setPosition(float x, float y);
+void setFieldText(std::string const&);
+
+int getWidth();
+int getHight();
+
 bool isEntered();
 
 private:
 int const char_limit;
+int const align_text{15};
 sf::Font font;
 sf::String input;
 sf::Text text;
@@ -29,6 +35,7 @@ sf::Vector2f position;
 sf::RectangleShape box; 
 bool isSelected;
 bool isEntered_flag;
+
 
 };
 

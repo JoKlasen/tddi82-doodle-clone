@@ -1,4 +1,5 @@
 #include "High_Score_State.h"
+#include "constants.h"
 #include "Manager.h"
 #include <fstream>
 #include <iostream>
@@ -8,11 +9,22 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, font{}, high_scores{}, current_score{}, textfield{}
+    : menu{false}, state_text{}, font{}, high_scores{}, current_score{}, textfield{}, backgroundTexture{}, background{}
 {
     // Text
     font = Manager<sf::Font>::load(font_file);
-    state_text = sf::Text{ "HIGH SCORE", font, 25 };
+    state_text = sf::Text{ "HIGH SCORE", font, 30 };
+    state_text.setFillColor(sf::Color::Black);
+    state_text.setStyle(sf::Text::Bold);
+    state_text.setPosition ((screen_width-state_text.getGlobalBounds().width) / 2, (screen_height - state_text.getGlobalBounds().height) / 2 - 100);
+
+    // Text-field
+    textfield.setPosition ((screen_width-textfield.getWidth()) / 2, (screen_height - textfield.getHight()) / 2 + 40);
+    textfield.setFieldText("Enter name:");
+
+    //background
+    backgroundTexture = Manager<sf::Texture>::load(background_file);
+    background.setTexture(backgroundTexture);
 
     // Läser in hs
     read_file();
@@ -41,17 +53,11 @@ void High_Score_State::update ()
 
 void High_Score_State::render(sf::RenderTarget & target)
 {
+    //background
+    target.draw(background);
 
-    // State text
-    auto bounds { state_text.getGlobalBounds () };
-    auto size   { target.getSize () };
-
-    state_text.setPosition ((size.x - bounds.width) / 2,
-                      (size.y - bounds.height) / 2-30);
-
+    //state-text
     target.draw (state_text);
-
-
 
     //textfield
     textfield.render(target);
