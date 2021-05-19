@@ -11,7 +11,7 @@ public:
 
     Platform();
     Platform( float, float );   //position 
-    Platform( sf::Vector2f );   //position 
+    Platform( sf::Vector2f );   //position, dom övre konstruktorerna använder sig av denna, gör ändringar här 
     Platform(std::string name, sf::Vector2f position= sf::Vector2f(), std::vector<int> CollisionContainer = std::vector<int>{});
     
     
@@ -22,11 +22,8 @@ public:
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
 protected:
-    virtual void default_shape();
-
     double jump_value{10.0};
     sf::Sprite shape; 
-    //sf::RectangleShape shape{ sf::Vector2f(75, 20) };
 
 };
 
