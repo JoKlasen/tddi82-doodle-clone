@@ -8,13 +8,14 @@
 
 Game_World::Game_World ()
     : score{0}, entities{}, player{}, //platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
-      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, ScoreBarFill{Texture_Manager::load("./resources/images/testbar3.png")}
+      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle}
 {
     // Initiera poängräknare-del
     scoreBar.setPosition(0,0);
     scoreBar.setFillColor(sf::Color(128, 128, 128, 128)); // Genomskinlig grå färg
 
-    ScoreBarFill.setPosition(0, 35);
+    scoreBarEdge.setPosition(0, 35);
+    scoreBarEdge.setScale( 5.32, 1.0 );
 
     scoreText.setFont(Font_Manager::load(font_file));
     scoreText.setString("Score: 0");
@@ -45,8 +46,8 @@ void Game_World::placePlatforms()
     int spawn_y_pos {0};
 
     std::random_device generator;
-    std::uniform_int_distribution<int> pos_distribution(1, 300);
-    std::uniform_int_distribution<int> spawn_distribution(1, 4);
+    std::uniform_int_distribution<int> pos_distribution(1, (screen_width-78));     // 78 = platform.getGlobalBounds().width, men osäker på om det går att använda utan ett permanent platformsobjekt - Johan
+    std::uniform_int_distribution<int> spawn_distribution(1, 5);
 
     /*
     std::cout << "entities: " << entities.size()  
@@ -67,6 +68,8 @@ void Game_World::placePlatforms()
             entities.push_back( std::make_unique<Breaking_Platform>(dice_x_roll, spawn_y_pos) );
         if (spawn_type == 4)
             entities.push_back( std::make_unique<Extra_Jump_Platform>(dice_x_roll, spawn_y_pos) );
+        if (spawn_type == 5)
+            entities.push_back( std::make_unique<Disappearing_Platform>(dice_x_roll, spawn_y_pos) );    
     }
     /*
     if (entities.size() < 10)
@@ -155,7 +158,7 @@ void Game_World::render (sf::RenderTarget & target)
     player.render(target);
 
     target.draw(scoreBar);
-    //target.draw(ScoreBarFill);
+    target.draw(scoreBarEdge);
     target.draw(scoreText);
 }
 

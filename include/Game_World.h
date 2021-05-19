@@ -29,7 +29,7 @@ private:
 
     sf::RectangleShape scoreBar;
     sf::Text scoreText;
-    sf::Sprite ScoreBarFill;
+    sf::Sprite scoreBarEdge;
 
     void placePlatforms();
     void destroyPlatforms();
