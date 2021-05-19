@@ -3,7 +3,7 @@
 
 // basklass powerup
 Power_Up::Power_Up()
-    : sprite{}, active{true}, effects{0,0,0}, texture{}
+    :/*  sprite{}, */ active{true}, effects{0,0,0}, texture{}
 {
 }
 
@@ -12,7 +12,7 @@ void Power_Up::render(sf::RenderTarget & target)
     target.draw(shape);
     if(active)
     {
-        target.draw(sprite);
+        //target.draw(sprite);
     }
 }
     
@@ -23,7 +23,7 @@ bool Power_Up::is_active()
 void Power_Up::set_pos(sf::Vector2f const& pos)
 {
     shape.setPosition(pos.x + 30, pos.y -30);
-    sprite.setPosition(pos.x + 30, pos.y -30);
+    //sprite.setPosition(pos.x + 30, pos.y -30);
 }
 
 
@@ -33,9 +33,9 @@ Spring::Spring()
 {
 
     //sprite
-    texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
-    sprite.setTexture(texture);
-    sprite.setScale(0.1, 0.1);
+    //texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
+    //sprite.setTexture(texture);
+    //sprite.setScale(0.1, 0.1);
     //testshape
     Power_Up::shape.setFillColor(sf::Color::Red);
 
@@ -53,10 +53,10 @@ std::vector<int> const& Spring::get_effect()
 Shield::Shield()
     : Power_Up{}
 {
-    //sprite
-    texture = Manager<sf::Texture>::load("./resources/images/fire.png");
-    sprite.setTexture(texture);
-    sprite.setScale(0.1, 0.1);
+    // //sprite
+    // texture = Manager<sf::Texture>::load("./resources/images/fire.png");
+    // sprite.setTexture(texture);
+    // sprite.setScale(0.1, 0.1);
     Power_Up::shape.setFillColor(sf::Color::Green);
 
     // setting effect
