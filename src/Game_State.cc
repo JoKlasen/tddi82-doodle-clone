@@ -44,11 +44,11 @@ int Game_State::get_next_state()
         menu = false;
         return MENU_STATE;
     }
-    // else if (pause)
-    // {
-    //     pause = false;
-    //     return PAUSE_STATE;
-    // }
+    else if (pause)
+    {
+        pause = false;
+        return PAUSE_STATE;
+    }
     return GAME_STATE;
 }
 

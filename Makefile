@@ -2,6 +2,8 @@
 
 CC := g++
 FLAGS := -std=c++17 -Wall -Wextra -pedantic -Weffc++ -Wold-style-cast -Woverloaded-virtual -fmax-errors=3 -g
+#FLAGS := -std=c++17  -Wfatal-errors   -fmax-errors=3 -g    #om error medellanden är längre än terminalen 
+
 LIB := -lsfml-window -lsfml-graphics -lsfml-system
 
 
@@ -11,40 +13,25 @@ TARGET := bin/spelnamn
 INC := -I include
 
 #Moduler
-#Alla moduler som behövs för kompilering måste läggas till här när dom skapas och ska med
-OBJECTS := $(BUILDDIR)/Game.o $(BUILDDIR)/Menu_State.o $(BUILDDIR)/High_Score_State.o $(BUILDDIR)/Game_State.o $(BUILDDIR)/Game_World.o $(BUILDDIR)/Entity.o $(BUILDDIR)/Player.o $(BUILDDIR)/Platform.o 
+SRCEXT := cc
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
 #Huvudmål
-main: $(OBJECTS)
-	$(CC) $(INC) $(FLAGS) $(SRCDIR)/main.cc $(OBJECTS) -o $(TARGET) $(LIB)
+$(TARGET): dir $(OBJECTS)
+	@echo "Linking..."
+	@echo "$(OBJECTS)"; $(CC) $(INC) $(FLAGS) $(OBJECTS) -o $(TARGET) $(LIB)
+	@echo "Done!"
 
 #Delmål
-$(BUILDDIR)/Game.o: $(SRCDIR)/Game.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game.cc -o $(BUILDDIR)/Game.o
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@echo "Compiling:"
+	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-$(BUILDDIR)/Menu_State.o: $(SRCDIR)/Menu_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Menu_State.cc -o $(BUILDDIR)/Menu_State.o
+$(BUILDDIR)/Pause_State.o: $(SRCDIR)/Pause_State.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Pause_State.cc -o $(BUILDDIR)/Pause_State.o	
 
-$(BUILDDIR)/High_Score_State.o: $(SRCDIR)/High_Score_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/High_Score_State.cc -o $(BUILDDIR)/High_Score_State.o
-
-$(BUILDDIR)/Game_State.o: $(SRCDIR)/Game_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_State.cc -o $(BUILDDIR)/Game_State.o
-
-$(BUILDDIR)/Game_World.o: $(SRCDIR)/Game_World.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Game_World.cc -o $(BUILDDIR)/Game_World.o
-
-$(BUILDDIR)/Entity.o: $(SRCDIR)/Entity.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Entity.cc -o $(BUILDDIR)/Entity.o
-
-$(BUILDDIR)/Player.o: $(SRCDIR)/Player.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Player.cc -o $(BUILDDIR)/Player.o
-
-$(BUILDDIR)/Platform.o: $(SRCDIR)/Platform.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Platform.cc -o $(BUILDDIR)/Platform.o
-
-	
-
+.PHONY: dir
 dir:
 	@mkdir -p $(BUILDDIR) bin
 

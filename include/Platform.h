@@ -20,11 +20,14 @@ public:
     
     sf::Rect< float > getGlobalBounds() override;
 
-private:
-    void default_shape();
+    sf::FloatRect getGlobalBounds() const override; //tillfälig
 
+protected:
+    virtual void default_shape();
 
-    sf::RectangleShape shape{ sf::Vector2f(75, 20) };
+    double jump_value{10.0};
+    sf::Sprite shape; 
+    //sf::RectangleShape shape{ sf::Vector2f(75, 20) };
 
 };
 

@@ -41,4 +41,7 @@ private:
     
 };
 
+using Texture_Manager = Manager <sf::Texture>;
+using Font_Manager    = Manager <sf::Font>;
+
 #include "../src/Manager.tcc"
