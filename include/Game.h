@@ -13,9 +13,6 @@ public:
     Game (std::string const & title, unsigned width, unsigned height);
 
     void start ();
-
-
-
 private:
     //Variabler
     sf::RenderWindow window;

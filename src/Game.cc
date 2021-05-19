@@ -2,6 +2,7 @@
 #include "Menu_State.h" 
 #include "Game_State.h" 
 #include "High_Score_State.h" 
+#include "Pause_State.h"
 #include "State.h" 
 #include "constants.h" 
 #include "Manager.h"
@@ -17,9 +18,8 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
         
 {
     // Insert all sates you want in your game in the states map
-    states.insert(
-        std::pair<int,
-            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>()}));
+    states.insert(std::pair<int,
+            std::unique_ptr<State>>({MENU_STATE, std::make_unique<Menu_State>(window)}));
 
     
     states.insert(std::pair<int,
@@ -29,6 +29,10 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
     states.insert(std::pair<int,
             std::unique_ptr<State>>({HIGH_SCORE_STATE,
                                     std::make_unique<High_Score_State>()}));
+
+    states.insert(std::pair<int,
+            std::unique_ptr<State>>({PAUSE_STATE,
+                                    std::make_unique<Pause_State>(*states.at(1), window)}));                                
    
 }
 
@@ -120,3 +124,5 @@ void Game::delay (sf::Clock & clock) const
     sleep (milliseconds (1000.0 / fps) - clock.getElapsedTime ());
     clock.restart ();
 }
+
+

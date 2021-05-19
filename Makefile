@@ -28,6 +28,8 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@echo "Compiling:"
 	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
+$(BUILDDIR)/Pause_State.o: $(SRCDIR)/Pause_State.cc dir
+	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Pause_State.cc -o $(BUILDDIR)/Pause_State.o	
 
 .PHONY: dir
 dir:

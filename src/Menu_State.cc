@@ -3,6 +3,7 @@
 #include "Manager.h"
 #include "constants.h"
 #include "Platform.h"   
+#include "UI.h"
 
 //sf::CircleShape shape(100.f);
 //titel
@@ -17,64 +18,39 @@
 
 
 
-Menu_State::Menu_State()
+Menu_State::Menu_State(sf::Window & window)
     : play{false}, exit_game{false}, high_score{false}, options{},
-      titelText{}, playText{}, highScoreText{}, optionsText{},
+      titelText{}, playText{}, highScoreText{}, optionsText{}, play_button{window}, hs_button{window}, options_button{window},
       platform{}
 {
-    // init texts
-    initMenuItem(titelText,     50,  100, "doodle jump", 60, sf::Color::Red);
-    initMenuItem(playText,      125, 200, "play",        40, sf::Color::Black);
-    initMenuItem(highScoreText, 380, 400, "scores",      40, sf::Color::Black);
-    initMenuItem(optionsText,   330, 480, "options",     40, sf::Color::Black);
-    
-}
-void Menu_State::initMenuItem(sf::Text & sfText, int x, int y, std::string name, int caracterSize, sf::Color color )
-{
-    sfText.setFont(Font_Manager::load(font_file));
-    sfText.setString(name);
-    sfText.setFillColor(color);
-    sfText.setCharacterSize(caracterSize);
-    sfText.setPosition(x,y);
-}
+    UI::initText(titelText,     50,  100, "doodle jump", 60, sf::Color::Red);
+    UI::initText(playText,      125, 200, "play",        40, sf::Color::Black);
+    UI::initText(highScoreText, 380, 400, "scores",      40, sf::Color::Black);
+    UI::initText(optionsText,   330, 480, "options",     40, sf::Color::Black);
+    play_button.setText(playText);
+    hs_button.setText(highScoreText);
+    options_button.setText(optionsText);
 
-bool Menu_State::mouseEventMenuItem(sf::Event event, sf::Text & sfText)
-{
-    bool clicked = false;
-    int left = sfText.getGlobalBounds().left;
-    int top = sfText.getGlobalBounds().top;
-    int width = sfText.getGlobalBounds().width;
-    int height = sfText.getGlobalBounds().height;
-    int x = event.mouseButton.x;
-    int y = event.mouseButton.y;
-    
-    if(left < x && x < left+width && top < y && y < top+height)
-    {
-        clicked = true;
-    }
-    return clicked;
 }
 
 void Menu_State::handle_event(sf::Event event)
 {
-    if ( event.type == sf::Event::KeyPressed )
+    play_button.handle_event(event);
+    hs_button.handle_event(event);
+    options_button.handle_event(event);
+
+    if(play_button.is_pressed())
     {
-        if ( event.key.code == sf::Keyboard::Key::H )
-            high_score = true;
-        else if ( event.key.code == sf::Keyboard::Key::P )
-            play = true;
-        else if ( event.key.code == sf::Keyboard::Key::Return )
-            play = true;
+        play = true;
     }
-    if (event.type == sf::Event::MouseButtonPressed)
+    else if(hs_button.is_pressed())
     {
-        if( mouseEventMenuItem(event, highScoreText) )
-	        high_score = true;
-	    else if ( mouseEventMenuItem(event, playText) )
-            play = true;
-	    else if ( mouseEventMenuItem(event, optionsText) )
-            options = true;
-    }    
+        high_score = true;
+    }
+    else if(options_button.is_pressed())
+    {
+        options = true;
+    }
 }
 
 void Menu_State::update()
@@ -89,9 +65,10 @@ void Menu_State::render(sf::RenderTarget & target)
     //target.draw(sprite);//TESTFIXASAPEDVIN
 
     target.draw(titelText);
-    target.draw(playText);
-    target.draw(highScoreText);
-    target.draw(optionsText);
+    play_button.draw(target);
+    hs_button.draw(target);
+    options_button.draw(target);
+    
 }
 
 int Menu_State::get_next_state() 
