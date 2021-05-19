@@ -7,6 +7,7 @@
 
 #include <iostream> //debug
 
+//Sounds sounds;
 
 void Platform::default_shape()
 {
@@ -56,6 +57,7 @@ void Platform::update()
 void Platform::handle_collision( Entity const&)
 {
     Entity::acceleration = -jump_value;
+    Sounds::jump();
     //auto = &e;
 }
 

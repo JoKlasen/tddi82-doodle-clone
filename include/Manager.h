@@ -1,13 +1,11 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 #include <unordered_map>
 #include <utility>
 #include <stdexcept>
-#include <SFML/Graphics.hpp>
-
-
-
 
 
 /*
@@ -31,9 +29,7 @@ class Manager
 
 public:
 
-    
     static T & load (const std::string & file); // filnamnet utgår från root ex. (./resources/images/Apple.png)
-
 
 private:
 
@@ -41,7 +37,8 @@ private:
     
 };
 
-using Texture_Manager = Manager <sf::Texture>;
-using Font_Manager    = Manager <sf::Font>;
+using Texture_Manager   = Manager <sf::Texture>;
+using Font_Manager      = Manager <sf::Font>;
+using Sound_Manager     = Manager <sf::SoundBuffer>;
 
 #include "../src/Manager.tcc"

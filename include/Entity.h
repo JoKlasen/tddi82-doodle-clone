@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 #include "Manager.h"
+#include "Sounds.h"
 
 #include <vector>
 #include <string>

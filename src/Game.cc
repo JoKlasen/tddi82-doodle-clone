@@ -6,6 +6,7 @@
 #include "constants.h" 
 #include "Manager.h"
 
+
 using namespace sf;
 
 Game::Game (std::string const & title, unsigned width, unsigned height)
@@ -33,7 +34,7 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
 }
 
 void Game::start ()
-{
+{   
     Clock clock {}; // startar räkning
     while ( running )
     {

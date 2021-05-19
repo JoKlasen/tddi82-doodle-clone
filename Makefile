@@ -4,7 +4,7 @@ CC := g++
 FLAGS := -std=c++17 -Wall -Wextra -pedantic -Weffc++ -Wold-style-cast -Woverloaded-virtual -fmax-errors=3 -g
 #FLAGS := -std=c++17  -Wfatal-errors   -fmax-errors=3 -g    #om error medellanden är längre än terminalen 
 
-LIB := -lsfml-window -lsfml-graphics -lsfml-system
+LIB := -lsfml-window -lsfml-graphics -lsfml-audio -lsfml-system 
 
 
 SRCDIR := src
