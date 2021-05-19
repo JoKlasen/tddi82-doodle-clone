@@ -55,20 +55,14 @@ void Menu_State::handle_event(sf::Event event)
 
 void Menu_State::update()
 {
-
 }
 
 void Menu_State::render(sf::RenderTarget & target)
 {
-    //target.draw(shape);
-
-    //target.draw(sprite);//TESTFIXASAPEDVIN
-
     target.draw(titelText);
     play_button.draw(target);
     hs_button.draw(target);
     options_button.draw(target);
-    
 }
 
 int Menu_State::get_next_state() 

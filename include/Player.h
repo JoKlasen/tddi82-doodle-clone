@@ -12,13 +12,15 @@ public:
     Player();
     
     void render( sf::RenderTarget & target) override;
-    void handle_collision( Entity const& ) override;
+    void handle_collision( Entity & ) override;
     void update() override;
 
     void handle_input();
+    sf::Rect< float > getGlobalBounds();
 
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
+    void initCollisionContainer();
 
 private:
     int life;

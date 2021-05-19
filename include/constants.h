@@ -4,6 +4,12 @@
 int const screen_width  { 532 };
 int const screen_height { 850 };
 
+
+int const PLAYER_ANY{0};
+int const PLAYER_LEGS{1};
+int const PLAYER_HEAD{2};
+
+int const PLATFORM_ANY{0};
 std::string const font_file         {"./resources/fonts/DoodleJump.ttf"};
 std::string const background_file   {"./resources/images/Background.png"};
 std::string const spritesheet_file  {"./resources/images/sprite_sheet.png"};

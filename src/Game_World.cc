@@ -135,7 +135,9 @@ void Game_World::update ()
     {
         if (testPlayerCollision( *ent ))
         {
+            testCollisionContainer(player,*ent);
             ent->handle_collision(player);
+            player.handle_collision(*ent);
         }
     }
 
@@ -162,34 +164,46 @@ void Game_World::render (sf::RenderTarget & target)
     target.draw(scoreText);
 }
 
-
-
-bool Game_World::testPlayerCollision (Entity const & obj)
+void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
-    /*auto player_rect = player.getGlobalBounds() ;
-    std::cout << "player_rect.top: " << player_rect.top << std::endl;
-    player_rect.top -=  20;
-    auto obj_rect    = obj.getGlobalBounds() ;
-    if (player_rect.intersects(obj_rect) ) //*/
-
-    if ((player.getPosition().x + player.getGlobalBounds().width > obj.getPosition().x) &&
-        (player.getPosition().x < obj.getPosition().x + obj.getGlobalBounds().width) &&
-        (player.getPosition().y + player.getGlobalBounds().height >= obj.getPosition().y) &&
-        (player.getPosition().y + player.getGlobalBounds().height < obj.getPosition().y + obj.getGlobalBounds().height) &&
-        (player.getAcceleration() > 0) ) 
+    //std::cout << "Test Game_World.cc: "<< std::endl; //TESTREMOVEASAP
+    int i = 0;
+    for (auto box1 : obj1.getCollisionContainer())
     {
-        //std::cout << "CRASH" << std::endl <<"player_rect.top: " << player_rect.top << std::endl;
-        return true;
-    }
-    else
-    {
-        return false;
+        int j = 0;
+        box1.left += obj1.getGlobalBounds().left;
+        box1.top += obj1.getGlobalBounds().top;
+        for (auto box2 : obj2.getCollisionContainer())
+        {
+	        box2.left += obj2.getGlobalBounds().left;
+	        box2.top += obj2.getGlobalBounds().top;
+	        if (box1.intersects(box2))
+	        {
+	            //std::cout << i <<" "<< j << std::endl; //TESTREMOVEASAP
+	            obj1.colitionList.push_back(std::tuple<int, int>{i, j});
+	            obj2.colitionList.push_back(std::tuple<int, int>{i, j});
+	        }
+	        j++;
+        }
+        i++;
     }
 }
 
+bool Game_World::testCollision (Entity & obj1,Entity & obj2)
+{   
+    if(obj1.getGlobalBounds().intersects(obj2.getGlobalBounds()))
+    {
+        return true;
+    }
+    return false;
+}
 
-
-
-
-
-
+bool Game_World::testPlayerCollision (Entity & obj)
+{   
+    if(player.getGlobalBounds().intersects(obj.getGlobalBounds()))
+    {
+        return true;
+    }
+  return false;
+        
+}

@@ -36,7 +36,9 @@ private:
     void updateEntities();
     
 
-    bool testPlayerCollision (Entity const & obj);
+    void testCollisionContainer (Entity & obj1,Entity & obj2);
+    bool testCollision (Entity & obj1,Entity & obj2);
+    bool testPlayerCollision (Entity & obj);
 };
 
 #endif
