@@ -19,15 +19,7 @@ sf::Sprite background;
 
 Menu_State::Menu_State()
     : play{false}, exit_game{false}, high_score{false}, options{},
-      titelText{}, playText{}, highScoreText{}, optionsText{},
-      platform{}, font{}//TESTFIXASAPEDVIN
-{
-    //texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
-    //sprite.setTexture(texture);
-  
-    
-    //Platform p();
-    //Platform p1("oskar");
+      titelText{}, playText{}, highScoreText{}, optionsText{}, font{}//TESTFIXASAPEDVIN
 
     //TESTFIXASAPEDVIN Load the font
     font.loadFromFile("./resources/fonts/DoodleJump.ttf"); //TESTFIXASAPEDVIN load form game memory
@@ -94,22 +86,15 @@ void Menu_State::handle_event(sf::Event event)
 
 void Menu_State::update()
 {
-    //platform.update();
-
-    //shape.setFillColor(sf::Color::Green);
 }
 
 void Menu_State::render(sf::RenderTarget & target)
 {
-    //target.draw(shape);
-
-    //target.draw(sprite);//TESTFIXASAPEDVIN
     target.draw(background);//TESTFIXASAPEDVIN
     target.draw(titelText);
     target.draw(playText);
     target.draw(highScoreText);
     target.draw(optionsText);
-    //platform.render(target);
 }
 
 int Menu_State::get_next_state() 

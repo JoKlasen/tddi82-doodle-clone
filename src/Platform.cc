@@ -1,5 +1,6 @@
 #include "Platform.h"
 #include "Entity.h"
+#include "constants.h"
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -12,6 +13,8 @@ void Platform::default_shape()
 {
     shape.setOutlineColor(sf::Color::Blue);
     shape.setOutlineThickness(5);
+    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
+	
 }
 
 
@@ -25,7 +28,8 @@ Platform::Platform()
 
 Platform::Platform( float x, float y )
     : Platform( sf::Vector2f(x, y) )
-{ }
+{
+}
 
 Platform::Platform(sf::Vector2f pos)
     : Entity()
@@ -34,7 +38,7 @@ Platform::Platform(sf::Vector2f pos)
     default_shape();
 }
 
-Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<int> pCollisionContainer)
+Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect< float >> pCollisionContainer)
     : Entity{pname, pposition, pCollisionContainer}
 {
     default_shape();
@@ -51,9 +55,35 @@ void Platform::update()
     shape.setPosition( position ) ;
 }
 
-void Platform::handle_collision( Entity const&)
+void Platform::handle_collision( Entity & ent)
 {
-    Entity::acceleration = -7.5;
-    //auto = &e;
+    while (!colitionList.empty())
+    {
+        double acc {ent.getAcceleration()};
+        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        {
+	
+	        if(acc > 0)
+	        {
+	            Entity::acceleration = -7.5;
+	        }
+        }
+        else if (colitionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
+        {
+	        if(acc < 0)
+	        {
+	            Entity::acceleration = 0;
+	        }
+        }
+        colitionList.pop_back();
+    } 
 }
 
+
+
+
+
+sf::Rect< float > Platform::getGlobalBounds()
+{
+    return shape.getGlobalBounds();
+}

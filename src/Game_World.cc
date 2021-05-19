@@ -1,10 +1,11 @@
 #include "Game_World.h"
 #include <SFML/Graphics.hpp>
 #include "constants.h"
+#include <iostream>
 
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, platform{ 150, 300 }//platform{ sf::Vector2f(50, 50) }
+    : score{0}, entities{}, player{}, platform{ 150, 660 }//platform{ sf::Vector2f(50, 50) }
 {
     //entities.push_back( Platform {} );
 }
@@ -32,8 +33,10 @@ void Game_World::update ()
 
     // Kollisionslogik för spelare mot generell entiry
     // TESTFIXASAP; Senare for each platform i vector<entity>
-    if (testPlayerCollision(platform))
+    if (testCollision(player,platform))
         {
+	    testCollisionContainer(player,platform);
+            player.handle_collision(platform);
             platform.handle_collision(player);
         }
 
@@ -61,17 +64,46 @@ void Game_World::render (sf::RenderTarget & target)
     player.render (target);
 }
 
-bool Game_World::testPlayerCollision (Entity const & obj)
+void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
-    // TESTFIXASAP; 60, 60, 70 och 20 representerar här spelarens hårdkodade width och height, platformens bredd respektive platformens höjd. Bör bytas ut mot getBounds eller liknande för generella entities
-    if ( (player.getPosition().x + 60 > obj.getPosition().x) && (player.getPosition().x < obj.getPosition().x + 70) 
-         && (player.getPosition().y + 60 >= obj.getPosition().y) && (player.getPosition().y + 60 < obj.getPosition().y + 20)
-         && (player.getAcceleration() > 0) )
+    int i = 0;
+    for (auto box1 : obj1.getCollisionContainer())
+    {
+        int j = 0;
+        box1.left += obj1.getGlobalBounds().left;
+        box1.top += obj1.getGlobalBounds().top;
+        for (auto box2 : obj2.getCollisionContainer())
         {
-            return true;
+	        box2.left += obj2.getGlobalBounds().left;
+	        box2.top += obj2.getGlobalBounds().top;
+	        if (box1.intersects(box2))
+	        {
+	            //std::cout << i <<" "<< j << std::endl;
+	            obj1.colitionList.push_back(std::tuple<int, int>{i, j});
+	            obj2.colitionList.push_back(std::tuple<int, int>{i, j});
+	        }
+	        j++;
         }
-    else
-        {
-            return false;
-        }
+        i++;
+    }
+    //std::cout << std::endl;
+}
+
+bool Game_World::testCollision (Entity & obj1,Entity & obj2)
+{   
+    if(obj1.getGlobalBounds().intersects(obj2.getGlobalBounds()))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool Game_World::testPlayerCollision (Entity & obj)
+{   
+    if(player.getGlobalBounds().intersects(obj.getGlobalBounds()))
+    {
+        return true;
+    }
+  return false;
+        
 }
