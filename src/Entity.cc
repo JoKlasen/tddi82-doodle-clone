@@ -15,6 +15,7 @@ Entity::Entity(std::string pname,
     std::vector<sf::Rect< float >> pCollisionContainer )
     : colitionList{}, name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
     {
+    }
 
 
 // Getters och setters

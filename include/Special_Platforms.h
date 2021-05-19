@@ -26,7 +26,7 @@ public:
     Breaking_Platform( float, float );   //position 
     Breaking_Platform( sf::Vector2f );   //position 
 
-    void handle_collision( Entity const& ) override;
+    void handle_collision( Entity & ) override;
     void update() override;
 
 private:
@@ -60,7 +60,7 @@ public:
     Disappearing_Platform( sf::Vector2f );   //position 
 
     void render( sf::RenderTarget & ) override;
-    void handle_collision( Entity const& ) override;
+    void handle_collision( Entity & ) override;
     void update() override;
 
 private:

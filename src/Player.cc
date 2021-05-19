@@ -22,10 +22,6 @@ Player::Player()
 	    colitionrightbox.height = height/2;
         CollisionContainer.push_back(colitionrightbox);
         CollisionContainer.push_back(colitionleftbox);
-	  
-        //TESTFIX; ta bort nedan
-        testplatform.setFillColor (sf::Color::Green);
-        testplatform.setPosition (0,300);
 
     }
 

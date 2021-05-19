@@ -64,13 +64,25 @@ void Breaking_Platform::default_shape()
     //shape.setOutlineThickness(5);
 }
 
-void Breaking_Platform::handle_collision( Entity const& )
+void Breaking_Platform::handle_collision( Entity & ent)
 {
-    if(intact)
+    while (!colitionList.empty())
     {
-        intact = false;
-        shape.setTextureRect(red_platform_broken);
-    }
+        double acc {ent.getAcceleration()};
+        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        {
+	
+	        if(acc > 0)
+	        {
+                if(intact)
+                {
+                    intact = false;
+                    shape.setTextureRect(red_platform_broken);
+                }
+	        }
+        }
+        colitionList.pop_back();
+    } 
 }
 
 void Breaking_Platform::update()
@@ -168,13 +180,24 @@ void Disappearing_Platform::render( sf::RenderTarget & target)
         Platform::render(target);
 }
 
-void Disappearing_Platform::handle_collision( Entity const& ent)
-{
-    if(intact)
+void Disappearing_Platform::handle_collision( Entity & ent)
+{while (!colitionList.empty())
     {
-        intact = false;
-        Platform::handle_collision(ent);
-    }
+        double acc {ent.getAcceleration()};
+        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        {
+	
+	        if(acc > 0)
+	        {
+                if(intact)
+                {
+                    intact = false;
+	                Entity::acceleration = -jump_value;
+                }
+	        }
+        }
+        colitionList.pop_back();
+    } 
 }
 
 void Disappearing_Platform::update()

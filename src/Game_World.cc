@@ -134,7 +134,7 @@ void Game_World::update ()
         {
             testCollisionContainer(player,*ent);
             ent->handle_collision(player);
-            player->handle_collision(*ent);
+            player.handle_collision(*ent);
         }
     }
 
@@ -163,6 +163,7 @@ void Game_World::render (sf::RenderTarget & target)
 
 void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
+    std::cout << "Test Game_World.cc: "<< std::endl;
     int i = 0;
     for (auto box1 : obj1.getCollisionContainer())
     {
@@ -175,7 +176,7 @@ void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 	        box2.top += obj2.getGlobalBounds().top;
 	        if (box1.intersects(box2))
 	        {
-	            //std::cout << i <<" "<< j << std::endl;
+	            std::cout << i <<" "<< j << std::endl;
 	            obj1.colitionList.push_back(std::tuple<int, int>{i, j});
 	            obj2.colitionList.push_back(std::tuple<int, int>{i, j});
 	        }
@@ -183,7 +184,6 @@ void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
         }
         i++;
     }
-    //std::cout << std::endl;
 }
 
 bool Game_World::testCollision (Entity & obj1,Entity & obj2)
