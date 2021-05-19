@@ -163,7 +163,7 @@ void Game_World::render (sf::RenderTarget & target)
 
 void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
-    std::cout << "Test Game_World.cc: "<< std::endl;
+    //std::cout << "Test Game_World.cc: "<< std::endl; //TESTREMOVEASAP
     int i = 0;
     for (auto box1 : obj1.getCollisionContainer())
     {
@@ -176,7 +176,7 @@ void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 	        box2.top += obj2.getGlobalBounds().top;
 	        if (box1.intersects(box2))
 	        {
-	            std::cout << i <<" "<< j << std::endl;
+	            //std::cout << i <<" "<< j << std::endl; //TESTREMOVEASAP
 	            obj1.colitionList.push_back(std::tuple<int, int>{i, j});
 	            obj2.colitionList.push_back(std::tuple<int, int>{i, j});
 	        }

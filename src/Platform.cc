@@ -36,6 +36,7 @@ Platform::Platform(sf::Vector2f pos)
 {
     shape.setScale(0.75, 0.75);
     Entity::position = pos; 
+    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
     //default_shape();
 }
 
@@ -69,6 +70,7 @@ void Platform::handle_collision( Entity & ent)
 	            Entity::acceleration = -jump_value;
 	        }
         }
+	/*
         else if (colitionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
         {
 	        if(acc < 0)
@@ -76,6 +78,7 @@ void Platform::handle_collision( Entity & ent)
 	            Entity::acceleration = 0;
 	        }
         }
+	*/
         colitionList.pop_back();
     } 
 }

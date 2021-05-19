@@ -11,8 +11,13 @@ Player::Player()
         this->position.y = (screen_height/2 - this->dimensions.y/2);
         
         playershape.setFillColor (sf::Color::Blue);
+        
+        initCollisionContainer();
 
-	//inti colition container
+    }
+    
+void Player::initCollisionContainer()
+{
         CollisionContainer.push_back(playershape.getLocalBounds ()); //migt become a isue
 	    auto height {playershape.getLocalBounds ().height};
         auto colitionleftbox {playershape.getLocalBounds ()};
@@ -22,8 +27,7 @@ Player::Player()
 	    colitionrightbox.height = height/2;
         CollisionContainer.push_back(colitionrightbox);
         CollisionContainer.push_back(colitionleftbox);
-
-    }
+}
 
 
 void Player::render( sf::RenderTarget & target)

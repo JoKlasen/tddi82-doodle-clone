@@ -20,6 +20,7 @@ public:
 
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
+    void initCollisionContainer();
 
 private:
     int life;
