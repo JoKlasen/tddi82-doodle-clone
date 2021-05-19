@@ -18,19 +18,24 @@ public:
     Platform();
     Platform( float, float );   //position 
     Platform( sf::Vector2f );   //position 
-    Platform(std::string name, sf::Vector2f position= sf::Vector2f(), std::vector<int> CollisionContainer = std::vector<int>{});
+    Platform(std::string name, sf::Vector2f position= sf::Vector2f(), std::vector<sf::Rect< float >> CollisionContainer = std::vector<sf::Rect< float >>{});
     
     void render( sf::RenderTarget & ) override;
-    void handle_collision( Entity const& ) override;
+    void handle_collision( Entity & ) override;
     void update() override;
-
-private:
-    void make_power_up(std::unique_ptr<Power_Up> & );
-    void default_shape();
-    sf::RectangleShape shape{ sf::Vector2f(75, 20) };
-    std::unique_ptr<Power_Up> power_up;
-    bool has_power_up;
     
+    sf::Rect< float > getGlobalBounds() override;
+
+    sf::FloatRect getGlobalBounds() const override; //tillfälig
+protected:
+    virtual void default_shape();
+    void make_power_up(std::unique_ptr<Power_Up> & );
+    double jump_value{10.0};
+    sf::Sprite shape; 
+    bool has_power_up;
+    std::unique_ptr<Power_Up> power_up;
+    //sf::RectangleShape shape{ sf::Vector2f(75, 20) };
+
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "Platform.h"
 #include "Entity.h"
+#include "constants.h"
 #include <SFML/Graphics.hpp>
 #include <random>
 #include <vector>
@@ -10,8 +11,9 @@
 
 void Platform::default_shape()
 {
-    shape.setOutlineColor(sf::Color::Blue);
-    shape.setOutlineThickness(5);
+    //shape.setOutlineColor(sf::Color::Blue);
+    //shape.setOutlineThickness(5);
+    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
 }
 
 void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här för hur ofta power_ups ska spawna
@@ -38,36 +40,32 @@ void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här f�
 
 //konstruktor
 Platform::Platform()
-    : Entity(), power_up{}, has_power_up{false}
-{
-    default_shape();
-
-    // power_up
-
+    : Entity(), shape{Texture_Manager::load(spritesheet_file), green_platform}, has_power_up{false}, power_up{nullptr}
+{   
+    shape.setScale(0.75, 0.75);
     make_power_up(power_up);
+    //default_shape();
 }
 
 Platform::Platform( float x, float y )
     : Platform( sf::Vector2f(x, y) )
-{ }
-
-Platform::Platform(sf::Vector2f pos)
-    : Entity(), power_up{}, has_power_up{false}
 {
-    Entity::position = pos; 
-    default_shape();
-
-    // power_up
-    make_power_up(power_up);
-
 }
 
-Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<int> pCollisionContainer)
-    : Entity{pname, pposition, pCollisionContainer}, power_up{},has_power_up{false}
+Platform::Platform(sf::Vector2f pos)
+    : Entity(), shape{Texture_Manager::load(spritesheet_file), green_platform},has_power_up{false},power_up{nullptr}
 {
-    default_shape();
+    shape.setScale(0.75, 0.75);
+    Entity::position = pos; 
+    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
+    make_power_up(power_up);
+    //default_shape();
+}
 
-    // power_up
+Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect< float >> pCollisionContainer)
+    : Entity{pname, pposition, pCollisionContainer}, shape{Texture_Manager::load(spritesheet_file), green_platform}, has_power_up{false},power_up{nullptr}
+{
+    //default_shape();
     make_power_up(power_up);
 }
 
@@ -84,11 +82,42 @@ void Platform::update()
     power_up->set_pos(shape.getPosition());
 }
 
-void Platform::handle_collision( Entity const&)
+void Platform::handle_collision( Entity & ent)
 {
-    Entity::acceleration = -7.5;
-    //auto = &e;
-
-    
+    while (!colitionList.empty())
+    {
+        double acc {ent.getAcceleration()};
+        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        {
+	
+	        if(acc > 0)
+	        {
+	            Entity::acceleration = -jump_value;
+	        }
+        }
+	/*
+        else if (colitionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
+        {
+	        if(acc < 0)
+	        {
+	            Entity::acceleration = 0;
+	        }
+        }
+	*/
+        colitionList.pop_back();
+    } 
 }
 
+
+
+
+
+sf::Rect< float > Platform::getGlobalBounds()
+{
+    return shape.getGlobalBounds();
+}
+
+sf::FloatRect Platform::getGlobalBounds() const
+{
+    return shape.getGlobalBounds() ;
+}
