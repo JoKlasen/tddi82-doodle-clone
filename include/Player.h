@@ -25,7 +25,8 @@ public:
 private:
     int life;
     sf::Vector2f dimensions{};      // Width, Height
-    sf::CircleShape playershape{30, 3};
+    sf::Sprite playershape;
+    //sf::CircleShape playershape{30, 3};
 };
 
 

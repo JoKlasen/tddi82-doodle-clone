@@ -5,12 +5,21 @@
 #include <iostream>
 
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, dimensions{60, 60}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, dimensions{60, 60}, 
+      playershape{Texture_Manager::load(spritesheet_file), player_right}
     {
         this->position.x = (screen_width/2 - this->dimensions.x/2);
         this->position.y = (screen_height/2 - this->dimensions.y/2);
         
-        playershape.setFillColor (sf::Color::Blue);
+        std::cout << "Innan scale: LocalBounds= " << playershape.getLocalBounds().width << ", " << playershape.getLocalBounds().height <<
+        " GlobalBounds= " << playershape.getGlobalBounds().width << ", " << playershape.getGlobalBounds().height << std::endl;
+
+        playershape.setScale(0.75, 0.75);
+        
+        std::cout << "Efter scale: LocalBounds= " << playershape.getLocalBounds().width << ", " << playershape.getLocalBounds().height <<
+        " GlobalBounds= " << playershape.getGlobalBounds().width << ", " << playershape.getGlobalBounds().height << std::endl;
+        
+        //playershape.setFillColor (sf::Color::Blue);
         
         initCollisionContainer();
 
@@ -18,15 +27,24 @@ Player::Player()
     
 void Player::initCollisionContainer()
 {
-        CollisionContainer.push_back(playershape.getLocalBounds ()); //migt become a isue
-	    auto height {playershape.getLocalBounds ().height};
-        auto colitionleftbox {playershape.getLocalBounds ()};
-	    colitionleftbox.height = height/2;
+        CollisionContainer.push_back(playershape.getLocalBounds()); //might become an issue
+	    
+
+        auto height {playershape.getLocalBounds ().height};
+        
         auto colitionrightbox {playershape.getLocalBounds ()};
 	    colitionrightbox.top  = height/2;
 	    colitionrightbox.height = height/2;
+
         CollisionContainer.push_back(colitionrightbox);
+        
+        auto colitionleftbox {playershape.getLocalBounds ()};
+	    colitionleftbox.height = height/2;
+
         CollisionContainer.push_back(colitionleftbox);
+
+
+    
 }
 
 
