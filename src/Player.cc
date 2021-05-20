@@ -5,22 +5,15 @@
 #include <iostream>
 
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, dimensions{60, 60}//, 
-      //sprite{Texture_Manager::load(spritesheet_file), player_right}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}
     {
         sprite.setTexture(Texture_Manager::load(spritesheet_file));
         sprite.setTextureRect(player_right);
-        this->position.x = (screen_width/2 - this->dimensions.x/2);
-        this->position.y = (screen_height/2 - this->dimensions.y/2);
-        
-        std::cout << "Innan scale: LocalBounds= " << sprite.getLocalBounds().width << ", " << sprite.getLocalBounds().height <<
-        " GlobalBounds= " << sprite.getGlobalBounds().width << ", " << sprite.getGlobalBounds().height << std::endl;
 
+        sprite.setPosition( (screen_width/2 - sprite.getGlobalBounds().width/2), (screen_height/2 - sprite.getGlobalBounds().height/2) );
+        
         //sprite.setScale(0.75, 0.75);
         
-        std::cout << "Efter scale: LocalBounds= " << sprite.getLocalBounds().width << ", " << sprite.getLocalBounds().height <<
-        " GlobalBounds= " << sprite.getGlobalBounds().width << ", " << sprite.getGlobalBounds().height << std::endl;
-
         initCollisionContainer();
     }
     
@@ -31,7 +24,6 @@ Player::Player()
 
 void Player::render( sf::RenderTarget & target)
 {
-    sprite.setPosition( this->getPosition() );
     target.draw(sprite);
 }
 
@@ -51,7 +43,20 @@ void Player::update()
 
     // Hopp/fall
     Entity::acceleration += 0.2;    // Öka fallhastighet
-    this->position.y += Entity::acceleration;
+    sprite.move(0, Entity::acceleration);
+    if (Entity::acceleration >= 2)  // Om "studsande" sprite, byt till "vanlig"
+    {
+        if (facing_right)
+        {   
+            sprite.setTextureRect(player_right);
+        }
+        else
+        {
+            sprite.setTextureRect(player_left);
+        }
+    }
+    
+
 }
 
 
@@ -59,21 +64,29 @@ void Player::handle_input()
 {
     // Flytta spelaren vid knappar
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
+    {   
+        if (facing_right)
+        {   
+            facing_right = false;
+        }
         sprite.setTextureRect(player_left);
         move(sf::Vector2f(-4, 0));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
+    {   
+        if (!facing_right)
+        {
+            facing_right = true;
+        }
         sprite.setTextureRect(player_right);
         move(sf::Vector2f(4, 0));
     }
 
     // wrap around
-    if ( this->position.x + dimensions.x/2 > screen_width )
-        this->position.x = -(dimensions.x/2);
-    else if ( this->position.x < (0 - this->dimensions.x/2 ) )
-        this->position.x = (screen_width - this->dimensions.x/2 );
+    if ( getPosition().x + getGlobalBounds().width/2 > screen_width )
+        setPosition(-(getGlobalBounds().width/2) , getPosition().y);
+    else if ( getPosition().x < (0 - getGlobalBounds().width/2) )
+        setPosition( (screen_width - getGlobalBounds().width/2) , getPosition().y);
 }
 
 
@@ -87,31 +100,30 @@ sf::FloatRect Player::getGlobalBounds() const
     return sprite.getGlobalBounds() ;
 }
 
+// bool Player::isFacingRight()
+// {
+//     return facing_right;
+// }
+
+void Player::setCollisionSprite()
+{
+    if (facing_right)
+        sprite.setTextureRect(player_right_landing);
+    else
+        sprite.setTextureRect(player_left_landing);
+}
+
 ////////////////
 // Private functions
 ////////////////
 
 void Player::initCollisionContainer()
 {
+    auto box = sprite.getLocalBounds();
+    box.width = box.width * sprite.getScale().x;
+    box.height = box.height * sprite.getScale().y;
     CollisionContainer.push_back(sprite.getLocalBounds()); //might become an issue
     
     CollisionContainer.push_back(player_legs_box);
     CollisionContainer.push_back(player_body_box);
-
-    // auto height {sprite.getLocalBounds ().height};
-    
-    // auto collisionRightbox {sprite.getLocalBounds ()};
-    // collisionRightbox.left      = 30;
-    // collisionRightbox.top       = height-15;
-    // collisionRightbox.height    = 15;
-    // collisionRightbox.width     = 50;
-
-    // CollisionContainer.push_back(collisionRightbox);
-    
-    // auto collisionLeftbox {sprite.getLocalBounds ()};
-    // collisionLeftbox.height     = height/2;
-    // collisionLeftbox.left       = 30;
-    // collisionLeftbox.width      = 50;
-
-    // CollisionContainer.push_back(collisionLeftbox);
 }

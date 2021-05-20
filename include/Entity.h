@@ -24,12 +24,6 @@ public:
     virtual void handle_collision( Entity & ) = 0;
     virtual void update() = 0;
     
-
-    //virtual void movement_behavior() = 0;         //? tycker att dena ska vara private och lokal för "läggre" klasser 
-
-    void move(sf::Vector2f const & value);
-    void move(float const & offsetX, float const & offsetY); 
-
     // Getters och setters
     virtual sf::Rect<float> getGlobalBounds() = 0;
     virtual sf::FloatRect getGlobalBounds() const  = 0; 
@@ -39,9 +33,15 @@ public:
 
     sf::Vector2f getPosition() const;
     void setPosition(sf::Vector2f value);
+    void setPosition(float valueX, float valueY);
+
+    void move(sf::Vector2f const & value);
+    void move(float const & offsetX, float const & offsetY); 
 
     double getAcceleration() const;
     void setAcceleration(double value);     // Inte helt hundra på om dessa behövs eller inte
+
+    virtual void setCollisionSprite();      // Just nu för att ändra player
 
     std::vector<sf::Rect<float>> getCollisionContainer();
 
@@ -50,8 +50,7 @@ protected:
     // Datamedlemmar
     std::string name;
     sf::Sprite sprite;
-    sf::Vector2f position;                  // sf::Vector2<float>
-    static double acceleration;             // Ändrade denna, dels till double, för jag tror att vi bara behöver hålla koll på förändring i Y-led. Och dels till static för att jag tror att resten av planen kommer vara direkt beroende av spelaren. -Johan
+    static double acceleration;
     std::vector<sf::Rect<float>> CollisionContainer;    // ska vara collision box
 
 };

@@ -8,9 +8,8 @@
 class Extra_Jump_Platform : public Platform
 {
 public:
-    Extra_Jump_Platform();
     Extra_Jump_Platform( float, float );   //position 
-    Extra_Jump_Platform( sf::Vector2f );   //position, dom övre konstruktorerna använder sig av denna, gör ändringar här eller motsvarande i andra platformar. 
+    Extra_Jump_Platform( sf::Vector2f pos = sf::Vector2f{} );   //position
 
 private:
 
@@ -20,9 +19,8 @@ private:
 class Breaking_Platform : public Platform
 {
 public:
-    Breaking_Platform();
     Breaking_Platform( float, float );   //position 
-    Breaking_Platform( sf::Vector2f );   //position 
+    Breaking_Platform( sf::Vector2f pos = sf::Vector2f{} );   //position 
 
     void handle_collision( Entity & ) override;
     void update() override;
@@ -36,9 +34,8 @@ private:
 class Moving_Platform : public Platform
 {
 public:
-    Moving_Platform();
     Moving_Platform( float, float );   //position 
-    Moving_Platform( sf::Vector2f );   //position 
+    Moving_Platform( sf::Vector2f pos = sf::Vector2f{} );   //position 
 
     void update() override;
 
@@ -50,9 +47,8 @@ private:
 class Disappearing_Platform : public Platform
 {
 public:
-    Disappearing_Platform();
     Disappearing_Platform( float, float );   //position 
-    Disappearing_Platform( sf::Vector2f );   //position
+    Disappearing_Platform( sf::Vector2f pos = sf::Vector2f{} );   //position
 
     void render( sf::RenderTarget & ) override;
     void handle_collision( Entity & ) override;

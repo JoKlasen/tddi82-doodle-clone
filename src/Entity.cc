@@ -5,7 +5,7 @@
 double Entity::acceleration = 0;
 
 Entity::Entity()
-    : collisionList{}, name{"bertil"}, sprite{}, position{}, CollisionContainer{}
+    : collisionList{}, name{"bertil"}, sprite{}, CollisionContainer{}
 {
 
 }
@@ -15,8 +15,9 @@ Entity::Entity( std::string pname,
                 //sf::IntRect psubtexture,
                 sf::Vector2f pposition,        
                 std::vector<sf::Rect<float>> pCollisionContainer )
-    : collisionList{}, name{pname}, sprite{}, position{pposition}, CollisionContainer{pCollisionContainer}
+    : collisionList{}, name{pname}, sprite{}, CollisionContainer{pCollisionContainer}
     {
+        sprite.setPosition(pposition);
         // if ( (psubtexture.width != 0) && (psubtexture.height != 0) )
         //     sprite.setTextureRect(psubtexture);
     }
@@ -30,7 +31,7 @@ std::vector<sf::Rect<float>> Entity::getCollisionContainer()
 
 sf::FloatRect Entity::getGlobalBounds() const
 {
-    return getGlobalBounds();
+    return sprite.getGlobalBounds();
 }
 
 std::string Entity::getName() const
@@ -45,13 +46,18 @@ void Entity::setName(std::string value)
 
 sf::Vector2f Entity::getPosition() const
 {
-    return this->position;
+    return sprite.getPosition();
 }
 
 void Entity::setPosition(sf::Vector2f value)
 {
-    this->position.x = value.x;
-    this->position.y = value.y;
+    sprite.setPosition(value);
+}
+
+void Entity::setPosition(float valueX, float valueY)
+{   
+    sf::Vector2f value(valueX, valueY);
+    sprite.setPosition(value);
 }
 
 double Entity::getAcceleration() const
@@ -66,12 +72,16 @@ void Entity::setAcceleration(double value)
 
 void Entity::move(sf::Vector2f const & value)
 {
-    this->position.x += value.x;
-    this->position.y += value.y;
+    sprite.move(value);
 }
 
 void Entity::move(float const & offsetX, float const & offsetY)
 {
-    this->position.x += offsetX;
-    this->position.y += offsetY;
+    sf::Vector2f value(offsetX, offsetY);
+    sprite.move(value);
+}
+
+void Entity::setCollisionSprite()
+{
+    
 }

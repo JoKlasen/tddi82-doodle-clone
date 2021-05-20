@@ -8,9 +8,7 @@
 class Platform : public Entity
 {
 public:
-    //Platform();
     Platform( float, float );   //position 
-    //Platform( sf::Vector2f );   //position, dom övre konstruktorerna använder sig av denna, gör främst ändringar här 
     Platform(   std::string name = std::string{"Platform"},
                 sf::Vector2f position = sf::Vector2f(), 
                 std::vector<sf::Rect<float>> CollisionContainer = std::vector<sf::Rect<float>>{} );
@@ -25,7 +23,6 @@ public:
 protected:
     // Datamedlemmar
     double jump_value{10.0};
-    //sf::Sprite shape; 
 
 };
 

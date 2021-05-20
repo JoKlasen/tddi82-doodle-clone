@@ -19,12 +19,12 @@ public:
     sf::Rect<float> getGlobalBounds() override;
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
+    void setCollisionSprite() override;
+
 private:
     // Datamedlemmar
     int life;
-    sf::Vector2f dimensions{};      // Width, Height
-    //sf::Sprite playershape;
-    //sf::CircleShape playershape{30, 3};
+    bool facing_right{true};
 
     // Interna funktioner
     void initCollisionContainer();

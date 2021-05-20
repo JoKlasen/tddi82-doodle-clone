@@ -153,7 +153,7 @@ void Game_World::destroyPlatforms()
 {
     int destroy_y_line {screen_height};
 
-    // Tar bort entetis under skärm 
+    // Tar bort entities under skärm 
     auto it = remove_if(entities.begin(), entities.end(), 
                 [destroy_y_line](auto const& ent ){ return ent->getPosition().y > destroy_y_line; } );
     entities.erase(it, entities.end()
@@ -174,20 +174,29 @@ void Game_World::updateEntities()
 
 void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
-    //std::cout << "Test Game_World.cc: "<< std::endl; //TESTREMOVEASAP
+    // std::cout << "Test Game_World.cc: "<< std::endl; //TESTREMOVEASAP
+    // std::cout << obj1.getCollisionContainer().size() << " " <<obj2.getCollisionContainer().size() << std::endl;
     int i = 0;
     for (auto box1 : obj1.getCollisionContainer())
     {
         int j = 0;
+
         box1.left += obj1.getGlobalBounds().left;
         box1.top += obj1.getGlobalBounds().top;
+        //box1.height = box1.height * obj1.getScale().y;        // OBS detta måste göras om det inte hanteras av entitetens konstruktor
+        // std::cout << box1.left << " " << box1.top << " " << box1.width << " " << box1.height << std::endl;
         for (auto box2 : obj2.getCollisionContainer())
         {
+          
 	        box2.left += obj2.getGlobalBounds().left;
 	        box2.top += obj2.getGlobalBounds().top;
-	        if (box1.intersects(box2))
+
+
+	        // std::cout << box2.left << " " << box2.top << " " << box2.width << " " << box2.height << std::endl;
+            if (box1.intersects(box2))
 	        {
-	            //std::cout << i <<" "<< j << std::endl; //TESTREMOVEASAP
+	            // std::cout << i <<" "<< j << std::endl; //TESTREMOVEASAP
+                // std::cout << box1.left << ", " << box1.top << " " << box2.left << ", " << box2.top << std::endl;
 	            obj1.collisionList.push_back(std::tuple<int, int>{i, j});
 	            obj2.collisionList.push_back(std::tuple<int, int>{i, j});
 	        }

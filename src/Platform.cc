@@ -10,21 +10,9 @@
 
 
 //konstruktor
-// Platform::Platform()
-//     : Platform(sf::Vector2f(0, 0))
-// { }
-
 Platform::Platform( float x, float y )
     : Platform("Platform", sf::Vector2f(x, y) )
 { }
-
-// Platform::Platform(sf::Vector2f pos)
-//     : Entity(), sprite{Texture_Manager::load(spritesheet_file), green_platform}
-// {
-//     sprite.setScale(0.75, 0.75);
-//     Entity::position = pos; 
-//     CollisionContainer.push_back(sprite.getGlobalBounds ()); //might become an issue
-// }
 
 Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect<float>> pCollisionContainer)
     : Entity{pname, pposition, pCollisionContainer}//, sprite{Texture_Manager::load(spritesheet_file), green_platform}
@@ -32,8 +20,10 @@ Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Re
     sprite.setTexture(Texture_Manager::load(spritesheet_file));
     sprite.setTextureRect(green_platform);
     sprite.setScale(0.75, 0.75);
-    Entity::position = pposition; 
-    CollisionContainer.push_back(sprite.getGlobalBounds ()); //might become an issue
+    auto box = sprite.getLocalBounds();
+    box.width = box.width * sprite.getScale().x;
+    box.height = box.height * sprite.getScale().y;
+    CollisionContainer.push_back(box); //might become an issue
 }
 
 void Platform::render(sf::RenderTarget & target)
@@ -43,7 +33,7 @@ void Platform::render(sf::RenderTarget & target)
 
 void Platform::update() 
 {
-    sprite.setPosition( position ) ;
+    
 }
 
 void Platform::handle_collision( Entity & ent)
@@ -57,6 +47,7 @@ void Platform::handle_collision( Entity & ent)
 	        if(acc > 0)
 	        {
 	            Entity::acceleration = -jump_value;
+                ent.setCollisionSprite();
 	        }
         }
 	/*
@@ -80,5 +71,5 @@ sf::Rect< float > Platform::getGlobalBounds()
 
 sf::FloatRect Platform::getGlobalBounds() const
 {
-    return sprite.getGlobalBounds() ;
+    return sprite.getGlobalBounds();
 }
