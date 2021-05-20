@@ -135,6 +135,7 @@ void Disappearing_Platform::handle_collision( Entity & ent)
                     intact = false;
 	                Entity::acceleration = -jump_value;
                     ent.setCollisionSprite();
+                    Sounds::jump();
                 }
 	        }
         }
