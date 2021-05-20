@@ -10,38 +10,40 @@
 
 
 //konstruktor
-Platform::Platform()
-    : Platform(sf::Vector2f(0, 0))
-{ }
+// Platform::Platform()
+//     : Platform(sf::Vector2f(0, 0))
+// { }
 
 Platform::Platform( float x, float y )
-    : Platform( sf::Vector2f(x, y) )
+    : Platform("Platform", sf::Vector2f(x, y) )
 { }
 
-Platform::Platform(sf::Vector2f pos)
-    : Entity(), shape{Texture_Manager::load(spritesheet_file), green_platform}
-{
-    shape.setScale(0.75, 0.75);
-    Entity::position = pos; 
-    CollisionContainer.push_back(shape.getGlobalBounds ()); //might become an issue
-}
+// Platform::Platform(sf::Vector2f pos)
+//     : Entity(), sprite{Texture_Manager::load(spritesheet_file), green_platform}
+// {
+//     sprite.setScale(0.75, 0.75);
+//     Entity::position = pos; 
+//     CollisionContainer.push_back(sprite.getGlobalBounds ()); //might become an issue
+// }
 
 Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect<float>> pCollisionContainer)
-    : Entity{pname, pposition, pCollisionContainer}, shape{Texture_Manager::load(spritesheet_file), green_platform}
+    : Entity{pname, pposition, pCollisionContainer}//, sprite{Texture_Manager::load(spritesheet_file), green_platform}
 { 
-    shape.setScale(0.75, 0.75);
+    sprite.setTexture(Texture_Manager::load(spritesheet_file));
+    sprite.setTextureRect(green_platform);
+    sprite.setScale(0.75, 0.75);
     Entity::position = pposition; 
-    CollisionContainer.push_back(shape.getGlobalBounds ()); //might become an issue
+    CollisionContainer.push_back(sprite.getGlobalBounds ()); //might become an issue
 }
 
 void Platform::render(sf::RenderTarget & target)
 {
-    target.draw(shape);
+    target.draw(sprite);
 }
 
 void Platform::update() 
 {
-    shape.setPosition( position ) ;
+    sprite.setPosition( position ) ;
 }
 
 void Platform::handle_collision( Entity & ent)
@@ -73,10 +75,10 @@ void Platform::handle_collision( Entity & ent)
 
 sf::Rect< float > Platform::getGlobalBounds()
 {
-    return shape.getGlobalBounds();
+    return sprite.getGlobalBounds();
 }
 
 sf::FloatRect Platform::getGlobalBounds() const
 {
-    return shape.getGlobalBounds() ;
+    return sprite.getGlobalBounds() ;
 }

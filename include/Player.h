@@ -23,7 +23,7 @@ private:
     // Datamedlemmar
     int life;
     sf::Vector2f dimensions{};      // Width, Height
-    sf::Sprite playershape;
+    //sf::Sprite playershape;
     //sf::CircleShape playershape{30, 3};
 
     // Interna funktioner

@@ -18,7 +18,7 @@ Extra_Jump_Platform::Extra_Jump_Platform( float x, float y )
 { }
 
 Extra_Jump_Platform::Extra_Jump_Platform(sf::Vector2f pos)
-    : Platform(pos)
+    : Platform("Extra_Jump_Platform", pos)
 { 
     jump_value = extra_jump_value;
 }
@@ -37,9 +37,9 @@ Breaking_Platform::Breaking_Platform( float x, float y )
 { }
 
 Breaking_Platform::Breaking_Platform(sf::Vector2f pos)
-    : Platform(pos), fall_speed{0}
+    : Platform("Breaking_Platform", pos), fall_speed{0}
 {
-    shape.setTextureRect(red_platform_intact);
+    sprite.setTextureRect(red_platform_intact);
 }
 
 //funktioner
@@ -56,7 +56,7 @@ void Breaking_Platform::handle_collision( Entity & ent)
                 if(intact)
                 {
                     intact = false;
-                    shape.setTextureRect(red_platform_broken);
+                    sprite.setTextureRect(red_platform_broken);
                 }
 	        }
         }
@@ -88,9 +88,9 @@ Moving_Platform::Moving_Platform( float x, float y )
 { }
 
 Moving_Platform::Moving_Platform(sf::Vector2f pos)
-    : Platform(pos)
+    : Platform("Moving_Platform", pos)
 {   
-    shape.setTextureRect(blue_platform);
+    sprite.setTextureRect(blue_platform);
 }
 
 //funktioner
@@ -99,7 +99,7 @@ void Moving_Platform::update()
     if(moving_right)
     {
         move(sf::Vector2f(moving_platform_speed, 0));
-        if(position.x + shape.getGlobalBounds().width >= screen_width)
+        if(position.x + sprite.getGlobalBounds().width >= screen_width)
             moving_right = false;
     }
     else
@@ -125,9 +125,9 @@ Disappearing_Platform::Disappearing_Platform( float x, float y )
 { }
 
 Disappearing_Platform::Disappearing_Platform(sf::Vector2f pos)
-    : Platform(pos), fade_val{255}
+    : Platform("Disappearing_Platform", pos), fade_val{255}
 {
-    shape.setTextureRect(white_platform);
+    sprite.setTextureRect(white_platform);
 }
 
 //funktioner
@@ -164,7 +164,7 @@ void Disappearing_Platform::update()
         if (fade_val != 0)
         {
             fade_val -= 15;
-            shape.setColor(sf::Color(255, 255, 255, fade_val));
+            sprite.setColor(sf::Color(255, 255, 255, fade_val));
         }
     }
     Platform::update();

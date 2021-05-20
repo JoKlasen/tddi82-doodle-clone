@@ -14,9 +14,11 @@ class Entity
 public:
     virtual ~Entity () = default;
     Entity();
-    Entity( std::string pname,
-            sf::Vector2f pposition,
-            std::vector<sf::Rect< float >> pCollisionContainer);
+    Entity( std::string pname = std::string{},
+            //sf::Texture ptexture = sf::Texture{},
+            //sf::IntRect psubtexture = sf::IntRect{},
+            sf::Vector2f pposition = sf::Vector2f{},
+            std::vector<sf::Rect<float>> pCollisionContainer = std::vector<sf::Rect<float>>{});
 
     virtual void render( sf::RenderTarget & ) = 0;
     virtual void handle_collision( Entity & ) = 0;
@@ -47,6 +49,7 @@ public:
 protected:
     // Datamedlemmar
     std::string name;
+    sf::Sprite sprite;
     sf::Vector2f position;                  // sf::Vector2<float>
     static double acceleration;             // Ändrade denna, dels till double, för jag tror att vi bara behöver hålla koll på förändring i Y-led. Och dels till static för att jag tror att resten av planen kommer vara direkt beroende av spelaren. -Johan
     std::vector<sf::Rect<float>> CollisionContainer;    // ska vara collision box

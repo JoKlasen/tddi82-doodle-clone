@@ -5,16 +5,20 @@
 double Entity::acceleration = 0;
 
 Entity::Entity()
-    : collisionList{}, name{"bertil"}, position{}, CollisionContainer{}
+    : collisionList{}, name{"bertil"}, sprite{}, position{}, CollisionContainer{}
 {
 
 }
 
-Entity::Entity(std::string pname,
-    sf::Vector2f pposition,        
-    std::vector<sf::Rect<float>> pCollisionContainer )
-    : collisionList{}, name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
+Entity::Entity( std::string pname,
+                //sf::Texture ptexture,
+                //sf::IntRect psubtexture,
+                sf::Vector2f pposition,        
+                std::vector<sf::Rect<float>> pCollisionContainer )
+    : collisionList{}, name{pname}, sprite{}, position{pposition}, CollisionContainer{pCollisionContainer}
     {
+        // if ( (psubtexture.width != 0) && (psubtexture.height != 0) )
+        //     sprite.setTextureRect(psubtexture);
     }
 
 
