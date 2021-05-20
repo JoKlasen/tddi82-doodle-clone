@@ -44,7 +44,7 @@ void Player::update()
     // Hopp/fall
     Entity::acceleration += 0.2;    // Öka fallhastighet
     sprite.move(0, Entity::acceleration);
-    if (Entity::acceleration >= 2)  // Om "studsande" sprite, byt till "vanlig"
+    if (Entity::acceleration >= 0)  // Om "studsande" sprite, byt till "vanlig"
     {
         if (facing_right)
         {   
@@ -69,7 +69,10 @@ void Player::handle_input()
         {   
             facing_right = false;
         }
-        sprite.setTextureRect(player_left);
+        if (acceleration < 0)
+            setCollisionSprite();
+        else
+            sprite.setTextureRect(player_left);
         move(sf::Vector2f(-4, 0));
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -78,7 +81,10 @@ void Player::handle_input()
         {
             facing_right = true;
         }
-        sprite.setTextureRect(player_right);
+        if (acceleration < 0)
+            setCollisionSprite();
+        else
+            sprite.setTextureRect(player_right);
         move(sf::Vector2f(4, 0));
     }
 
