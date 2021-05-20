@@ -28,7 +28,6 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@echo "Compiling:"
 	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
 
-
 .PHONY: dir
 dir:
 	@mkdir -p $(BUILDDIR) bin

@@ -6,7 +6,12 @@ int const screen_height { 850 };
 
 double const fps { 60.0 };
 
-//Texture files
+int const PLAYER_ANY{0};
+int const PLAYER_LEGS{1};
+int const PLAYER_HEAD{2};
+
+int const PLATFORM_ANY{0};
+
 std::string const font_file         {"./resources/fonts/DoodleJump.ttf"};
 std::string const background_file   {"./resources/images/Background.png"};
 std::string const spritesheet_file  {"./resources/images/sprite_sheet.png"};
@@ -22,6 +27,10 @@ sf::IntRect const player_right          { 0, 121, 110, 80 };
 sf::IntRect const player_left           { 0, 201, 110, 80 };
 sf::IntRect const player_right_landing  { 0, 289, 110, 80 };
 sf::IntRect const player_left_landing   { 0, 371, 110, 80 };
+
+sf::FloatRect const player_legs_box       { 30, 80-15, 50, 15}; // Relativa lådor till playertexturernas width/height
+sf::FloatRect const player_body_box       { 30, 0, 50, 80-15};
+
 //Inte testade
 sf::IntRect const spring1               { 0, 445, 45, 53 };
 sf::IntRect const spring2               { 0, 501, 45, 53 };
