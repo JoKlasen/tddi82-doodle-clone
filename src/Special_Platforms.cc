@@ -45,10 +45,10 @@ Breaking_Platform::Breaking_Platform(sf::Vector2f pos)
 //funktioner
 void Breaking_Platform::handle_collision( Entity & ent)
 {
-    while (!colitionList.empty())
+    while (!collisionList.empty())
     {
         double acc {ent.getAcceleration()};
-        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        if (collisionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
         {
 	
 	        if(acc > 0)
@@ -60,7 +60,7 @@ void Breaking_Platform::handle_collision( Entity & ent)
                 }
 	        }
         }
-        colitionList.pop_back();
+        collisionList.pop_back();
     } 
 }
 
@@ -138,10 +138,10 @@ void Disappearing_Platform::render( sf::RenderTarget & target)
 }
 
 void Disappearing_Platform::handle_collision( Entity & ent)
-{while (!colitionList.empty())
+{while (!collisionList.empty())
     {
         double acc {ent.getAcceleration()};
-        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        if (collisionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
         {
 	
 	        if(acc > 0)
@@ -153,7 +153,7 @@ void Disappearing_Platform::handle_collision( Entity & ent)
                 }
 	        }
         }
-        colitionList.pop_back();
+        collisionList.pop_back();
     } 
 }
 

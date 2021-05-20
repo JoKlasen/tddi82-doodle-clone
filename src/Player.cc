@@ -14,39 +14,18 @@ Player::Player()
         std::cout << "Innan scale: LocalBounds= " << playershape.getLocalBounds().width << ", " << playershape.getLocalBounds().height <<
         " GlobalBounds= " << playershape.getGlobalBounds().width << ", " << playershape.getGlobalBounds().height << std::endl;
 
-        playershape.setScale(0.75, 0.75);
+        //playershape.setScale(0.75, 0.75);
         
         std::cout << "Efter scale: LocalBounds= " << playershape.getLocalBounds().width << ", " << playershape.getLocalBounds().height <<
         " GlobalBounds= " << playershape.getGlobalBounds().width << ", " << playershape.getGlobalBounds().height << std::endl;
-        
-        //playershape.setFillColor (sf::Color::Blue);
-        
-        initCollisionContainer();
 
+        initCollisionContainer();
     }
     
-void Player::initCollisionContainer()
-{
-        CollisionContainer.push_back(playershape.getLocalBounds()); //might become an issue
-	    
 
-        auto height {playershape.getLocalBounds ().height};
-        
-        auto colitionrightbox {playershape.getLocalBounds ()};
-	    colitionrightbox.top  = height/2;
-	    colitionrightbox.height = height/2;
-
-        CollisionContainer.push_back(colitionrightbox);
-        
-        auto colitionleftbox {playershape.getLocalBounds ()};
-	    colitionleftbox.height = height/2;
-
-        CollisionContainer.push_back(colitionleftbox);
-
-
-    
-}
-
+////////////////
+// Public functions
+////////////////
 
 void Player::render( sf::RenderTarget & target)
 {
@@ -54,13 +33,15 @@ void Player::render( sf::RenderTarget & target)
     target.draw(playershape);
 }
 
+
 void Player::handle_collision( Entity & ent)
 {
-  while (!colitionList.empty())
-  {
-    colitionList.pop_back();
-  }
+    while (!collisionList.empty())
+    {
+        collisionList.pop_back();
+    }
 }
+
 
 void Player::update()
 {
@@ -72,20 +53,20 @@ void Player::update()
 }
 
 
-
-sf::Rect< float > Player::getGlobalBounds()
-{
-    return playershape.getGlobalBounds();
-}
-
 void Player::handle_input()
 {
     // Flytta spelaren vid knappar
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        playershape.setTextureRect(player_left);
         move(sf::Vector2f(-4, 0));
+    }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        playershape.setTextureRect(player_right);
         move(sf::Vector2f(4, 0));
-    
+    }
+
     // wrap around
     if ( this->position.x + dimensions.x/2 > screen_width )
         this->position.x = -(dimensions.x/2);
@@ -93,8 +74,42 @@ void Player::handle_input()
         this->position.x = (screen_width - this->dimensions.x/2 );
 }
 
+
+sf::Rect<float> Player::getGlobalBounds()
+{
+    return playershape.getGlobalBounds();
+}
+
 sf::FloatRect Player::getGlobalBounds() const
 {
     return playershape.getGlobalBounds() ;
 }
 
+////////////////
+// Private functions
+////////////////
+
+void Player::initCollisionContainer()
+{
+    CollisionContainer.push_back(playershape.getLocalBounds()); //might become an issue
+    
+    CollisionContainer.push_back(player_legs_box);
+    CollisionContainer.push_back(player_body_box);
+
+    // auto height {playershape.getLocalBounds ().height};
+    
+    // auto collisionRightbox {playershape.getLocalBounds ()};
+    // collisionRightbox.left      = 30;
+    // collisionRightbox.top       = height-15;
+    // collisionRightbox.height    = 15;
+    // collisionRightbox.width     = 50;
+
+    // CollisionContainer.push_back(collisionRightbox);
+    
+    // auto collisionLeftbox {playershape.getLocalBounds ()};
+    // collisionLeftbox.height     = height/2;
+    // collisionLeftbox.left       = 30;
+    // collisionLeftbox.width      = 50;
+
+    // CollisionContainer.push_back(collisionLeftbox);
+}

@@ -5,20 +5,24 @@
 double Entity::acceleration = 0;
 
 Entity::Entity()
-    : colitionList{}, name{"bertil"}, position{}, CollisionContainer{}
+    : collisionList{}, name{"bertil"}, position{}, CollisionContainer{}
 {
 
 }
 
 Entity::Entity(std::string pname,
     sf::Vector2f pposition,        
-    std::vector<sf::Rect< float >> pCollisionContainer )
-    : colitionList{}, name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
+    std::vector<sf::Rect<float>> pCollisionContainer )
+    : collisionList{}, name{pname}, position{pposition}, CollisionContainer{pCollisionContainer}
     {
     }
 
 
 // Getters och setters
+std::vector<sf::Rect<float>> Entity::getCollisionContainer()
+{
+    return CollisionContainer;
+}
 
 sf::FloatRect Entity::getGlobalBounds() const
 {
@@ -66,9 +70,4 @@ void Entity::move(float const & offsetX, float const & offsetY)
 {
     this->position.x += offsetX;
     this->position.y += offsetY;
-}
-
-std::vector<sf::Rect< float >> Entity::getCollisionContainer()
-{
-    return CollisionContainer;
 }

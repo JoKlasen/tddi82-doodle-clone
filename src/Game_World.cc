@@ -2,29 +2,101 @@
 #include <SFML/Graphics.hpp>
 #include "constants.h"
 #include "Manager.h"
+#include "UI.h"
 #include <iostream>
 #include <algorithm>
 #include <random>
 
 Game_World::Game_World ()
-    : score{0}, entities{}, player{}, //platform{ 150, 630 }, platform2{0, 630},//platform{ sf::Vector2f(50, 50) }
-      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle}
+    : score{0}, entities{}, player{},
+      scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, 
+      scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle}
 {
     // Initiera poängräknare-del
-    scoreBar.setPosition(0,0);
-    scoreBar.setFillColor(sf::Color(128, 128, 128, 128)); // Genomskinlig grå färg
-
-    scoreBarEdge.setPosition(0, 35);
-    scoreBarEdge.setScale( 5.32, 1.0 );
-
-    scoreText.setFont(Font_Manager::load(font_file));
-    scoreText.setString("Score: 0");
-    scoreText.setFillColor(sf::Color::Black);
-    scoreText.setCharacterSize(30);
-    scoreText.setPosition(10,3);
-    scoreText.setStyle(sf::Text::Bold);
+    initScore();
 
     // Initera platformar
+    initPlatforms();
+}
+
+////////////////
+// Public functions
+////////////////
+
+void Game_World::handle_event (sf::Event)
+{
+
+}
+
+
+void Game_World::update ()
+{
+    //Random place new Platforms
+    placePlatforms();
+    //Destroy Platforms under screen
+    destroyPlatforms();
+
+    // Uppdaterar plats
+    // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
+    player.update();
+    updateEntities();
+
+    // Flytta ner platform(ar) och räkna poäng
+    if (player.getPosition().y < screen_height/2 - 50)
+    {
+        player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
+        score += -(player.getAcceleration())*10;
+        scoreText.setString("Score: " + std::to_string(score/10));
+        //std::cout << score/10 << std::endl;        // debugg
+
+        for (auto & ent : entities)
+        {
+            ent->move(0, -(ent->getAcceleration()));
+        }
+    }
+
+    // Kollisionslogik för spelare mot generell entiry
+    for (auto & ent : entities)
+    {
+        if (testPlayerCollision( *ent ))
+        {
+            testCollisionContainer(player,*ent);
+            ent->handle_collision(player);
+            player.handle_collision(*ent);
+        }
+    }
+
+    // TESTFIXASAP;
+    // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
+    if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
+        player.setAcceleration(-10);
+}
+
+
+void Game_World::render (sf::RenderTarget & target)
+{
+    for ( auto & ent : entities )
+    {
+        ent->render (target);
+    }
+
+    player.render(target);
+
+    target.draw(scoreBar);
+    target.draw(scoreBarEdge);
+    target.draw(scoreText);
+}
+
+
+////////////////
+// Private functions
+////////////////
+
+// Platforms-hantering
+
+void Game_World::initPlatforms()
+{   
+    //TESTFIX skulle kunna utvecklas till en slumpgenererad uppsättning.
     entities.push_back( std::make_unique<Platform>() );
     entities.push_back( std::make_unique<Moving_Platform>(200, 100) );
     entities.push_back( std::make_unique<Breaking_Platform>(200, 200) );
@@ -35,10 +107,6 @@ Game_World::Game_World ()
     entities.push_back( std::make_unique<Platform>(100, 700) );
 }
 
-void Game_World::handle_event (sf::Event)
-{
-
-}
 
 void Game_World::placePlatforms()
 {
@@ -92,6 +160,7 @@ void Game_World::destroyPlatforms()
     );
 }
 
+
 void Game_World::updateEntities()
 {
     for ( auto & ent : entities )
@@ -100,69 +169,8 @@ void Game_World::updateEntities()
     }
 }
 
-void Game_World::update ()
-{
-    //Random place new Platforms
-    placePlatforms();
-    //Destroy Platforms under screen
-    destroyPlatforms();
 
-
-    // Uppdaterar plats
-    // Flytta spelaren i X-led efter knappinput, kör wraparound på kanter om nödvändigt och flyttar sedan spelaren i Y-led enligt acc.
-    player.update ();
-    updateEntities();
-
-
-    // Flytta ner platform(ar) och räkna poäng
-    if (player.getPosition().y < screen_height/2 - 50)
-    {
-        player.setPosition(sf::Vector2f (player.getPosition().x, screen_height/2 - 50) );
-        score += -(player.getAcceleration())*10;
-        scoreText.setString("Score: " + std::to_string(score/10));
-        //std::cout << score/10 << std::endl;        // debugg
-
-        for (auto & ent : entities)
-        {
-            ent->move(0, -(ent->getAcceleration()));
-        }
-
-    }
-
-
-    // Kollisionslogik för spelare mot generell entiry
-    for (auto & ent : entities)
-    {
-        if (testPlayerCollision( *ent ))
-        {
-            testCollisionContainer(player,*ent);
-            ent->handle_collision(player);
-            player.handle_collision(*ent);
-        }
-    }
-
-    // TESTFIXASAP;
-    // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
-    if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
-        player.setAcceleration(-10);
-}
-
-
-
-void Game_World::render (sf::RenderTarget & target)
-{
-    for ( auto & ent : entities )
-    {
-        ent->render (target);
-    }
-   
-
-    player.render(target);
-
-    target.draw(scoreBar);
-    target.draw(scoreBarEdge);
-    target.draw(scoreText);
-}
+// Kollisions-hantering
 
 void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 {   
@@ -180,14 +188,15 @@ void Game_World::testCollisionContainer (Entity & obj1,Entity & obj2)
 	        if (box1.intersects(box2))
 	        {
 	            //std::cout << i <<" "<< j << std::endl; //TESTREMOVEASAP
-	            obj1.colitionList.push_back(std::tuple<int, int>{i, j});
-	            obj2.colitionList.push_back(std::tuple<int, int>{i, j});
+	            obj1.collisionList.push_back(std::tuple<int, int>{i, j});
+	            obj2.collisionList.push_back(std::tuple<int, int>{i, j});
 	        }
 	        j++;
         }
         i++;
     }
 }
+
 
 bool Game_World::testCollision (Entity & obj1,Entity & obj2)
 {   
@@ -198,12 +207,26 @@ bool Game_World::testCollision (Entity & obj1,Entity & obj2)
     return false;
 }
 
+
 bool Game_World::testPlayerCollision (Entity & obj)
 {   
     if(player.getGlobalBounds().intersects(obj.getGlobalBounds()))
     {
         return true;
     }
-  return false;
-        
+    return false; 
+}
+
+// Initiering av grafiska objekt
+
+void Game_World::initScore()
+{
+    scoreBar.setPosition(0,0);
+    scoreBar.setFillColor(sf::Color(128, 128, 128, 128)); // Genomskinlig grå färg
+
+    scoreBarEdge.setPosition(0, 35);
+    scoreBarEdge.setScale( 5.32, 1.0 );
+
+    UI::initText(scoreText, 10, 2, "Score: 0", 30, sf::Color::Black);
+    scoreText.setStyle(sf::Text::Bold);
 }

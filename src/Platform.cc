@@ -23,12 +23,16 @@ Platform::Platform(sf::Vector2f pos)
 {
     shape.setScale(0.75, 0.75);
     Entity::position = pos; 
-    CollisionContainer.push_back(shape.getLocalBounds ()); //might become an issue
+    CollisionContainer.push_back(shape.getGlobalBounds ()); //might become an issue
 }
 
-Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect< float >> pCollisionContainer)
+Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect<float>> pCollisionContainer)
     : Entity{pname, pposition, pCollisionContainer}, shape{Texture_Manager::load(spritesheet_file), green_platform}
-{ }
+{ 
+    shape.setScale(0.75, 0.75);
+    Entity::position = pposition; 
+    CollisionContainer.push_back(shape.getGlobalBounds ()); //might become an issue
+}
 
 void Platform::render(sf::RenderTarget & target)
 {
@@ -42,10 +46,10 @@ void Platform::update()
 
 void Platform::handle_collision( Entity & ent)
 {
-    while (!colitionList.empty())
+    while (!collisionList.empty())
     {
         double acc {ent.getAcceleration()};
-        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        if (collisionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
         {
 	
 	        if(acc > 0)
@@ -54,7 +58,7 @@ void Platform::handle_collision( Entity & ent)
 	        }
         }
 	/*
-        else if (colitionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
+        else if (collisionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
         {
 	        if(acc < 0)
 	        {
@@ -62,7 +66,7 @@ void Platform::handle_collision( Entity & ent)
 	        }
         }
 	*/
-        colitionList.pop_back();
+        collisionList.pop_back();
     } 
 }
 
