@@ -8,7 +8,6 @@
 class Player : public Entity
 {
 public:
-
     Player();
     
     void render( sf::RenderTarget & target) override;
@@ -16,16 +15,19 @@ public:
     void update() override;
 
     void handle_input();
-    sf::Rect< float > getGlobalBounds();
 
+    sf::Rect<float> getGlobalBounds() override;
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
-    void initCollisionContainer();
+    void setCollisionSprite() override;
 
 private:
+    // Datamedlemmar
     int life;
-    sf::Vector2f dimensions{};      // Width, Height
-    sf::CircleShape playershape{30, 3};
+    bool facing_right{true};
+
+    // Interna funktioner
+    void initCollisionContainer();
 };
 
 

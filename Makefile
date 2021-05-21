@@ -4,7 +4,7 @@ CC := g++
 FLAGS := -std=c++17 -Wall -Wextra -pedantic -Weffc++ -Wold-style-cast -Woverloaded-virtual -fmax-errors=3 -g
 #FLAGS := -std=c++17  -Wfatal-errors   -fmax-errors=3 -g    #om error medellanden är längre än terminalen 
 
-LIB := -lsfml-window -lsfml-graphics -lsfml-system
+LIB := -lsfml-window -lsfml-graphics -lsfml-audio -lsfml-system 
 
 
 SRCDIR := src
@@ -27,9 +27,6 @@ $(TARGET): dir $(OBJECTS)
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@echo "Compiling:"
 	@echo "$@"; $(CC) $(INC) $(FLAGS) -c $< -o $@
-
-$(BUILDDIR)/Pause_State.o: $(SRCDIR)/Pause_State.cc dir
-	$(CC) $(INC) $(FLAGS) -c $(SRCDIR)/Pause_State.cc -o $(BUILDDIR)/Pause_State.o	
 
 .PHONY: dir
 dir:

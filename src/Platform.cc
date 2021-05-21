@@ -8,14 +8,6 @@
 
 #include <iostream> //debug
 
-
-void Platform::default_shape()
-{
-    //shape.setOutlineColor(sf::Color::Blue);
-    //shape.setOutlineThickness(5);
-    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
-}
-
 void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här för hur ofta power_ups ska spawna
 {
     std::random_device rd;
@@ -39,64 +31,53 @@ void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här f�
 }
 
 //konstruktor
-Platform::Platform()
-    : Entity(), shape{Texture_Manager::load(spritesheet_file), green_platform}, has_power_up{false}, power_up{nullptr}
-{   
-    shape.setScale(0.75, 0.75);
-    make_power_up(power_up);
-    //default_shape();
-}
-
 Platform::Platform( float x, float y )
-    : Platform( sf::Vector2f(x, y) )
-{
-}
+    : Platform("Platform", sf::Vector2f(x, y) )
+{ }
 
-Platform::Platform(sf::Vector2f pos)
-    : Entity(), shape{Texture_Manager::load(spritesheet_file), green_platform},has_power_up{false},power_up{nullptr}
-{
-    shape.setScale(0.75, 0.75);
-    Entity::position = pos; 
-    CollisionContainer.push_back(shape.getLocalBounds ()); //migt become a isue
-    make_power_up(power_up);
-    //default_shape();
-}
-
-Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect< float >> pCollisionContainer)
-    : Entity{pname, pposition, pCollisionContainer}, shape{Texture_Manager::load(spritesheet_file), green_platform}, has_power_up{false},power_up{nullptr}
-{
-    //default_shape();
-    make_power_up(power_up);
+Platform::Platform(std::string pname, sf::Vector2f pposition, std::vector<sf::Rect<float>> pCollisionContainer)
+    : Entity{pname, pposition, pCollisionContainer}//, sprite{Texture_Manager::load(spritesheet_file), green_platform}
+{ 
+    sprite.setTexture(Texture_Manager::load(spritesheet_file));
+    sprite.setTextureRect(green_platform);
+    sprite.setScale(0.75, 0.75);
+    auto box = sprite.getLocalBounds();
+    box.width = box.width * sprite.getScale().x;
+    box.height = box.height * sprite.getScale().y;
+    CollisionContainer.push_back(box); //might become an issue
 }
 
 void Platform::render(sf::RenderTarget & target)
 {
-    target.draw(shape);
     //std::cout << "Platform::render()" << std::endl;   //debug
     power_up->render(target);
+    target.draw(sprite);
 }
 
 void Platform::update() 
 {
-    shape.setPosition( position );
-    power_up->set_pos(shape.getPosition());
+    sf::Vector2f pos {CollisionContainer.at(0).left, CollisionContainer.at(0).top};
+    power_up->set_pos(pos);
+    
 }
 
 void Platform::handle_collision( Entity & ent)
 {
-    while (!colitionList.empty())
+    while (!collisionList.empty())
     {
         double acc {ent.getAcceleration()};
-        if (colitionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
+        if (collisionList.back() == std::tuple<int, int>{PLAYER_LEGS, PLATFORM_ANY})
         {
 	
 	        if(acc > 0)
 	        {
 	            Entity::acceleration = -jump_value;
+                ent.setCollisionSprite();
+                Sounds::jump();
 	        }
         }
 	/*
-        else if (colitionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
+        else if (collisionList.back() == std::tuple<int, int>{PLAYER_HEAD, PLATFORM_ANY})
         {
 	        if(acc < 0)
 	        {
@@ -104,20 +85,17 @@ void Platform::handle_collision( Entity & ent)
 	        }
         }
 	*/
-        colitionList.pop_back();
+        collisionList.pop_back();
     } 
 }
 
 
-
-
-
 sf::Rect< float > Platform::getGlobalBounds()
 {
-    return shape.getGlobalBounds();
+    return sprite.getGlobalBounds();
 }
 
 sf::FloatRect Platform::getGlobalBounds() const
 {
-    return shape.getGlobalBounds() ;
+    return sprite.getGlobalBounds();
 }

@@ -5,44 +5,37 @@
 #include <iostream>
 
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, dimensions{60, 60}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}
     {
-        this->position.x = (screen_width/2 - this->dimensions.x/2);
-        this->position.y = (screen_height/2 - this->dimensions.y/2);
+        sprite.setTexture(Texture_Manager::load(spritesheet_file));
+        sprite.setTextureRect(player_right);
+
+        sprite.setPosition( (screen_width/2 - sprite.getGlobalBounds().width/2), (screen_height/2 - sprite.getGlobalBounds().height/2) );
         
-        playershape.setFillColor (sf::Color::Blue);
+        //sprite.setScale(0.75, 0.75);
         
         initCollisionContainer();
-
     }
     
-void Player::initCollisionContainer()
-{
-        CollisionContainer.push_back(playershape.getLocalBounds ()); //migt become a isue
-	    auto height {playershape.getLocalBounds ().height};
-        auto colitionleftbox {playershape.getLocalBounds ()};
-	    colitionleftbox.height = height/2;
-        auto colitionrightbox {playershape.getLocalBounds ()};
-	    colitionrightbox.top  = height/2;
-	    colitionrightbox.height = height/2;
-        CollisionContainer.push_back(colitionrightbox);
-        CollisionContainer.push_back(colitionleftbox);
-}
 
+////////////////
+// Public functions
+////////////////
 
 void Player::render( sf::RenderTarget & target)
 {
-    playershape.setPosition( this->getPosition() );
-    target.draw(playershape);
+    target.draw(sprite);
 }
+
 
 void Player::handle_collision( Entity & ent)
 {
-  while (!colitionList.empty())
-  {
-    colitionList.pop_back();
-  }
+    while (!collisionList.empty())
+    {
+        collisionList.pop_back();
+    }
 }
+
 
 void Player::update()
 {
@@ -50,33 +43,93 @@ void Player::update()
 
     // Hopp/fall
     Entity::acceleration += 0.2;    // Öka fallhastighet
-    this->position.y += Entity::acceleration;
+    sprite.move(0, Entity::acceleration);
+    if (Entity::acceleration >= 0)  // Om "studsande" sprite, byt till "vanlig"
+    {
+        if (facing_right)
+        {   
+            sprite.setTextureRect(player_right);
+        }
+        else
+        {
+            sprite.setTextureRect(player_left);
+        }
+    }
+    
+
 }
 
-
-
-sf::Rect< float > Player::getGlobalBounds()
-{
-    return playershape.getGlobalBounds();
-}
 
 void Player::handle_input()
 {
     // Flytta spelaren vid knappar
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {   
+        if (facing_right)
+        {   
+            facing_right = false;
+        }
+        if (acceleration < 0)
+            setCollisionSprite();
+        else
+            sprite.setTextureRect(player_left);
         move(sf::Vector2f(-4, 0));
+    }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {   
+        if (!facing_right)
+        {
+            facing_right = true;
+        }
+        if (acceleration < 0)
+            setCollisionSprite();
+        else
+            sprite.setTextureRect(player_right);
         move(sf::Vector2f(4, 0));
-    
+    }
+
     // wrap around
-    if ( this->position.x + dimensions.x/2 > screen_width )
-        this->position.x = -(dimensions.x/2);
-    else if ( this->position.x < (0 - this->dimensions.x/2 ) )
-        this->position.x = (screen_width - this->dimensions.x/2 );
+    if ( getPosition().x + getGlobalBounds().width/2 > screen_width )
+        setPosition(-(getGlobalBounds().width/2) , getPosition().y);
+    else if ( getPosition().x < (0 - getGlobalBounds().width/2) )
+        setPosition( (screen_width - getGlobalBounds().width/2) , getPosition().y);
+}
+
+
+sf::Rect<float> Player::getGlobalBounds()
+{
+    return sprite.getGlobalBounds();
 }
 
 sf::FloatRect Player::getGlobalBounds() const
 {
-    return playershape.getGlobalBounds() ;
+    return sprite.getGlobalBounds() ;
 }
 
+// bool Player::isFacingRight()
+// {
+//     return facing_right;
+// }
+
+void Player::setCollisionSprite()
+{
+    if (facing_right)
+        sprite.setTextureRect(player_right_landing);
+    else
+        sprite.setTextureRect(player_left_landing);
+}
+
+////////////////
+// Private functions
+////////////////
+
+void Player::initCollisionContainer()
+{
+    auto box = sprite.getLocalBounds();
+    box.width = box.width * sprite.getScale().x;
+    box.height = box.height * sprite.getScale().y;
+    CollisionContainer.push_back(sprite.getLocalBounds()); //might become an issue
+    
+    CollisionContainer.push_back(player_legs_box);
+    CollisionContainer.push_back(player_body_box);
+}
