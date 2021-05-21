@@ -27,6 +27,8 @@ sf::IntRect const player_right          { 0, 121, 110, 80 };
 sf::IntRect const player_left           { 0, 201, 110, 80 };
 sf::IntRect const player_right_landing  { 0, 289, 110, 80 };
 sf::IntRect const player_left_landing   { 0, 371, 110, 80 };
+sf::IntRect const spring_unpushed       { 0, 500, 45, 55 };
+sf::IntRect const spring_pushed         { 0, 470, 45, 55 };
 
 sf::FloatRect const player_legs_box       { 30, 80-15, 50, 15}; // Relativa lådor till playertexturernas width/height
 sf::FloatRect const player_body_box       { 30, 0, 50, 80-15};

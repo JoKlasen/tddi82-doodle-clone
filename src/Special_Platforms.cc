@@ -48,6 +48,7 @@ void Breaking_Platform::handle_collision( Entity & ent)
                 {
                     intact = false;
                     sprite.setTextureRect(red_platform_broken);
+                    check_power();
                 }
 	        }
         }
@@ -136,6 +137,7 @@ void Disappearing_Platform::handle_collision( Entity & ent)
 	                Entity::acceleration = -jump_value;
                     ent.setCollisionSprite();
                     Sounds::jump();
+                    check_power();
                 }
 	        }
         }

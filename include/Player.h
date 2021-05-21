@@ -20,14 +20,24 @@ public:
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 
     void setCollisionSprite() override;
+    int get_life();
+    static void set_power(std::vector<int>);
+
 
 private:
     // Datamedlemmar
+    static std::vector<int> power_vec;
     int life;
     bool facing_right{true};
+    bool shield;
+  
+
+    sf::Clock clock;
 
     // Interna funktioner
     void initCollisionContainer();
+    
+    void update_power_effect();
 };
 
 

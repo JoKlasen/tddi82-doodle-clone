@@ -100,7 +100,7 @@ void Game_World::initPlatforms()
     entities.push_back( std::make_unique<Platform>() );
     entities.push_back( std::make_unique<Moving_Platform>(200, 100) );
     entities.push_back( std::make_unique<Breaking_Platform>(200, 200) );
-    entities.push_back( std::make_unique<Extra_Jump_Platform>(300, 300) );
+    entities.push_back( std::make_unique<Platform>(300, 300) ); // extra jump
     entities.push_back( std::make_unique<Platform>(100, 400) );
     entities.push_back( std::make_unique<Platform>(100, 500) );
     entities.push_back( std::make_unique<Platform>(100, 600) );
@@ -135,7 +135,7 @@ void Game_World::placePlatforms()
         if (spawn_type == 3)
             entities.push_back( std::make_unique<Breaking_Platform>(dice_x_roll, spawn_y_pos) );
         if (spawn_type == 4)
-            entities.push_back( std::make_unique<Extra_Jump_Platform>(dice_x_roll, spawn_y_pos) );
+            entities.push_back( std::make_unique<Platform>(dice_x_roll, spawn_y_pos) ); // extra jump
         if (spawn_type == 5)
             entities.push_back( std::make_unique<Disappearing_Platform>(dice_x_roll, spawn_y_pos) );    
     }

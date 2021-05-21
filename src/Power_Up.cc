@@ -1,18 +1,21 @@
 #include "Power_Up.h"
+#include "Player.h"
 
 
 // basklass powerup
 Power_Up::Power_Up()
-    :/*  sprite{}, */ active{true}, effects{0,0,0}, texture{}
+    :sprite{}, active{true}, effects{0,0,0,0}, texture{}
 {
+    
 }
 
 void Power_Up::render(sf::RenderTarget & target)
 {
-    target.draw(shape);
+    
     if(active)
     {
-        //target.draw(sprite);
+        target.draw(shape);
+        target.draw(sprite);
     }
 }
     
@@ -23,7 +26,11 @@ bool Power_Up::is_active()
 void Power_Up::set_pos(sf::Vector2f const& pos)
 {
     shape.setPosition(pos.x + 30, pos.y -30);
-    //sprite.setPosition(pos.x + 30, pos.y -30);
+    sprite.setPosition(pos.x + 30, pos.y -30);
+}
+void Power_Up::set_active(bool a)
+{
+    active = a;
 }
 
 
@@ -33,14 +40,33 @@ Spring::Spring()
 {
 
     //sprite
-    //texture = Manager<sf::Texture>::load("./resources/images/Apple.png");
-    //sprite.setTexture(texture);
-    //sprite.setScale(0.1, 0.1);
+    sprite.setTexture(Manager<sf::Texture>::load(spritesheet_file));
+    sprite.setTextureRect(spring_unpushed);
+    sprite.setOrigin(0, 500);
+    
+
     //testshape
-    Power_Up::shape.setFillColor(sf::Color::Red);
+    Power_Up::shape.setFillColor(sf::Color::Transparent);
 
     // setting effect
-    Power_Up::effects.at(0) = 2; 
+    Power_Up::effects.at(SPRING_POWER) = 15; 
+}
+
+void Spring::set_pos(sf::Vector2f const& pos)
+{   
+    sprite.setPosition(pos.x + 30, pos.y - 45);
+}
+void Spring::render(sf::RenderTarget & target)
+{
+    if(active)
+    {
+        target.draw(sprite);
+    }
+    else
+    {
+        sprite.setTextureRect(spring_pushed);
+        target.draw(sprite);
+    }
 }
 
 std::vector<int> const& Spring::get_effect()
@@ -54,13 +80,15 @@ Shield::Shield()
     : Power_Up{}
 {
     // //sprite
-    // texture = Manager<sf::Texture>::load("./resources/images/fire.png");
-    // sprite.setTexture(texture);
-    // sprite.setScale(0.1, 0.1);
-    Power_Up::shape.setFillColor(sf::Color::Green);
+
+    sprite.setTexture(Manager<sf::Texture>::load("./resources/images/Apple.png"));
+    sprite.setScale(0.1, 0.1);
+
+    
+    Power_Up::shape.setFillColor(sf::Color::Transparent);
 
     // setting effect
-    Power_Up::effects.at(1) = 2; 
+    Power_Up::effects.at(SHIELD_POWER) = 2; 
 }
 std::vector<int> const&  Shield::get_effect()
 {
@@ -73,14 +101,37 @@ Extra_Life::Extra_Life()
     : Power_Up{}
 {
     //sprite
-    //Power_Up:sprite = Manager<sf::Texture>::load();
-    Power_Up::shape.setFillColor(sf::Color::Yellow);
-
+    sprite.setTexture(Manager<sf::Texture>::load("./resources/images/Apple.png"));
+    sprite.setScale(0.1, 0.1);
+    
+    Power_Up::shape.setFillColor(sf::Color::Transparent);
     // setting effect
-    Power_Up::effects.at(2) = 4; 
+    Power_Up::effects.at(LIFE_POWER) = 4; 
 }
 
 std::vector<int> const&  Extra_Life::get_effect()
+{
+    return Power_Up::effects;
+    
+}
+
+// Jetpack
+
+Jetpack::Jetpack()
+    : Power_Up{}
+{
+    //sprite
+    sprite.setTexture(Manager<sf::Texture>::load("./resources/images/Apple.png"));
+    sprite.setScale(0.1, 0.1);
+
+
+    Power_Up::shape.setFillColor(sf::Color::Transparent);
+
+    // setting effect
+    Power_Up::effects.at(JETPACK_POWER) = 200; 
+}
+
+std::vector<int> const&  Jetpack::get_effect()
 {
     return Power_Up::effects;
     

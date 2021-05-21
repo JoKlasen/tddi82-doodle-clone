@@ -1,11 +1,14 @@
 #include "Entity.h"
 #include "Player.h"
+#include "Power_Up.h"
 #include "constants.h"
 #include <vector>
 #include <iostream>
 
+std::vector<int> Player::power_vec{0,0,0,0};
+
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, shield{false}, clock{}
     {
         sprite.setTexture(Texture_Manager::load(spritesheet_file));
         sprite.setTextureRect(player_right);
@@ -15,6 +18,9 @@ Player::Player()
         //sprite.setScale(0.75, 0.75);
         
         initCollisionContainer();
+        
+        clock.restart();
+        
     }
     
 
@@ -30,8 +36,11 @@ void Player::render( sf::RenderTarget & target)
 
 void Player::handle_collision( Entity & ent)
 {
+   
     while (!collisionList.empty())
     {
+
+        
         collisionList.pop_back();
     }
 }
@@ -39,6 +48,7 @@ void Player::handle_collision( Entity & ent)
 
 void Player::update()
 {
+    
     handle_input();
 
     // Hopp/fall
@@ -55,13 +65,15 @@ void Player::update()
             sprite.setTextureRect(player_left);
         }
     }
-    
 
+    //update player effects
+    update_power_effect();
 }
 
 
 void Player::handle_input()
 {
+    
     // Flytta spelaren vid knappar
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {   
@@ -119,6 +131,11 @@ void Player::setCollisionSprite()
         sprite.setTextureRect(player_left_landing);
 }
 
+int Player::get_life()
+{
+    return life;
+}
+
 ////////////////
 // Private functions
 ////////////////
@@ -133,3 +150,56 @@ void Player::initCollisionContainer()
     CollisionContainer.push_back(player_legs_box);
     CollisionContainer.push_back(player_body_box);
 }
+
+void Player::update_power_effect()
+{
+    // skapar bara referens till power_vec för läsbarhet
+    int & spring_power = power_vec.at(Power_Up::SPRING_POWER);
+    int & life_power = power_vec.at(Power_Up::LIFE_POWER);
+    int & shield_power = power_vec.at(Power_Up::SHIELD_POWER);
+    int & jetpack_power = power_vec.at(Power_Up::JETPACK_POWER);
+
+    
+    if(spring_power > 0)
+    {
+        // make player jump
+        Entity::acceleration = -spring_power;
+        spring_power = 0;
+    }
+    if(life_power > 0)
+    {
+        // add life to player
+        life += life_power;
+        life_power = 0;
+    }
+    if(shield_power > 0 && !shield)
+    {
+        // do something if shield is on
+        shield = true;
+        clock.restart();
+        shield_power = 0;
+    }
+    if(jetpack_power > 0)
+    {
+        // do something if shield is on
+        acceleration = -30;
+        jetpack_power--;
+
+    }
+
+    if(shield && clock.getElapsedTime().asMilliseconds() > 10000 && shield == true) // räknar till 5 sekunder och stänger sedan av shield
+    {
+        shield = false;
+        std::cout << "over" << std::endl;
+    }
+   
+}
+
+
+//static function
+
+void Player::set_power(std::vector<int> vec)
+{
+    power_vec = vec;
+}
+

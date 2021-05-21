@@ -23,7 +23,7 @@ public:
     sf::Rect<float> getGlobalBounds() override;
     sf::FloatRect getGlobalBounds() const override; //tillfälig
 protected:
-
+    void check_power();
     void make_power_up(std::unique_ptr<Power_Up> & );
     bool has_power_up;
     std::unique_ptr<Power_Up> power_up;
