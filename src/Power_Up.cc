@@ -41,8 +41,8 @@ Spring::Spring()
 
     //sprite
     sprite.setTexture(Manager<sf::Texture>::load(spritesheet_file));
-    sprite.setTextureRect(spring_unpushed);
-    sprite.setOrigin(0, 500);
+    sprite.setTextureRect(spring_pushed);
+    sprite.setOrigin(0, 28);
     
 
     //testshape
@@ -54,7 +54,10 @@ Spring::Spring()
 
 void Spring::set_pos(sf::Vector2f const& pos)
 {   
-    sprite.setPosition(pos.x + 30, pos.y - 45);
+    sprite.setPosition(pos.x + 20, pos.y + 5);
+
+    if(!active)
+        sprite.setPosition(pos.x + 20, pos.y - 20);
 }
 void Spring::render(sf::RenderTarget & target)
 {
@@ -64,7 +67,8 @@ void Spring::render(sf::RenderTarget & target)
     }
     else
     {
-        sprite.setTextureRect(spring_pushed);
+        sprite.setTextureRect(spring_unpushed);
+        
         target.draw(sprite);
     }
 }
@@ -79,12 +83,9 @@ std::vector<int> const& Spring::get_effect()
 Shield::Shield()
     : Power_Up{}
 {
-    // //sprite
-
-    sprite.setTexture(Manager<sf::Texture>::load("./resources/images/Apple.png"));
-    sprite.setScale(0.1, 0.1);
-
-    
+    //sprite
+    sprite.setTexture(Texture_Manager::load(spritesheet_power_file));
+    sprite.setTextureRect(shield_pic);
     Power_Up::shape.setFillColor(sf::Color::Transparent);
 
     // setting effect
@@ -121,8 +122,8 @@ Jetpack::Jetpack()
     : Power_Up{}
 {
     //sprite
-    sprite.setTexture(Manager<sf::Texture>::load("./resources/images/Apple.png"));
-    sprite.setScale(0.1, 0.1);
+    sprite.setTexture(Texture_Manager::load(spritesheet_power_file));
+    sprite.setTextureRect(jetpack_pic);
 
 
     Power_Up::shape.setFillColor(sf::Color::Transparent);

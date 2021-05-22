@@ -30,7 +30,8 @@ private:
     int life;
     bool facing_right{true};
     bool shield;
-  
+    bool jetpack;
+    sf::Sprite power_sprite;
 
     sf::Clock clock;
 

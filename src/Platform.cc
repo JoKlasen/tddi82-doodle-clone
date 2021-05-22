@@ -15,8 +15,8 @@ void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här f�
     std::uniform_int_distribution<int> distrib(1, 100);
     std::mt19937 gen(rd());
     int rand = distrib(gen);
-    std::cout << rand << std::endl;
-    if(rand <= 5)
+    //std::cout << rand << std::endl;
+    if(rand < 5)
     {
         pwup = std::make_unique<Spring>();
         has_power_up = true;
@@ -31,7 +31,7 @@ void Platform::make_power_up(std::unique_ptr<Power_Up> & pwup) // ändra här f�
         pwup = std::make_unique<Extra_Life>();
         has_power_up = true;
     }
-    else if(rand == 100)
+    else if(rand == 100 ) // rand =100
     {
         pwup = std::make_unique<Jetpack>();
         has_power_up = true;

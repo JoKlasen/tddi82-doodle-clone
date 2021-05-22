@@ -8,10 +8,13 @@
 std::vector<int> Player::power_vec{0,0,0,0};
 
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, shield{false}, clock{}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, shield{false}, jetpack{false}, power_sprite{}, clock{}
     {
         sprite.setTexture(Texture_Manager::load(spritesheet_file));
         sprite.setTextureRect(player_right);
+
+        power_sprite.setTexture(Texture_Manager::load(spritesheet_power_file));
+        //power_sprite.setTextureRect(jetpack_fly);
 
         sprite.setPosition( (screen_width/2 - sprite.getGlobalBounds().width/2), (screen_height/2 - sprite.getGlobalBounds().height/2) );
         
@@ -31,6 +34,21 @@ Player::Player()
 void Player::render( sf::RenderTarget & target)
 {
     target.draw(sprite);
+
+    if(jetpack)
+    {
+        power_sprite.setScale(1.5, 1.5);
+        target.draw(power_sprite);
+    }
+
+    if(shield)
+    {
+        sf::CircleShape shield_shape{100, 50};
+        shield_shape.setOrigin(50, 50);
+        shield_shape.setPosition(getPosition().x +5, getPosition().y -5);
+        shield_shape.setFillColor(sf::Color(0, 200, 0, 150));
+        target.draw(shield_shape);
+    }
 }
 
 
@@ -63,9 +81,20 @@ void Player::update()
         else
         {
             sprite.setTextureRect(player_left);
+            
         }
     }
 
+    if(facing_right && jetpack)
+    {
+        power_sprite.setTextureRect(jetpack_fly_r);
+        power_sprite.setPosition(getPosition().x + 10, getPosition().y + 40);
+    }
+    if(!facing_right && jetpack)
+    {
+        power_sprite.setTextureRect(jetpack_fly_l);
+        power_sprite.setPosition(getPosition().x + 76, getPosition().y + 40);
+    }
     //update player effects
     update_power_effect();
 }
@@ -178,12 +207,17 @@ void Player::update_power_effect()
         shield = true;
         clock.restart();
         shield_power = 0;
+
     }
     if(jetpack_power > 0)
     {
+        jetpack = true;
         // do something if shield is on
         acceleration = -30;
         jetpack_power--;
+
+        if(jetpack_power == 0)
+            jetpack = false;
 
     }
 
@@ -191,6 +225,8 @@ void Player::update_power_effect()
     {
         shield = false;
         std::cout << "over" << std::endl;
+
+
     }
    
 }
