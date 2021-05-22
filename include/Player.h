@@ -32,6 +32,8 @@ private:
     bool shield;
     bool jetpack;
     sf::Sprite power_sprite;
+    sf::CircleShape shield_shape;
+    int fade;
 
     sf::Clock clock;
 
@@ -39,6 +41,8 @@ private:
     void initCollisionContainer();
     
     void update_power_effect();
+    void drawShield(sf::RenderTarget & target);
+    void drawJetpack(sf::RenderTarget & target);
 };
 
 

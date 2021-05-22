@@ -49,3 +49,5 @@ sf::IntRect const key_right             { 92, 641, 16, 16 };
 
 //Sound files
 std::string const jump_file         {"./resources/sounds/jump.wav"};
+std::string const spring_sound_file {"./resources/sounds/spring_sound.wav"};
+std::string const rocket_sound_file {"./resources/sounds/rocket.wav"};

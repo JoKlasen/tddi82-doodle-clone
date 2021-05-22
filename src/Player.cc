@@ -1,27 +1,29 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Power_Up.h"
+#include "Sounds.h"
 #include "constants.h"
 #include <vector>
 #include <iostream>
 
-std::vector<int> Player::power_vec{0,0,0,0};
+std::vector<int> Player::power_vec{0,0,0,0,0,0,0,0};
 
 Player::Player()
-    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, shield{false}, jetpack{false}, power_sprite{}, clock{}
+    : Entity{ "Player", sf::Vector2f{}, std::vector<sf::Rect< float >>{} }, life {3}, shield{false}, jetpack{false}, power_sprite{}, shield_shape{100, 50}, fade{}, clock{}
     {
         sprite.setTexture(Texture_Manager::load(spritesheet_file));
         sprite.setTextureRect(player_right);
+        sprite.setPosition( (screen_width/2 - sprite.getGlobalBounds().width/2), (screen_height/2 - sprite.getGlobalBounds().height/2) );
 
         power_sprite.setTexture(Texture_Manager::load(spritesheet_power_file));
-        //power_sprite.setTextureRect(jetpack_fly);
-
-        sprite.setPosition( (screen_width/2 - sprite.getGlobalBounds().width/2), (screen_height/2 - sprite.getGlobalBounds().height/2) );
         
         //sprite.setScale(0.75, 0.75);
         
         initCollisionContainer();
         
+        shield_shape.setOrigin(50, 50);
+        shield_shape.setFillColor(sf::Color(0, 200, 0, 150));
+
         clock.restart();
         
     }
@@ -34,22 +36,12 @@ Player::Player()
 void Player::render( sf::RenderTarget & target)
 {
     target.draw(sprite);
-
-    if(jetpack)
-    {
-        power_sprite.setScale(1.5, 1.5);
-        target.draw(power_sprite);
-    }
-
-    if(shield)
-    {
-        sf::CircleShape shield_shape{100, 50};
-        shield_shape.setOrigin(50, 50);
-        shield_shape.setPosition(getPosition().x +5, getPosition().y -5);
-        shield_shape.setFillColor(sf::Color(0, 200, 0, 150));
-        target.draw(shield_shape);
-    }
+    drawJetpack(target);
+    drawShield(target);
 }
+
+
+
 
 
 void Player::handle_collision( Entity & ent)
@@ -85,16 +77,7 @@ void Player::update()
         }
     }
 
-    if(facing_right && jetpack)
-    {
-        power_sprite.setTextureRect(jetpack_fly_r);
-        power_sprite.setPosition(getPosition().x + 10, getPosition().y + 40);
-    }
-    if(!facing_right && jetpack)
-    {
-        power_sprite.setTextureRect(jetpack_fly_l);
-        power_sprite.setPosition(getPosition().x + 76, getPosition().y + 40);
-    }
+   
     //update player effects
     update_power_effect();
 }
@@ -193,6 +176,7 @@ void Player::update_power_effect()
     {
         // make player jump
         Entity::acceleration = -spring_power;
+        Sounds::spring();
         spring_power = 0;
     }
     if(life_power > 0)
@@ -214,23 +198,64 @@ void Player::update_power_effect()
         jetpack = true;
         // do something if shield is on
         acceleration = -30;
-        jetpack_power--;
+        if(jetpack_power-- == 200)
+            Sounds::rocket();
 
         if(jetpack_power == 0)
             jetpack = false;
 
     }
 
-    if(shield && clock.getElapsedTime().asMilliseconds() > 10000 && shield == true) // räknar till 5 sekunder och stänger sedan av shield
+    if(shield && clock.getElapsedTime().asMilliseconds() > 10000 && shield == true) // räknar till 10 sekunder och stänger sedan av shield
     {
         shield = false;
+        shield_power = 0;
+        shield_shape.setFillColor(sf::Color(0, 200, 0, 150));
+        fade = 0;
         std::cout << "over" << std::endl;
 
 
     }
+    if(shield && clock.getElapsedTime().asMilliseconds() > 5000) // fade efter 5 sekunder
+    {
+        if(fade <= 300)
+            shield_shape.setFillColor(sf::Color(0, 200, 0, 150- fade++/2));
+
+
+        //std::cout << fade << std::endl;    
+        
+    }
+
+
+     if(facing_right && jetpack)
+    {
+        power_sprite.setTextureRect(jetpack_fly_r);
+        power_sprite.setPosition(getPosition().x + 10, getPosition().y + 40);
+    }
+    if(!facing_right && jetpack)
+    {
+        power_sprite.setTextureRect(jetpack_fly_l);
+        power_sprite.setPosition(getPosition().x + 76, getPosition().y + 40);
+    }
    
 }
+void Player::drawShield(sf::RenderTarget & target)
+{
+    if(shield)
+    {
+        shield_shape.setPosition(getPosition().x +5, getPosition().y -5);
+        target.draw(shield_shape);
+    }
+}
 
+void Player::drawJetpack(sf::RenderTarget & target)
+{
+    if(jetpack)
+    {
+        power_sprite.setScale(1.5, 1.5);
+        target.draw(power_sprite);
+    }
+}
 
 //static function
 

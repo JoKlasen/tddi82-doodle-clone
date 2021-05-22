@@ -4,7 +4,7 @@
 
 // basklass powerup
 Power_Up::Power_Up()
-    :sprite{}, active{true}, effects{0,0,0,0}, texture{}
+    :sprite{}, active{true}, effects{0,0,0,0,0,0,0,}, texture{}
 {
     
 }
