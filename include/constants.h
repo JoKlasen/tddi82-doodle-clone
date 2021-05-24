@@ -16,6 +16,7 @@ std::string const font_file         {"./resources/fonts/DoodleJump.ttf"};
 std::string const background_file   {"./resources/images/Background.png"};
 std::string const spritesheet_file  {"./resources/images/sprite_sheet.png"};
 std::string const spritesheet_power_file  {"./resources/images/Power_ups_Doodle_Jump.png"};
+std::string const spritesheet_monster  {"./resources/images/doodle_monsters.png"};
 std::string const hs_file           {"./resources/high_score.txt"};
 
 //Textures from sprite_sheet
@@ -34,6 +35,8 @@ sf::IntRect const jetpack_pic           { 20, 10, 30, 40};
 sf::IntRect const jetpack_fly_r         { 20, 10, 15, 40};
 sf::IntRect const jetpack_fly_l         { 32, 10, 15, 40};
 sf::IntRect const shield_pic            { 160, 60, 35, 35};
+sf::IntRect const monster_blue          { 155, 110, 45, 55};
+sf::IntRect const monster_red           { 90, 114, 50, 40};
 
 
 
@@ -51,3 +54,4 @@ sf::IntRect const key_right             { 92, 641, 16, 16 };
 std::string const jump_file         {"./resources/sounds/jump.wav"};
 std::string const spring_sound_file {"./resources/sounds/spring_sound.wav"};
 std::string const rocket_sound_file {"./resources/sounds/rocket.wav"};
+std::string const damage_sound_file {"./resources/sounds/rocket.wav"};

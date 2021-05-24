@@ -8,6 +8,7 @@
 #include "Platform.h"
 #include "Special_Platforms.h"
 #include "Player.h"
+#include "Threat.h"
 
 
 class Game_World
@@ -18,11 +19,13 @@ public:
     void handle_event (sf::Event); 
     void update ();
     void render (sf::RenderTarget & target);
+    int getLife();
 
 private:
     // Datamedlemmar
     int score;
     std::vector< std::unique_ptr<Entity> > entities;
+    std::vector<Threat> threats;
     Player player;
 
     sf::RectangleShape scoreBar;
@@ -42,6 +45,8 @@ private:
 
     // Övrigt
     void initScore ();
+    void destroyThreats();
+    void placeThreats();
 };
 
 #endif

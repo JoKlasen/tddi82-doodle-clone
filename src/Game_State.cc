@@ -21,6 +21,8 @@ void Game_State::handle_event (sf::Event event)
 void Game_State::update ()
 {
     game_world.update();
+    if(game_world.getLife() < 1)
+        game_over = true;
 }
 
 void Game_State::render (sf::RenderTarget & target)
@@ -35,6 +37,7 @@ int Game_State::get_next_state()
         game_over = false;
         // för över poäng från gameworld till High_score_state på något vis.
         // Kör cleanup?
+        cleanup();
         return HIGH_SCORE_STATE;
     }
     else if (menu)
@@ -50,7 +53,7 @@ int Game_State::get_next_state()
     return GAME_STATE;
 }
 
-// void Game_State::cleanup ()
-// {
-
-// }
+void Game_State::cleanup ()
+{
+    
+}

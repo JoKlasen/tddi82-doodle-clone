@@ -15,6 +15,7 @@ public:
     void handle_event (sf::Event event) override;
     void update () override;
     void render (sf::RenderTarget & target) override;
+    void cleanup();
     virtual int get_next_state() override;
 
 

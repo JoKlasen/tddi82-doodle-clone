@@ -21,7 +21,11 @@ public:
 
     void setCollisionSprite() override;
     int get_life();
+    void set_life(int new_life);
+    void giveDamage(int);
+
     static void set_power(std::vector<int>);
+    
 
 
 private:
@@ -39,7 +43,6 @@ private:
 
     // Interna funktioner
     void initCollisionContainer();
-    
     void update_power_effect();
     void drawShield(sf::RenderTarget & target);
     void drawJetpack(sf::RenderTarget & target);

@@ -107,7 +107,7 @@ Extra_Life::Extra_Life()
     
     Power_Up::shape.setFillColor(sf::Color::Transparent);
     // setting effect
-    Power_Up::effects.at(LIFE_POWER) = 4; 
+    Power_Up::effects.at(LIFE_POWER) = 1; 
 }
 
 std::vector<int> const&  Extra_Life::get_effect()

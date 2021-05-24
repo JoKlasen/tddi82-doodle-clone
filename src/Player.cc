@@ -58,6 +58,7 @@ void Player::handle_collision( Entity & ent)
 
 void Player::update()
 {
+   // std::cout << life << std::endl;
     
     handle_input();
 
@@ -148,6 +149,21 @@ int Player::get_life()
     return life;
 }
 
+void Player::set_life(int new_life)
+{
+    life = new_life;
+}
+
+void Player::giveDamage(int damage)
+{
+    if(!shield)
+    {
+        life -= damage;
+        acceleration = -10;
+    }
+        
+
+}
 ////////////////
 // Private functions
 ////////////////
@@ -182,8 +198,12 @@ void Player::update_power_effect()
     if(life_power > 0)
     {
         // add life to player
-        life += life_power;
-        life_power = 0;
+        if(life < 3)
+        {   
+            life += life_power;
+            life_power = 0;
+        }   
+        
     }
     if(shield_power > 0 && !shield)
     {
@@ -262,5 +282,8 @@ void Player::drawJetpack(sf::RenderTarget & target)
 void Player::set_power(std::vector<int> vec)
 {
     power_vec = vec;
+    
 }
+
+
 
