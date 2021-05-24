@@ -30,8 +30,17 @@ Game_World::Game_World ()
 
 int Game_World::getLife()
 {
-    
     return player.get_life();
+}
+
+bool Game_World::playerFellOut()
+{
+    return player.playerFellOut();
+}
+
+void Game_World::resetAcceleration()
+{
+    player.resetAcceleration();
 }
 
 void Game_World::handle_event (sf::Event)
@@ -99,12 +108,15 @@ void Game_World::update ()
 
     // TESTFIXASAP;
     // Kollision med golv för testvärld denna bör bytas ut mot att sätta game_over-flaggan för att spelet ska ta slut, funkar som kollision just nu för att göra test enklare.
-    if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
-        player.setAcceleration(-10);
+    //if ( player.getPosition().y >= (screen_height - 30) ) // 30 = player->dimensions.y/2 byt ut mot någon form av getBounds().height/2
+    //    player.setAcceleration(-10);
 
+    //Kolla om man trillat av banan
+    // if ( player.getPosition().y >= (screen_height - player.getGlobalBounds().height/2) )
+    // {
 
+    // }
 
-   
 }
 
 

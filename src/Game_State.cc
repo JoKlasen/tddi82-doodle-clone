@@ -21,7 +21,7 @@ void Game_State::handle_event (sf::Event event)
 void Game_State::update ()
 {
     game_world.update();
-    if(game_world.getLife() < 1)
+    if(game_world.getLife() < 1 || game_world.playerFellOut() )
         game_over = true;
 }
 
@@ -55,5 +55,6 @@ int Game_State::get_next_state()
 
 void Game_State::cleanup ()
 {
-    
+    game_world = Game_World();
+    game_world.resetAcceleration();
 }

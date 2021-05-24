@@ -83,5 +83,10 @@ void Entity::move(float const & offsetX, float const & offsetY)
 
 void Entity::setCollisionSprite()
 {
-    
+    // Ska vara tom och överlagras av ärvda entities vid behov
+}
+
+void Entity::resetAcceleration()
+{
+    Entity::acceleration = 0;
 }

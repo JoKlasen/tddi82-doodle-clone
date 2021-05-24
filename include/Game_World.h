@@ -20,6 +20,8 @@ public:
     void update ();
     void render (sf::RenderTarget & target);
     int getLife();
+    bool playerFellOut();
+    void resetAcceleration();
 
 private:
     // Datamedlemmar

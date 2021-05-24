@@ -21,6 +21,7 @@ public:
 
     void setCollisionSprite() override;
     int get_life();
+    bool playerFellOut();
     void set_life(int new_life);
     void giveDamage(int);
 

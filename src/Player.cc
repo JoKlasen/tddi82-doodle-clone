@@ -149,6 +149,11 @@ int Player::get_life()
     return life;
 }
 
+bool Player::playerFellOut()
+{
+    return ( sprite.getPosition().y >= (screen_height - sprite.getGlobalBounds().height/2) );
+}
+
 void Player::set_life(int new_life)
 {
     life = new_life;

@@ -44,6 +44,8 @@ public:
 
     virtual void setCollisionSprite();      // Just nu för att ändra player
 
+    void resetAcceleration();
+
     std::vector<sf::Rect<float>> getCollisionContainer();
 
     std::vector<std::tuple<int, int>> collisionList;

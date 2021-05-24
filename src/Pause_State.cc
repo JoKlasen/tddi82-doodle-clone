@@ -75,6 +75,7 @@ int Pause_State::get_next_state()
     else if(main_menu)
     {
         main_menu = false;
+        cleanup();
         return MENU_STATE;
     }
     else
