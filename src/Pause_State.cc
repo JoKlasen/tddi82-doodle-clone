@@ -52,10 +52,7 @@ void Pause_State::handle_event (sf::Event event)
 }
 void Pause_State::update ()
 {
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
-        unpause = true;
-    }
+    
 }
 
 void Pause_State::render (sf::RenderTarget & target) 

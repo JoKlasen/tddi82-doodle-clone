@@ -12,10 +12,8 @@ void Game_State::handle_event (sf::Event event)
 {
     if ( event.type == sf::Event::KeyPressed )
     {
-        if ( event.key.code == sf::Keyboard::Key::P)
+        if ( event.key.code == sf::Keyboard::Key::P || event.key.code == sf::Keyboard::Key::Escape)
             pause = true;
-        if ( event.key.code == sf::Keyboard::Key::Escape)
-            menu = true;
     }
     game_world.handle_event(event);
 }
