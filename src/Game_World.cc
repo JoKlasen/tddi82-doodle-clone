@@ -157,7 +157,7 @@ void Game_World::initPlatforms()
     entities.push_back( std::make_unique<Platform>(100, 400) );
     entities.push_back( std::make_unique<Platform>(100, 500) );
     entities.push_back( std::make_unique<Platform>(100, 600) );
-    entities.push_back( std::make_unique<Platform>(100, 700) );
+    entities.push_back( std::make_unique<Platform>(250, 700) );
 }
 
 
