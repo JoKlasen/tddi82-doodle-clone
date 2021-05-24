@@ -7,6 +7,8 @@
 Pause_State::Pause_State(State & pgame_world, sf::Window & window)
     : unpause{false}, main_menu{false}, game_world{pgame_world}, filter{}, paused{}, resume{}, quit{}, resume_b{window}, quit_b{window}
 {
+    
+
     // init filter
     filter.setSize(sf::Vector2f(screen_width, screen_height));
     filter.setFillColor(sf::Color(150, 150, 150, 125));

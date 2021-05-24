@@ -1,8 +1,9 @@
-10:Kalle
-30:Berta
-50:Simon
-5:Ludvig
-100:Oskar
-500:Banan
-400:Banan
-400:Banan
+100:Kalle
+2070:best
+4050:bertil
+9994:Anton
+2070:dfdfj
+8480:sdfojjg
+42538:The man
+10226:dfdadfadf
+178796:Oskar

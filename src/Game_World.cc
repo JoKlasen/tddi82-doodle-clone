@@ -32,7 +32,11 @@ int Game_World::getLife()
 {
     return player.get_life();
 }
-
+int Game_World::getScore()
+{
+    
+    return score;
+}
 bool Game_World::playerFellOut()
 {
     return player.playerFellOut();

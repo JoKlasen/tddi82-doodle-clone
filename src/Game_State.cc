@@ -1,12 +1,14 @@
 #include "State.h"
 #include "Game_State.h"
 
+ int Game_State::score{};
 
 Game_State::Game_State ()
     : game_over{false}, menu{false}, pause{false}, game_world{}
 {
     
 }
+
 
 void Game_State::handle_event (sf::Event event)
 {
@@ -34,6 +36,7 @@ int Game_State::get_next_state()
 {
     if (game_over)
     {
+        Game_State::score = game_world.getScore();
         game_over = false;
         // för över poäng från gameworld till High_score_state på något vis.
         // Kör cleanup?
@@ -58,3 +61,4 @@ void Game_State::cleanup ()
     game_world = Game_World();
     game_world.resetAcceleration();
 }
+

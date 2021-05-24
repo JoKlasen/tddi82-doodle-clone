@@ -1,4 +1,6 @@
 #include "High_Score_State.h"
+#include "UI.h"
+#include "Game_State.h"
 #include "constants.h"
 #include "Manager.h"
 #include <fstream>
@@ -9,17 +11,20 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, high_scores{}, current_score{}, textfield{}
+    : menu{false}, state_text{}, high_scores{}, current_score{}, textfield{},playerScore{}
 {
     // Text
-    
-    state_text = sf::Text{ "HIGH SCORE", Font_Manager::load(font_file), 30 };
-    state_text.setFillColor(sf::Color::Black);
+    UI::initText(state_text, "Score", 35, sf::Color::Black);
+    UI::initText(playerScore, "", 30, sf::Color::Green);
+    UI::centerText(state_text, -100);
+    UI::centerText(playerScore, -30);
     state_text.setStyle(sf::Text::Bold);
-    state_text.setPosition ((screen_width-state_text.getGlobalBounds().width) / 2, (screen_height - state_text.getGlobalBounds().height) / 2 - 100);
+    playerScore.setStyle(sf::Text::Bold);
+    playerScore.setOutlineColor(sf::Color::Black);
+    playerScore.setOutlineThickness(2);
 
     // Text-field
-    textfield.setPosition ((screen_width-textfield.getWidth()) / 2, (screen_height - textfield.getHight()) / 2 + 40);
+    textfield.setPosition ((screen_width-textfield.getWidth()) / 2, (screen_height - textfield.getHight()) / 2 + 80);
     textfield.setFieldText("Enter name:");
 
     // Läser in hs
@@ -41,16 +46,37 @@ void High_Score_State::handle_event (sf::Event event)
 
 void High_Score_State::update ()
 {
+    
+
+    set_current_score(Game_State::score);
+
+    playerScore.setString(std::to_string(current_score.score));
+
     if(textfield.isEntered())
     {
         current_score.name = textfield.get_entered_name();
+        menu = true;
+
+        add_current_score();
+    }
+
+    if(current_score.score > high_scores.at(0).score)
+    {   
+        state_text.setString("New High Score");
+    }
+    else
+    {
+        state_text.setString("Score");
     }
 }
 
 void High_Score_State::render(sf::RenderTarget & target)
 {
     //state-text
+    UI::centerText(state_text, -100);
     target.draw (state_text);
+    UI::centerText(playerScore,-30);
+    target.draw (playerScore);
 
     //textfield
     textfield.render(target);
@@ -61,6 +87,7 @@ int High_Score_State::get_next_state()
    if(menu)
    {
        menu = false;
+       cleanup();
        return MENU_STATE;
    }
         
@@ -148,4 +175,15 @@ void High_Score_State::print_hs()
     }
 }
 
+void High_Score_State::cleanup()
+{
+    UI::initText(state_text, "Score", 35, sf::Color::Black);
+    UI::initText(playerScore, "", 30, sf::Color::Green);
 
+    high_scores.clear();
+    read_file();
+    current_score.name = "";
+    current_score.score = 0;
+    textfield.reset();
+    
+}

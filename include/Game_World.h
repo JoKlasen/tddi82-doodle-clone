@@ -20,6 +20,7 @@ public:
     void update ();
     void render (sf::RenderTarget & target);
     int getLife();
+    int getScore();
     bool playerFellOut();
     void resetAcceleration();
 

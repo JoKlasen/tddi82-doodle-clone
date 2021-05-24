@@ -149,4 +149,11 @@ int Textfield::getHight()
     return box.getGlobalBounds().height;
 }
 
-//Textfield(sf::Font pfont, int size, sf::Vector2f pposition);
+void Textfield::reset()
+{
+    input = "";
+    text.setString(input);
+    isSelected = false;
+    isEntered_flag = false;
+}
+

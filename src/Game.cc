@@ -33,7 +33,7 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
 
     states.insert(std::pair<int,
             std::unique_ptr<State>>({PAUSE_STATE,
-                                    std::make_unique<Pause_State>(*states.at(1), window)}));                                
+                                    std::make_unique<Pause_State>(*states.at(GAME_STATE), window)}));                                
    
 }
 
@@ -86,6 +86,8 @@ void Game::start ()
          * time for a frame.
          */
         delay (clock);
+
+        
     }
 }
 

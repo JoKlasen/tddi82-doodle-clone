@@ -19,6 +19,7 @@ std::string get_entered_name();
 
 void setPosition(float x, float y);
 void setFieldText(std::string const&);
+void reset();
 
 int getWidth();
 int getHight();
