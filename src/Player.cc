@@ -156,10 +156,11 @@ void Player::set_life(int new_life)
 
 void Player::giveDamage(int damage)
 {
-    if(!shield)
+    if(!shield && !jetpack)
     {
         life -= damage;
         acceleration = -10;
+        Sounds::damage();
     }
         
 
@@ -232,7 +233,7 @@ void Player::update_power_effect()
         shield_power = 0;
         shield_shape.setFillColor(sf::Color(0, 200, 0, 150));
         fade = 0;
-        std::cout << "over" << std::endl;
+        //std::cout << "over" << std::endl;
 
 
     }

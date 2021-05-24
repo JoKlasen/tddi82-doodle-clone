@@ -26,7 +26,7 @@ void Sounds::rocket()
 }
 void Sounds::damage()
 {
-   // Sounds::damage_sound.setBuffer(Sound_Manager::load()); 
+    Sounds::damage_sound.setBuffer(Sound_Manager::load("./resources/sounds/mixkit-small-hit-in-a-game-2072.wav")); 
 
     damage_sound.play();
 }
