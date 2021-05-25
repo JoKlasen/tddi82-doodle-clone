@@ -3,7 +3,11 @@
 Det här är repot för det projekt där vi har som mål att göra ett platform-spel i stil med spelet doodle jump.
 För en mer utförligare beskrivning, se projektbeskrivningen i /doc/.
 
+## Orginalspelet
 ![Doodle Jump](./doc/doodle_jump.jpg "Spelet Doodle Jump")
+
+## Vårt spel!
+![Vårt spel](./doc/capture.png "Skamlös klon")
 
 ## Användning
 ```bash
