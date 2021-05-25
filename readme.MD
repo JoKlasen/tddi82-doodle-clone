@@ -18,4 +18,7 @@ make run
 
 #För att både bygga och direkt köra spelet:
 make test
+
+#Vid problem eller oväntade buggar, kompilera om efter att du kört:
+make clean
 ```
