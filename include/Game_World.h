@@ -35,6 +35,8 @@ private:
     sf::Text scoreText;
     sf::Sprite scoreBarEdge;
 
+    sf::Sprite lifeCounter;
+
     // Platforms-hantering
     void initPlatforms();
     void placePlatforms();
@@ -47,7 +49,8 @@ private:
     bool testPlayerCollision (Entity & obj);
 
     // Övrigt
-    void initScore ();
+    void initScore();
+    void renderLife(sf::RenderTarget & target);
     void destroyThreats();
     void placeThreats();
 };

@@ -10,7 +10,8 @@
 Game_World::Game_World ()
     : score{0}, entities{}, threats{}, player{},
       scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, 
-      scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle}
+      scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle},
+      lifeCounter{Texture_Manager::load("./resources/images/Apple.png")}
 {
     // Initiera poängräknare-del
     initScore();
@@ -20,8 +21,6 @@ Game_World::Game_World ()
 
     //threats.push_back(MonsterBlue(sf::Vector2f(300, 300)));
     //threats.push_back(MonsterRed(sf::Vector2f(200, 500)));
-
-
 }
 
 ////////////////
@@ -34,7 +33,6 @@ int Game_World::getLife()
 }
 int Game_World::getScore()
 {
-    
     return score;
 }
 bool Game_World::playerFellOut()
@@ -142,6 +140,7 @@ void Game_World::render (sf::RenderTarget & target)
     target.draw(scoreBar);
     target.draw(scoreBarEdge);
     target.draw(scoreText);
+    renderLife(target);
 }
 
 
@@ -158,9 +157,9 @@ void Game_World::initPlatforms()
     entities.push_back( std::make_unique<Moving_Platform>(200, 100) );
     entities.push_back( std::make_unique<Breaking_Platform>(200, 200) );
     entities.push_back( std::make_unique<Platform>(300, 300) ); // extra jump
-    entities.push_back( std::make_unique<Platform>(100, 400) );
-    entities.push_back( std::make_unique<Platform>(100, 500) );
-    entities.push_back( std::make_unique<Platform>(100, 600) );
+    entities.push_back( std::make_unique<Platform>(83, 400) );
+    entities.push_back( std::make_unique<Platform>(431, 500) );
+    entities.push_back( std::make_unique<Platform>(128, 600) );
     entities.push_back( std::make_unique<Platform>(250, 700) );
 }
 
@@ -365,4 +364,26 @@ void Game_World::initScore()
 
     UI::initText(scoreText, 10, 2, "Score: 0", 30, sf::Color::Black);
     scoreText.setStyle(sf::Text::Bold);
+
+    lifeCounter.setScale(0.1, 0.1);
+    lifeCounter.setPosition(0, 3);
+}
+
+void Game_World::renderLife(sf::RenderTarget & target)
+{
+    if ( getLife() >= 1 )
+    {
+        lifeCounter.setPosition( (screen_width - (lifeCounter.getGlobalBounds().width * 6)), lifeCounter.getPosition().y );
+        target.draw(lifeCounter);
+    }
+    if ( getLife() >= 2 )
+    {
+        lifeCounter.setPosition( (screen_width - (lifeCounter.getGlobalBounds().width * 4)), lifeCounter.getPosition().y );
+        target.draw(lifeCounter);
+    }
+    if ( getLife() >= 3 )
+    {
+        lifeCounter.setPosition( (screen_width - (lifeCounter.getGlobalBounds().width * 2)), lifeCounter.getPosition().y );
+        target.draw(lifeCounter);
+    }
 }
