@@ -11,7 +11,7 @@
 
 
 High_Score_State::High_Score_State()
-    : menu{false}, state_text{}, high_scores{}, current_score{}, textfield{},playerScore{}
+    : menu{false}, state_text{}, playerScore{}, high_scores{}, current_score{}, textfield{}
 {
     // Text
     UI::initText(state_text, "Score", 35, sf::Color::Black);
@@ -80,6 +80,7 @@ void High_Score_State::render(sf::RenderTarget & target)
 
     //textfield
     textfield.render(target);
+
 }
 
 int High_Score_State::get_next_state()
@@ -134,6 +135,12 @@ void High_Score_State::add_current_score()
 
 void High_Score_State::read_file()
 {
+
+    if(high_scores.size() > 0)
+    {
+        high_scores.erase(high_scores.begin(), high_scores.end());
+    }
+
     std::ifstream ifs{};
     ifs.open(hs_file);
 

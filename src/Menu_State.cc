@@ -69,7 +69,9 @@ int Menu_State::get_next_state()
     if(high_score)
     {
         high_score = false;
-        return HIGH_SCORE_STATE;
+
+        // här ska det nya current score returneras
+        return CURRENT_SCORE_STATE;  
     }
     else if(play)
     {

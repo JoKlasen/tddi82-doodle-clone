@@ -3,6 +3,7 @@
 #include "Game_State.h" 
 #include "High_Score_State.h" 
 #include "Pause_State.h"
+#include "Current_HS_State.h"
 #include "State.h" 
 #include "constants.h" 
 #include "Manager.h"
@@ -30,6 +31,10 @@ Game::Game (std::string const & title, unsigned width, unsigned height)
     states.insert(std::pair<int,
             std::unique_ptr<State>>({HIGH_SCORE_STATE,
                                     std::make_unique<High_Score_State>()}));
+
+    states.insert(std::pair<int,
+            std::unique_ptr<State>>({CURRENT_SCORE_STATE,
+                                    std::make_unique<Current_HS_State>(window)}));                                
 
     states.insert(std::pair<int,
             std::unique_ptr<State>>({PAUSE_STATE,
