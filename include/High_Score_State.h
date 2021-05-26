@@ -1,6 +1,7 @@
 #ifndef HIGH_SCORE_STATE_H
 #define HIGH_SCORE_STATE_H
 #include "State.h"
+#include "UI.h"
 #include <SFML/Graphics.hpp>
 #include <set>
 #include "Textfield.h"
@@ -10,20 +11,20 @@ class High_Score_State: public State
 public:
     High_Score_State();
 
-    void handle_event (sf::Event event) override;
+    virtual void handle_event (sf::Event event) override;
 
-    void update () override;
+    virtual void update () override;
 
-    void render(sf::RenderTarget & target) override;
+    virtual void render(sf::RenderTarget & target) override;
 
-    int get_next_state() override;
+    virtual int get_next_state() override;
 
     void set_current_score(int score);
     void set_current_name(std::string name);
     void add_current_score();
 
 
-private:
+protected:
     
     struct High_Score
     {
