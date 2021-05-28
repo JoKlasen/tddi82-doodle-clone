@@ -11,7 +11,7 @@ Game_World::Game_World ()
     : score{0}, entities{}, threats{}, player{},
       scoreBar{sf::Vector2f(screen_width, 40)}, scoreText{}, 
       scoreBarEdge{Texture_Manager::load(spritesheet_file), squiggle},
-      lifeCounter{Texture_Manager::load("./resources/images/Apple.png")}
+      lifeCounter{Texture_Manager::load("./resources/images/Apple.png")}, brokenPlatformCount{}
 {
     // Initiera poängräknare-del
     initScore();
@@ -183,17 +183,31 @@ void Game_World::placePlatforms()
     {
         int dice_x_roll   = pos_distribution(generator);
         int spawn_type  = spawn_distribution(generator);
+        
 
         if (spawn_type == 1)
             entities.push_back( std::make_unique<Platform>(dice_x_roll, spawn_y_pos) );
         if (spawn_type == 2)
             entities.push_back( std::make_unique<Moving_Platform>(dice_x_roll, spawn_y_pos) );
-        if (spawn_type == 3)
+        if (spawn_type == 3 && brokenPlatformCount != 3)
+        {
             entities.push_back( std::make_unique<Breaking_Platform>(dice_x_roll, spawn_y_pos) );
+            brokenPlatformCount++;
+        }
+        else
+        {
+            if(brokenPlatformCount == 3)
+            {
+                brokenPlatformCount = 0;
+                spawn_type = 4;
+            }
+        }
+           
         if (spawn_type == 4)
             entities.push_back( std::make_unique<Platform>(dice_x_roll, spawn_y_pos) ); // extra jump
         if (spawn_type == 5)
-            entities.push_back( std::make_unique<Disappearing_Platform>(dice_x_roll, spawn_y_pos) );      
+            entities.push_back( std::make_unique<Disappearing_Platform>(dice_x_roll, spawn_y_pos) ); 
+     
     }
     /*
     if (entities.size() < 10)
@@ -209,28 +223,24 @@ void Game_World::placeThreats()
     int const spawn_distance = 200;
     
     int stage = 0;
-   
+
     if(score > 100000)
     {
-        stage = 2000;
-    }
-    if(score > 200000)
+        stage = score/100 + 1000;
+    }   
+    if(score > 900000)
     {
-        stage = 4000;
+        stage = 95000;
     }
-    if(score > 300000)
+    if(score > 1000000)
     {
-        stage = 5000;
-    }
-    if(score > 500000)
-    {
-        stage = 10000;
+        stage = 1000000;
     }
 
     //std::cout << stage << std::endl;
 
     std::random_device rd;
-    std::uniform_int_distribution<int> dist(1, 10100-stage); // 10000
+    std::uniform_int_distribution<int> dist(1, 10100-stage);
     std::uniform_int_distribution<int> typedist(1, 2);
     std::mt19937 gen(rd());
     int type = typedist(gen);

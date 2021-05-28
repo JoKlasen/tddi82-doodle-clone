@@ -27,6 +27,7 @@ public:
 private:
     // Datamedlemmar
     int score;
+    int brokenPlatformCount;
     std::vector< std::unique_ptr<Entity> > entities;
     std::vector<Threat> threats;
     Player player;
