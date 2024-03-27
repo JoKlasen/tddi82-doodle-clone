@@ -1,4 +1,4 @@
-# Projektrepo för Grupp B06 i kursen TDDI82
+## Det här ett ett speglat repo för Grupp B06 i kursen TDDI82 VT2021 taget från LiU-gitlab
 
 Det här är repot för det projekt där vi har som mål att göra ett platform-spel i stil med spelet doodle jump.
 För en mer utförligare beskrivning, se projektbeskrivningen i /doc/.
